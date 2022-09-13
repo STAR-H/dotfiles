@@ -499,7 +499,7 @@ endif
 "===
 "=== auto load cscope file
 "===
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 if has("cscope")
     "TODO need change cmd path
     set csprg=/opt/homebrew/bin/cscope
@@ -524,19 +524,23 @@ endif
         " split horizontally, with search result displayed in
         " the new window.
 
-nmap <C-space>s :scs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-space>g :scs find g <C-R>=expand("<cword>")<CR><CR>
-nmap <C-space>c :scs find c <C-R>=expand("<cword>")<CR><CR>
-nmap <C-space>t :scs find t <C-R>=expand("<cword>")<CR><CR>
-nmap <C-space>e :scs find e <C-R>=expand("<cword>")<CR><CR>
-nmap <C-space>f :scs find f <C-R>=expand("<cfile>")<CR><CR>
-nmap <C-space>i :scs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-nmap <C-space>d :scs find d <C-R>=expand("<cword>")<CR><CR>
-nmap <C-space>a :scs find a <C-R>=expand("<cword>")<CR><CR>
+"查找本C符号
+nmap cs :scs find s <C-R>=expand("<cword>")<CR><CR>
+"查找本定义
+"nmap gg :scs find g <C-R>=expand("<cword>")<CR><CR>
+"查找调用本函数的函数
+nmap cc :lcs find c <C-R>=expand("<cword>")<CR><CR>
+"查找本字符串
+"nmap gt :scs find t <C-R>=expand("<cword>")<CR><CR>
+"查找本函数调用的函数
+nmap cd :scs find d <C-R>=expand("<cword>")<CR><CR>
+"查找此符号被赋值的位置
+nmap ca :scs find a <C-R>=expand("<cword>")<CR><CR>
 "generate ctags
 "ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags
 "generate cscope datebase
-"cscope -Rbq -f .cscope.out
+"find . -name "*.h" -o -name "*.cpp" > cscope.files
+"cscope -Rbkq -i cscope.files -f .cscope.out
 " remove unuseless wasteful whitespace end of line
 autocmd BufWritePost * :%s/\s\+$//ge
 " look up key mapping whether used
