@@ -372,6 +372,19 @@ augroup mygroup
     autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
 
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Mappings for CoCList
 " Show all diagnostics.
@@ -542,6 +555,12 @@ nmap ca :scs find a <C-R>=expand("<cword>")<CR><CR>
 "find . -name "*.h" -o -name "*.cpp" > cscope.files
 "cscope -Rbkq -i cscope.files -f .cscope.out
 " remove unuseless wasteful whitespace end of line
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+au BufWinEnter * match ExtraWhitespace /\s\+$/
+au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+au InsertLeave * match ExtraWhitespace /\s\+$/
+au BufWinLeave * call clearmatches()
 autocmd BufWritePost * :%s/\s\+$//ge
 " look up key mapping whether used
 " :verbose map <key>
