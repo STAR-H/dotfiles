@@ -147,6 +147,8 @@ Plug 'inkarkat/vim-ingo-library'
 "Plug 'guns/xterm-color-table.vim'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'rktjmp/lush.nvim'
+Plug 'petertriho/nvim-scrollbar'
+Plug 'kevinhwang91/nvim-hlslens'
 call plug#end()
 
 "===
@@ -486,6 +488,42 @@ nmap N <Plug>MarkSearchAnyOrDefaultPrev
 nmap * <Plug>MarkSearchOrCurNext
 nmap # <Plug>MarkSearchOrCurPrev
 
+"===
+"=== nvim-scrollbar
+"===
+lua << EOF
+require("scrollbar").setup()
+require("scrollbar.handlers.search").setup()
+require("scrollbar").setup({
+show = true,
+show_in_active_only = false,
+handle = {
+    text = " ",
+    color = "#928374",
+    hide_if_all_visible = true,
+    },
+marks = {
+    Search = { color = "yellow" },
+    Misc = { color = "purple" },
+    },
+handlers = {
+    diagnostic = true,
+    search = true,
+    },
+})
+EOF
+
+"===
+"=== nvim-hlslens
+"===
+noremap <silent> = <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
+            \<Cmd>lua require('hlslens').start()<CR>
+noremap <silent> - <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
+            \<Cmd>lua require('hlslens').start()<CR>
+noremap * *<Cmd>lua require('hlslens').start()<CR>
+noremap # #<Cmd>lua require('hlslens').start()<CR>
+noremap g* g*<Cmd>lua require('hlslens').start()<CR>
+noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 " transfer/read and write one block of text between vim sessions
 " Usage:
 " 'from' session:
@@ -512,7 +550,7 @@ endif
 "===
 "=== auto load cscope file
 "===
-set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+set cscopequickfix=s-,c-,d-,i-,t-,e-
 if has("cscope")
     "TODO need change cmd path
     set csprg=/opt/homebrew/bin/cscope
