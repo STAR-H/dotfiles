@@ -346,6 +346,11 @@ set pyx=3
 "switch .cpp file and .h file use <leader>a
 nmap <silent> <leader>a :CocCommand clangd.switchSourceHeader<CR>
 
+"coc-yank
+"show the list of yank
+nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
+"when leave the buffer clean the yank history
+autocmd BufWinLeave * :CocCommand yank.clean
 " 使用 <tab> 触发补全: >
 inoremap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
@@ -516,14 +521,14 @@ EOF
 "===
 "=== nvim-hlslens
 "===
-noremap <silent> = <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
-            \<Cmd>lua require('hlslens').start()<CR>
-noremap <silent> - <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
-            \<Cmd>lua require('hlslens').start()<CR>
-noremap * *<Cmd>lua require('hlslens').start()<CR>
-noremap # #<Cmd>lua require('hlslens').start()<CR>
-noremap g* g*<Cmd>lua require('hlslens').start()<CR>
-noremap g# g#<Cmd>lua require('hlslens').start()<CR>
+"noremap <silent> = <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
+"            \<Cmd>lua require('hlslens').start()<CR>
+"noremap <silent> - <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
+"            \<Cmd>lua require('hlslens').start()<CR>
+"noremap * *<Cmd>lua require('hlslens').start()<CR>
+"noremap # #<Cmd>lua require('hlslens').start()<CR>
+"noremap g* g*<Cmd>lua require('hlslens').start()<CR>
+"noremap g# g#<Cmd>lua require('hlslens').start()<CR>
 " transfer/read and write one block of text between vim sessions
 " Usage:
 " 'from' session:
@@ -593,13 +598,18 @@ nmap ca :scs find a <C-R>=expand("<cword>")<CR><CR>
 "find . -name "*.h" -o -name "*.cpp" > cscope.files
 "cscope -Rbkq -i cscope.files -f .cscope.out
 " remove unuseless wasteful whitespace end of line
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-au BufWinEnter * match ExtraWhitespace /\s\+$/
-au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-au InsertLeave * match ExtraWhitespace /\s\+$/
-au BufWinLeave * call clearmatches()
-autocmd BufWritePost * :%s/\s\+$//ge
+let extension = expand('%:e')
+if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
+    highlight ExtraWhitespace ctermbg=red guibg=red
+    match ExtraWhitespace /\s\+$/
+    au BufWinEnter * match ExtraWhitespace /\s\+$/
+    au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+    au InsertLeave * match ExtraWhitespace /\s\+$/
+    au BufWinLeave * call clearmatches()
+    autocmd BufWritePost * :%s/\s\+$//ge
+endif
+"clear yank register
+autocmd BufWinLeave * :let @/ = ""
 " look up key mapping whether used
 " :verbose map <key>
 " use nerd font Hack Nerd Font Mono
