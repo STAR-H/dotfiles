@@ -117,6 +117,8 @@ alias ls='ls --color=auto'
 alias ll='ls -alh --color=auto'
 alias ra=ranger
 alias ctags=/opt/homebrew/Cellar/universal-ctags/p5.9.20211219.0/bin/ctags
+alias genctags='ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
+alias gencscope='find . -name "*.h" -o -name "*.cpp" > .cscope.files && cscope -Rbkq -i .cscope.files -f .cscope.out'
 
 # avoid ranger configuratin file load twice
 RANGER_LOAD_DEFAULT_RC=FALSE
