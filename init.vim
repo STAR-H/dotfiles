@@ -234,7 +234,7 @@ let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#alt_sep = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -353,18 +353,20 @@ nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
 autocmd BufWinLeave * :CocCommand yank.clean
 " 使用 <tab> 触发补全: >
 inoremap <silent><expr> <TAB>
-            \ pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ coc#refresh()
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-" 使用 <CR> 确认补全，并触发 coc.nvim 的 `formatOnType` 功能: >
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-            \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
@@ -488,8 +490,8 @@ nmap mm <Plug>MarkSet
 xmap mm <Plug>MarkSet
 nmap mr <Plug>MarkRegex
 nmap mc <Plug>MarkConfirmAllClear
-nmap n <Plug>MarkSearchAnyOrDefaultNext
-nmap N <Plug>MarkSearchAnyOrDefaultPrev
+"nmap n <Plug>MarkSearchAnyOrDefaultNext
+"nmap N <Plug>MarkSearchAnyOrDefaultPrev
 nmap * <Plug>MarkSearchOrCurNext
 nmap # <Plug>MarkSearchOrCurPrev
 
@@ -595,8 +597,8 @@ nmap ca :scs find a <C-R>=expand("<cword>")<CR><CR>
 "generate ctags
 "ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags
 "generate cscope datebase
-"find . -name "*.h" -o -name "*.cpp" > cscope.files
-"cscope -Rbkq -i cscope.files -f .cscope.out
+"find . -name "*.h" -o -name "*.cpp" > .cscope.files
+"cscope -Rbkq -i .cscope.files -f .cscope.out
 " remove unuseless wasteful whitespace end of line
 let extension = expand('%:e')
 if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
