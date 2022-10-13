@@ -75,8 +75,8 @@ set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set smarttab
-" set nowrap
-set wrap
+set nowrap
+" set wrap
 set backspace=2
 set textwidth=81
 
@@ -594,6 +594,12 @@ nmap cc :lcs find c <C-R>=expand("<cword>")<CR><CR>
 nmap cd :scs find d <C-R>=expand("<cword>")<CR><CR>
 "查找此符号被赋值的位置
 nmap ca :scs find a <C-R>=expand("<cword>")<CR><CR>
+
+"terminal in vim config
+"To map <Esc> to exit terminal-mode:
+tnoremap <Esc> <C-\><C-n>
+autocmd TermOpen * setlocal statusline=%{b:term_title}
+
 "generate ctags
 "ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags
 "generate cscope datebase
