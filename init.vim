@@ -33,11 +33,8 @@ set signcolumn=yes
 set noshowmode
 set ttyfast
 set scrolloff=10
-set fillchars=vert:\ ,stl:\ ,stlnc:\
-" set list
-" set listchars=tab:▸\ ,trail:▫
-" here is space
-set list lcs=tab:\|\
+set list
+set listchars=tab:▸\ ,trail:▫
 set magic
 set redrawtime=1500
 set splitright splitbelow
@@ -145,7 +142,7 @@ Plug 'inkarkat/vim-mark'
 " dependency for vim-mark
 Plug 'inkarkat/vim-ingo-library'
 "Plug 'guns/xterm-color-table.vim'
-Plug 'ellisonleao/gruvbox.nvim'
+Plug 'morhetz/gruvbox'
 Plug 'rktjmp/lush.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
@@ -475,7 +472,9 @@ nmap bx <Plug>BookmarkClearAll
 "=== easymotion
 "===
 " s{char}{char} to move to {char}{char}
-nmap f <Plug>(easymotion-overwin-f2)
+nmap <leader>ff <Plug>(easymotion-overwin-f2)
+nmap <leader>f  <Plug>(easymotion-overwin-f)
+nmap <leader>l  <Plug>(easymotion-overwin-line)
 
 "===
 "=== vim-mark
