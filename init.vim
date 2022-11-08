@@ -475,7 +475,9 @@ nmap bx <Plug>BookmarkClearAll
 "=== easymotion
 "===
 " s{char}{char} to move to {char}{char}
-nmap f <Plug>(easymotion-overwin-f2)
+nmap <leader>ff <Plug>(easymotion-overwin-f2)
+nmap <leader>f  <Plug>(easymotion-overwin-f)
+nmap <leader>l  <Plug>(easymotion-overwin-line)
 
 "===
 "=== vim-mark
