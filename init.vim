@@ -635,16 +635,16 @@ EOF
 "===
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c", "cpp", "html", "python" },
+  ensure_installed = {  "html", "python", "diff", "bash", "json", "vim" },
   sync_install = false,
   auto_install = true,
-  parser_install_dir = "/Users/star/.config/nvim/plugged/nvim-treesitter/parser",
+  parser_install_dir = "/Users/star/.config/nvim/plugged/nvim-treesitter",
   highlight = {
       enable = true;
     additional_vim_regex_highlighting = false,
   },
 }
-vim.opt.runtimepath:append("/Users/star/.config/nvim/plugged/nvim-treesitter/parser")
+vim.opt.runtimepath:append("/Users/star/.config/nvim/plugged/nvim-treesitter")
 EOF
 
 "===
