@@ -36,7 +36,7 @@ set scrolloff=10
 set list
 set listchars=tab:▸\ ,trail:▫
 set magic
-set redrawtime=1500
+set redrawtime=300
 set splitright splitbelow
 " set fcs=eob:\
 set showmatch
@@ -125,7 +125,7 @@ Plug 'preservim/tagbar'
 Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ryanoasis/vim-devicons'
-Plug 'octol/vim-cpp-enhanced-highlight'
+Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'h', 'cpp']}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'chxuan/vim-buffer'
@@ -137,7 +137,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
 Plug 'luochen1990/rainbow'
-Plug 'MattesGroeger/vim-bookmarks'
 Plug 'inkarkat/vim-mark'
 " dependency for vim-mark
 Plug 'inkarkat/vim-ingo-library'
@@ -146,6 +145,9 @@ Plug 'morhetz/gruvbox'
 Plug 'rktjmp/lush.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 "===
@@ -552,6 +554,98 @@ else
   vmap xr c<Esc>:r c:/.vimxfer<CR>
   vmap xw :w! c:/.vimxfer<CR>
 endif
+
+"===
+"=== diffview.nvim
+"===
+lua << EOF
+local actions = require("diffview.actions")
+
+require("diffview").setup({
+  diff_binaries = false,    -- Show diffs for binaries
+  enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
+  git_cmd = { "git" },      -- The git executable followed by default args.
+  use_icons = false,         -- Requires nvim-web-devicons
+  watch_index = true,       -- Update views and index buffers when the git index changes.
+  icons = {                 -- Only applies when use_icons is true.
+    folder_closed = "",
+    folder_open = "",
+  },
+  signs = {
+    fold_closed = "",
+    fold_open = "",
+    done = "✓",
+  },
+  view = {
+    default = {
+      -- Config for changed files, and staged files in diff views.
+      layout = "diff2_horizontal",
+    },
+    merge_tool = {
+      -- Config for conflicted files in diff views during a merge or rebase.
+      layout = "diff3_horizontal",
+      disable_diagnostics = true,   -- Temporarily disable diagnostics for conflict buffers while in the view.
+    },
+    file_history = {
+      -- Config for changed files in file history views.
+      layout = "diff2_horizontal",
+    },
+  },
+  file_panel = {
+    listing_style = "tree",             -- One of 'list' or 'tree'
+    tree_options = {                    -- Only applies when listing_style is 'tree'
+      flatten_dirs = true,              -- Flatten dirs that only contain one single dir
+      folder_statuses = "only_folded",  -- One of 'never', 'only_folded' or 'always'.
+    },
+    win_config = {    -- See ':h diffview-config-win_config'
+      position = "bottom",
+      height = 16,
+      win_opts = {}
+    },
+  },
+  file_history_panel = {
+    log_options = {   -- See ':h diffview-config-log_options'
+      single_file = {
+        diff_merges = "combined",
+      },
+      multi_file = {
+        diff_merges = "first-parent",
+      },
+    },
+    win_config = {    -- See ':h diffview-config-win_config'
+      position = "bottom",
+      height = 16,
+      win_opts = {}
+    },
+  },
+})
+
+hooks = {
+  view_opened = function(view)
+    print(
+      ("A new %s was opened on tab page %d!")
+      :format(view:class():name(), view.tabpage)
+    )
+  end,
+}
+EOF
+
+"===
+"=== nvim-treesitter
+"===
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = { "c", "cpp", "html", "python" },
+  sync_install = false,
+  auto_install = true,
+  parser_install_dir = "/Users/star/.config/nvim/plugged/nvim-treesitter/parser",
+  highlight = {
+      enable = true;
+    additional_vim_regex_highlighting = false,
+  },
+}
+vim.opt.runtimepath:append("/Users/star/.config/nvim/plugged/nvim-treesitter/parser")
+EOF
 
 "===
 "=== auto load cscope file
