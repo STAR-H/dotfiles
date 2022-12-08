@@ -45,13 +45,19 @@
         "typeParameter": "\uf728",
         "default": "\uf29c"
     },
-    "diagnostic.warningSign": "!!",
+    "diagnostic.warningSign": "!",
     "diagnostic.errorSign": "✘",
     "diagnostic.refreshOnInsertMode": false,
     "diagnostic.highlighLimit":300,
     "diagnostic.virtualText":true,
-    "diagnostic.virtualTextPrefix":"\uf188",
+    "diagnostic.checkCurrentLine": false,
+    "diagnostic.virtualTextPrefix":"\uf188 ",
+    "diagnostic.virtualTextLevel": "error",
     "diagnostic.enable":false,
+    "diagnostic.messageTarget": "float",
+    "diagnostic.messageLevel": "error",
+    "_comment": "disable diagnostic float window",
+    "diagnostic.enableMessage": "never",
     "codeLens.enable": true,
     "clangd.disableSnippetCompletion": false,
     "clangd.disableDiagnostics": false,
@@ -62,6 +68,7 @@
     "coc.preferences.extensionUpdateCheck":"weekly",
     "coc.preferences.enableFloatHighlight": true,
     "coc.preferences.currentFunctionSymbolAutoUpdate":true,
+    "coc.preferences.messageLevel": "error",
     "explorer.position": "right",
     "explorer.icon.enableNerdfont": true,
     "explorer.icon.source": "vim-devicons",
@@ -69,5 +76,14 @@
     "git.blameUseRealTime": true,
     "git.enableGlobalStatus": true,
     "git.enableGutters": true,
-    "git.addGBlameToVirtualText": true
+    "git.addGBlameToVirtualText": true,
+    "json.enable": true,
+    "languageserver": {
+        "bash": {
+            "command": "bash-language-server",
+            "args": ["start"],
+            "filetypes": ["sh"]
+        }
+        }
+    }
 }

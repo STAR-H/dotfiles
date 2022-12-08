@@ -37,11 +37,12 @@ set list
 set listchars=tab:▸\ ,trail:▫
 set magic
 set redrawtime=300
-set splitright splitbelow
+set splitbelow splitright
 " set fcs=eob:\
 set showmatch
 set matchtime=1
 set pumheight=15
+set history=10
 " set mouse=a
 set mouse=
 "禁止环形搜索
@@ -81,7 +82,7 @@ set textwidth=81
 "=== 代码补全
 "===
 set wildmenu
-set completeopt-=preview
+set completeopt=preview,longest,noinsert,menuone,noselect
 
 "===
 "=== 搜索设置
@@ -108,6 +109,8 @@ set termencoding=utf-8
 set encoding=UTF-8
 set fileencodings=utf8,ucs-bom,gbk,gb2312,gb18030
 
+"replace man
+autocmd FileType cpp set keywordprg=cppman
 "Vim-Plug的首次下载安装
 if empty(glob('~/.config/nvim/autoload/plug.vim'))
  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
@@ -126,6 +129,7 @@ Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ryanoasis/vim-devicons'
 Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'h', 'cpp']}
+Plug 'jackguo380/vim-lsp-cxx-highlight', {'for': ['c', 'h', 'cpp']}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'chxuan/vim-buffer'
@@ -148,6 +152,8 @@ Plug 'kevinhwang91/nvim-hlslens'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'cdelledonne/vim-cmake'
+Plug 'gauteh/vim-cppman', {'for': ['c', 'h', 'cpp']}
 call plug#end()
 
 "===
@@ -322,8 +328,9 @@ let g:tagbar_type_cpp = {
 "
 let g:loaded_ruby_provider = 0
 let g:loaded_python_provider = 0
+let g:loaded_perl_provider = 0
 "TODO need change cmd path macos or linux
-let g:python3_host_prog = "opt/homebrew/bin/python3"
+let g:python3_host_prog = "/usr/bin/python3"
 
 "===
 "=== coc.nvim
@@ -331,19 +338,21 @@ let g:python3_host_prog = "opt/homebrew/bin/python3"
 let g:coc_global_extensions = [
             \ 'coc-json',
             \ 'coc-lists',
-            \ 'coc-clangd',
             \ 'coc-git',
+            \ 'coc-clangd',
             \ 'coc-floatinput',
             \ 'coc-explorer',
             \ 'coc-yank',
             \ 'coc-jedi',
             \ 'coc-pyright',
             \ 'coc-actions',
+            \ 'coc-cmake',
+            \ 'coc-sh',
             \ 'coc-syntax']
 
 set pyx=3
 "switch .cpp file and .h file use <leader>a
-nmap <silent> <leader>a :CocCommand clangd.switchSourceHeader<CR>
+nmap <silent> <leader>a :CocCommand clangd.switchSourceHeader vsplit<CR>
 
 "coc-yank
 "show the list of yank
@@ -371,7 +380,13 @@ endfunction
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
+nmap <silent>dt :call CocAction('diagnosticToggle')<CR>
 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 augroup mygroup
     autocmd!
@@ -381,15 +396,21 @@ augroup mygroup
 augroup end
 
 " Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+nnoremap <silent> K :call ShowDocumentation()<CR>
 
+function! ShowDocumentation()
+
+    if CocAction('hasProvider', 'hover')
+        let ret  = CocAction('doHover')
+        if !ret
+            call feedkeys('K', 'in')
+        else
+            call CocActionAsync('doHover')
+        endif
+    else
+        call feedkeys('K', 'in')
+    endif
+endfunction
 
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
@@ -474,8 +495,7 @@ nmap bx <Plug>BookmarkClearAll
 "=== easymotion
 "===
 " s{char}{char} to move to {char}{char}
-nmap <leader>ff <Plug>(easymotion-overwin-f2)
-nmap <leader>f  <Plug>(easymotion-overwin-f)
+nmap <leader>f  <Plug>(easymotion-overwin-f2)
 nmap <leader>l  <Plug>(easymotion-overwin-line)
 
 "===
@@ -641,6 +661,7 @@ require'nvim-treesitter.configs'.setup {
   parser_install_dir = "/Users/star/.config/nvim/plugged/nvim-treesitter",
   highlight = {
       enable = true;
+      disable = {"c", "cpp"};
     additional_vim_regex_highlighting = false,
   },
 }
@@ -651,24 +672,27 @@ EOF
 "=== auto load cscope file
 "===
 set cscopequickfix=s-,c-,d-,i-,t-,e-
-if has("cscope")
-    "TODO need change cmd path
-    set csprg=/opt/homebrew/bin/cscope
-    set csto=0
-    set cst
-    set csverb
-    set cspc=3
-    "add any database in current dir
-    if filereadable(".cscope.out")
-        cs add .cscope.out
-    "else search cscope.out elsewhere
-    else
-       let cscope_file=findfile(".cscope.out", ".;")
-       let cscope_pre=matchstr(cscope_file, ".*/")
-       if !empty(cscope_file) && filereadable(cscope_file)
-           exe "cs add" cscope_file cscope_pre
-       endif
-     endif
+let extension = expand('%:e')
+if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
+    if has("cscope")
+        "TODO need change cmd path
+        set csprg=/opt/homebrew/bin/cscope
+        set csto=0
+        set cst
+        set csverb
+        set cspc=3
+        "add any database in current dir
+        if filereadable(".cscope.out")
+            cs add .cscope.out
+            "else search cscope.out elsewhere
+        else
+            let cscope_file=findfile(".cscope.out", ".;")
+            let cscope_pre=matchstr(cscope_file, ".*/")
+            if !empty(cscope_file) && filereadable(cscope_file)
+                exe "cs add" cscope_file cscope_pre
+            endif
+        endif
+    endif
 endif
 
  " Using 'CTRL-spacebar' then a search type makes the vim window
@@ -711,6 +735,10 @@ if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
 endif
 "clear yank register
 autocmd BufWinLeave * :let @/ = ""
+
 " look up key mapping whether used
 " :verbose map <key>
 " use nerd font Hack Nerd Font Mono
+
+"generate compile_commands.json
+"cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1

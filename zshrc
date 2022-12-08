@@ -74,9 +74,9 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(
     git
     autojump
-	zsh-autosuggestions
-	zsh-completions
-	zsh-syntax-highlighting)
+    zsh-autosuggestions
+    zsh-completions
+    zsh-syntax-highlighting)
 
 bindkey ',' autosuggest-accept
 autoload -U compinit && compinit
@@ -117,7 +117,7 @@ alias vi=nvim
 alias ls='ls --color=auto'
 alias ll='ls -alh --color=auto'
 alias ra=ranger
-alias ctags=/opt/homebrew/Cellar/universal-ctags/p5.9.20211219.0/bin/ctags
+alias ctags=/opt/homebrew/Cellar/universal-ctags/p5.9.20221120.0/bin/ctags
 alias genctags='ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
 alias gencscope='find . -name "*.h" -o -name "*.cpp" > .cscope.files && cscope -Rbkq -i .cscope.files -f .cscope.out'
 
