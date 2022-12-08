@@ -44,7 +44,7 @@ set matchtime=1
 set pumheight=15
 set history=10
 " set mouse=a
-set mouse=
+set mouse=n
 "禁止环形搜索
 "set nowrapscan
 set wrapscan
@@ -153,7 +153,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'cdelledonne/vim-cmake'
-Plug 'gauteh/vim-cppman', {'for': ['c', 'h', 'cpp']}
+Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 call plug#end()
 
 "===
