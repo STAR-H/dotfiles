@@ -128,3 +128,5 @@ export TMUX_PLUGIN_MANAGER_PATH='~/.tmux/plugins/tpm'
 # fzf configuratin
 export FZF_DEFAULT_OPTS=" --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 PROMPT=%m\ $PROMPT
+
+. /opt/homebrew/etc/profile.d/z.sh
