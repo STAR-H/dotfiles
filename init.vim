@@ -149,7 +149,6 @@ Plug 'rktjmp/lush.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'sindrets/diffview.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'cdelledonne/vim-cmake'
 Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
@@ -238,7 +237,7 @@ let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#alt_sep = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#tagbar#enabled = 1
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -575,81 +574,6 @@ else
 endif
 
 "===
-"=== diffview.nvim
-"===
-lua << EOF
-local actions = require("diffview.actions")
-
-require("diffview").setup({
-  diff_binaries = false,    -- Show diffs for binaries
-  enhanced_diff_hl = true, -- See ':h diffview-config-enhanced_diff_hl'
-  git_cmd = { "git" },      -- The git executable followed by default args.
-  use_icons = false,         -- Requires nvim-web-devicons
-  watch_index = true,       -- Update views and index buffers when the git index changes.
-  icons = {                 -- Only applies when use_icons is true.
-    folder_closed = "",
-    folder_open = "",
-  },
-  signs = {
-    fold_closed = "",
-    fold_open = "",
-    done = "✓",
-  },
-  view = {
-    default = {
-      -- Config for changed files, and staged files in diff views.
-      layout = "diff2_horizontal",
-    },
-    merge_tool = {
-      -- Config for conflicted files in diff views during a merge or rebase.
-      layout = "diff3_horizontal",
-      disable_diagnostics = true,   -- Temporarily disable diagnostics for conflict buffers while in the view.
-    },
-    file_history = {
-      -- Config for changed files in file history views.
-      layout = "diff2_horizontal",
-    },
-  },
-  file_panel = {
-    listing_style = "tree",             -- One of 'list' or 'tree'
-    tree_options = {                    -- Only applies when listing_style is 'tree'
-      flatten_dirs = true,              -- Flatten dirs that only contain one single dir
-      folder_statuses = "only_folded",  -- One of 'never', 'only_folded' or 'always'.
-    },
-    win_config = {    -- See ':h diffview-config-win_config'
-      position = "bottom",
-      height = 16,
-      win_opts = {}
-    },
-  },
-  file_history_panel = {
-    log_options = {   -- See ':h diffview-config-log_options'
-      single_file = {
-        diff_merges = "combined",
-      },
-      multi_file = {
-        diff_merges = "first-parent",
-      },
-    },
-    win_config = {    -- See ':h diffview-config-win_config'
-      position = "bottom",
-      height = 16,
-      win_opts = {}
-    },
-  },
-})
-
-hooks = {
-  view_opened = function(view)
-    print(
-      ("A new %s was opened on tab page %d!")
-      :format(view:class():name(), view.tabpage)
-    )
-  end,
-}
-EOF
-
-"===
 "=== nvim-treesitter
 "===
 lua << EOF
@@ -670,7 +594,7 @@ EOF
 "===
 "=== auto load cscope file
 "===
-set cscopequickfix=s-,c-,d-,i-,t-,e-
+" set cscopequickfix = s-,c-,d-,i-,t-,e-
 let extension = expand('%:e')
 if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
     if has("cscope")
