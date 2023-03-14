@@ -152,6 +152,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'cdelledonne/vim-cmake'
 Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
+Plug 'MattesGroeger/vim-bookmarks'
 call plug#end()
 
 "===
@@ -374,10 +375,12 @@ function! CheckBackspace() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use `[g` and `]g` to navigate diagnostics
+" navigate chunks of current buffer
+nmap [g <Plug>(coc-git-prevchunk)
+nmap ]g <Plug>(coc-git-nextchunk)
+" show chunk diff at current position
+nmap gs <Plug>(coc-git-chunkinfo)
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
 nmap <silent>dt :call CocAction('diagnosticToggle')<CR>
 
 " GoTo code navigation.
@@ -449,6 +452,7 @@ let g:indentLine_bufTypeExclude = ['help', 'terminal']
 "Maps show Normal mode mappings
 " [Tags] Command to generate tags file
 let g:fzf_tags_command = 'ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
+let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'Normal'],
@@ -463,8 +467,12 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
+
 command! -bang -nargs=* Rg
-            \call fzf#vim#grep("rg --column --line-number --no-heading --color=always --ignore-case --multiline --word-regexp --".shellescape(<q-args>), 1, fzf#vim#with_preview(), <bang>0)
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
+" Hide statusline
+autocmd! FileType fzf set laststatus=0 noshowmode noruler
+            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
 "===
 "=== bookmark
 "===
@@ -477,17 +485,16 @@ let g:bookmark_show_warning = 0
 let g:bookmark_auto_close = 1
 let g:bookmark_auto_save = 0
 let g:bookmark_center = 1
-let g:bookmark_sign = '\uf02c'
-
+let g:bookmark_sign = ''
+let g:bookmark_annotation_sign = '﭅'
 :highlight BookmarkSign guifg=#00ffff guibg=#3c3836
 :highlight BookmarkAnnotationSign guifg=#00ffff guibg=#3c3836
 nmap bb <Plug>BookmarkToggle
 nmap bi <Plug>BookmarkAnnotate
-nmap ba <Plug>BookmarkShowAll
 nmap bj <Plug>BookmarkNext
 nmap bk <Plug>BookmarkPrev
-nmap bc <Plug>BookmarkClear
-nmap bx <Plug>BookmarkClearAll
+nmap ba <Plug>BookmarkShowAll
+nmap bc <Plug>BookmarkClearAll
 
 "===
 "=== easymotion
@@ -509,8 +516,6 @@ nmap mm <Plug>MarkSet
 xmap mm <Plug>MarkSet
 nmap mr <Plug>MarkRegex
 nmap mc <Plug>MarkConfirmAllClear
-"nmap n <Plug>MarkSearchAnyOrDefaultNext
-"nmap N <Plug>MarkSearchAnyOrDefaultPrev
 nmap * <Plug>MarkSearchOrCurNext
 nmap # <Plug>MarkSearchOrCurPrev
 
@@ -540,17 +545,8 @@ handlers = {
 EOF
 
 "===
-"=== nvim-hlslens
+"=== transfer/read and write one block of text between vim sessions
 "===
-"noremap <silent> = <Cmd>execute('normal! ' . v:count1 . 'n')<CR>
-"            \<Cmd>lua require('hlslens').start()<CR>
-"noremap <silent> - <Cmd>execute('normal! ' . v:count1 . 'N')<CR>
-"            \<Cmd>lua require('hlslens').start()<CR>
-"noremap * *<Cmd>lua require('hlslens').start()<CR>
-"noremap # #<Cmd>lua require('hlslens').start()<CR>
-"noremap g* g*<Cmd>lua require('hlslens').start()<CR>
-"noremap g# g#<Cmd>lua require('hlslens').start()<CR>
-" transfer/read and write one block of text between vim sessions
 " Usage:
 " 'from' session:
 " ma
@@ -640,11 +636,6 @@ nmap ca :scs find a <C-R>=expand("<cword>")<CR><CR>
 tnoremap <Esc> <C-\><C-n>
 autocmd TermOpen * setlocal statusline=%{b:term_title}
 
-"generate ctags
-"ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags
-"generate cscope datebase
-"find . -name "*.h" -o -name "*.cpp" > .cscope.files
-"cscope -Rbkq -i .cscope.files -f .cscope.out
 " remove unuseless wasteful whitespace end of line
 let extension = expand('%:e')
 if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
@@ -656,6 +647,7 @@ if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
     au BufWinLeave * call clearmatches()
     autocmd BufWritePost * :%s/\s\+$//ge
 endif
+
 "clear yank register
 autocmd BufWinLeave * :let @/ = ""
 

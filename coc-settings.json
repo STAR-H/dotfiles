@@ -82,6 +82,23 @@
     "explorer.icon.enableNerdfont": true,
     "explorer.icon.source": "vim-devicons",
     "explorer.git.enable": true,
+    "explorer.root.customRules": {
+        "vcs": {
+            "patterns": [".git", ".root", ".project"]
+        },
+        "vcs-r": {
+            "patterns": [".git", ".root", ".project"],
+            "bottomUp": true
+        }
+    },
+    "explorer.root.strategies": [
+        "custom:vcs",
+        "custom:vcs-r",
+        "workspace",
+        "cwd",
+        "sourceBuffer",
+        "reveal"
+    ],
     "git.blameUseRealTime": true,
     "git.enableGlobalStatus": true,
     "git.enableGutters": true,
