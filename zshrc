@@ -101,6 +101,10 @@ export LANG=en_US.UTF-8
 export EDITOR='nvim'
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export PATH=$PATH:/Users/star/Software/nvim-macos/bin
+
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+
 export DISPLAY=:0
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
