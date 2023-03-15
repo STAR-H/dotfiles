@@ -149,10 +149,12 @@ Plug 'rktjmp/lush.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'cdelledonne/vim-cmake'
 Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'SirVer/ultisnips'
+Plug 'STAR-H/vim-snippets'
 call plug#end()
 
 "===
@@ -173,7 +175,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 "===
 set background=dark
 let g:_termcolors=256
-colorscheme gruvbox
+colorscheme tokyonight-moon
 
 "===
 "=== vim-easy-align
@@ -238,7 +240,7 @@ let g:airline#extensions#tabline#show_splits = 1
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#alt_sep = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:airline#extensions#tagbar#enabled = 1
+let g:airline#extensions#tagbar#enabled = 0
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -487,8 +489,8 @@ let g:bookmark_auto_save = 0
 let g:bookmark_center = 1
 let g:bookmark_sign = ''
 let g:bookmark_annotation_sign = '﭅'
-:highlight BookmarkSign guifg=#00ffff guibg=#3c3836
-:highlight BookmarkAnnotationSign guifg=#00ffff guibg=#3c3836
+:highlight BookmarkSign guifg=#00ffff
+:highlight BookmarkAnnotationSign guifg=#00ffff
 nmap bb <Plug>BookmarkToggle
 nmap bi <Plug>BookmarkAnnotate
 nmap bj <Plug>BookmarkNext
@@ -568,24 +570,6 @@ else
   vmap xr c<Esc>:r c:/.vimxfer<CR>
   vmap xw :w! c:/.vimxfer<CR>
 endif
-
-"===
-"=== nvim-treesitter
-"===
-lua << EOF
-require'nvim-treesitter.configs'.setup {
-  ensure_installed = {  "html", "python", "diff", "bash", "json", "vim" },
-  sync_install = false,
-  auto_install = true,
-  parser_install_dir = "/Users/star/.config/nvim/plugged/nvim-treesitter",
-  highlight = {
-      enable = true;
-      disable = {"c", "cpp"};
-    additional_vim_regex_highlighting = false,
-  },
-}
-vim.opt.runtimepath:append("/Users/star/.config/nvim/plugged/nvim-treesitter")
-EOF
 
 "===
 "=== auto load cscope file
