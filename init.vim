@@ -54,7 +54,7 @@ set clipboard=unnamed
 "取消nvimcursor错误
 " set guicursor=
 if exists('+previewpopup')
-	set previewpopup=height:10,width:60
+    set previewpopup=height:10,width:80
 endif
 set tags=./.tags;,.tags
 
@@ -76,7 +76,7 @@ set smarttab
 set nowrap
 " set wrap
 set backspace=2
-set textwidth=81
+" set textwidth=81
 
 "===
 "=== 代码补全
@@ -90,6 +90,7 @@ set completeopt=preview,longest,noinsert,menuone,noselect
 set hlsearch
 set incsearch
 set ignorecase
+set smartcase
 
 "===
 "=== 缓存设置
@@ -153,7 +154,6 @@ Plug 'cdelledonne/vim-cmake'
 Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
-Plug 'SirVer/ultisnips'
 Plug 'STAR-H/vim-snippets'
 call plug#end()
 
@@ -175,7 +175,8 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "
 "===
 set background=dark
 let g:_termcolors=256
-colorscheme tokyonight-moon
+
+colorscheme gruvbox
 
 "===
 "=== vim-easy-align
@@ -222,8 +223,6 @@ let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 let g:airline_symbols.crypt = '🔒'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.maxlinenr = '㏑'
 let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.spell = 'Ꞩ'
 let g:airline_symbols.notexists = 'Ɇ'
@@ -349,6 +348,7 @@ let g:coc_global_extensions = [
             \ 'coc-actions',
             \ 'coc-cmake',
             \ 'coc-sh',
+            \ 'coc-snippets',
             \ 'coc-syntax']
 
 set pyx=3
@@ -428,6 +428,24 @@ nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " coc-explorer
 nmap <leader>n <Cmd>CocCommand explorer<CR>
 
+"coc-snippets
+" Use <C-l> for trigger snippet expand.
+imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+" imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+" xmap <leader>x  <Plug>(coc-convert-snippet)
 "===
 "=== indentLine
 "===
@@ -489,8 +507,8 @@ let g:bookmark_auto_save = 0
 let g:bookmark_center = 1
 let g:bookmark_sign = ''
 let g:bookmark_annotation_sign = '﭅'
-:highlight BookmarkSign guifg=#00ffff
-:highlight BookmarkAnnotationSign guifg=#00ffff
+:highlight BookmarkSign guifg=#00ffff guibg=#3c3836
+:highlight BookmarkAnnotationSign guifg=#00ffff guibg=#3c3836
 nmap bb <Plug>BookmarkToggle
 nmap bi <Plug>BookmarkAnnotate
 nmap bj <Plug>BookmarkNext
@@ -532,7 +550,7 @@ show = true,
 show_in_active_only = false,
 handle = {
     text = " ",
-    color = "#928374",
+    color = "#282828",
     hide_if_all_visible = true,
     },
 marks = {
@@ -621,17 +639,16 @@ tnoremap <Esc> <C-\><C-n>
 autocmd TermOpen * setlocal statusline=%{b:term_title}
 
 " remove unuseless wasteful whitespace end of line
-let extension = expand('%:e')
-if extension ==# 'cpp' || extension ==# 'c' || extension ==# "h"
+augroup HighlightTrailingWhiteSpace
+    autocmd!
     highlight ExtraWhitespace ctermbg=red guibg=red
     match ExtraWhitespace /\s\+$/
-    au BufWinEnter * match ExtraWhitespace /\s\+$/
+    autocmd BufWinEnter match ExtraWhitespace /\s\+$/
     au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
     au InsertLeave * match ExtraWhitespace /\s\+$/
     au BufWinLeave * call clearmatches()
     autocmd BufWritePost * :%s/\s\+$//ge
-endif
-
+augroup END
 "clear yank register
 autocmd BufWinLeave * :let @/ = ""
 
