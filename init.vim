@@ -155,6 +155,7 @@ Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'STAR-H/vim-snippets'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 call plug#end()
 
 "===
@@ -240,6 +241,7 @@ let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#alt_sep = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#tabline#fnamemod = ':p:t'
 nmap <leader>1 <Plug>AirlineSelectTab1
 nmap <leader>2 <Plug>AirlineSelectTab2
 nmap <leader>3 <Plug>AirlineSelectTab3
@@ -588,6 +590,21 @@ else
   vmap xr c<Esc>:r c:/.vimxfer<CR>
   vmap xw :w! c:/.vimxfer<CR>
 endif
+
+"===
+"=== nvim-treesitter
+"===
+lua << EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {  "html", "python", "diff", "bash", "json", "vim", "lua", "c", "cpp", "help"},
+  sync_install = false,
+  auto_install = true,
+  highlight = {
+      enable = true;
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
 
 "===
 "=== auto load cscope file
