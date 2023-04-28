@@ -26,7 +26,7 @@
         "function": "\u0192",
         "reference": "\uf779",
         "constant": "\ue7ba",
-        "method": "\uf09a",
+        "method": "\u0192",
         "struct": "\ufb44",
         "class": "\uf0e8",
         "interface": "\uf417",
@@ -58,7 +58,7 @@
     "diagnostic.messageLevel": "warning",
     "_comment": "disable diagnostic float window",
     "diagnostic.enableMessage": "never",
-    "codeLens.enable": true,
+    "codeLens.enable": false,
     "clangd.disableSnippetCompletion": false,
     "clangd.disableDiagnostics": false,
     "clangd.enabled": true,
@@ -84,10 +84,10 @@
     "explorer.git.enable": true,
     "explorer.root.customRules": {
         "vcs": {
-            "patterns": [".git", ".root", ".project"]
+            "patterns": [".root"]
         },
         "vcs-r": {
-            "patterns": [".git", ".root", ".project"],
+            "patterns": [".git", ".project"],
             "bottomUp": true
         }
     },
@@ -104,6 +104,7 @@
     "git.enableGutters": true,
     "git.addGBlameToVirtualText": true,
     "json.enable": true,
+    "snippets.autoTrigger": true,
     "snippets.ultisnips.enable": false,
     "languageserver": {
         "bash": {

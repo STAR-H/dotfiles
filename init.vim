@@ -153,9 +153,9 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'cdelledonne/vim-cmake'
 Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
-Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'STAR-H/vim-snippets'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Plug 'ianding1/leetcode.vim'
 call plug#end()
 
 "===
@@ -332,7 +332,7 @@ let g:loaded_ruby_provider = 0
 let g:loaded_python_provider = 0
 let g:loaded_perl_provider = 0
 "TODO need change cmd path macos or linux
-let g:python3_host_prog = "/usr/bin/python3"
+let g:python3_host_prog = "/opt/homebrew/bin/python3"
 
 "===
 "=== coc.nvim
@@ -384,13 +384,15 @@ nmap [g <Plug>(coc-git-prevchunk)
 nmap ]g <Plug>(coc-git-nextchunk)
 " show chunk diff at current position
 nmap gs <Plug>(coc-git-chunkinfo)
+nmap <silent> gu :CocCommand git.chunkUndo<CR>
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent>dt :call CocAction('diagnosticToggle')<CR>
-
+" Apply the most preferred quickfix action to fix diagnostic on the current line
+nmap <leader>qf  <Plug>(coc-fix-current)
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 augroup mygroup
@@ -596,7 +598,7 @@ endif
 "===
 lua << EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = {  "html", "python", "diff", "bash", "json", "vim", "lua", "c", "cpp", "help"},
+  ensure_installed = {  "html", "python", "diff", "bash", "json", "vim", "lua", "c", "cpp"},
   sync_install = false,
   auto_install = true,
   highlight = {
@@ -675,3 +677,7 @@ autocmd BufWinLeave * :let @/ = ""
 
 "generate compile_commands.json
 "cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1
+"
+"leetcode
+" let g:leetcode_china=1
+" let g:leetcode_browser='chrome'

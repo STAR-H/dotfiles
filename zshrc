@@ -73,7 +73,6 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    autojump
     zsh-autosuggestions
     zsh-completions
     zsh-syntax-highlighting)
@@ -100,7 +99,6 @@ export LANG=en_US.UTF-8
 
 export EDITOR='nvim'
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-export PATH=$PATH:/Users/star/Software/nvim-macos/bin
 
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
