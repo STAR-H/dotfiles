@@ -118,7 +118,7 @@ export DISPLAY=:0
 alias vi=nvim
 alias ls='ls --color=auto'
 alias ll='ls -alh --color=auto'
-alias ra=ranger
+alias ra=joshuto
 alias ctags=/opt/homebrew/Cellar/universal-ctags/p5.9.20221120.0/bin/ctags
 alias genctags='ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
 alias gencscope='find . -name "*.h" -o -name "*.cpp" > .cscope.files && cscope -Rbkq -i .cscope.files -f .cscope.out'
@@ -132,3 +132,28 @@ export FZF_DEFAULT_OPTS=" --preview '(highlight -O ansi {} || cat {}) 2> /dev/nu
 PROMPT=%m\ $PROMPT
 
 . /opt/homebrew/etc/profile.d/z.sh
+
+function joshuto() {
+    ID="$$"
+    mkdir -p /tmp/$USER
+    OUTPUT_FILE="/tmp/$USER/joshuto-cwd-$ID"
+    env joshuto --output-file "$OUTPUT_FILE" $@
+    exit_code=$?
+
+    case "$exit_code" in
+        # regular exit
+        0)
+        ;;
+        # output contains current directory
+        101)
+        JOSHUTO_CWD=$(cat "$OUTPUT_FILE")
+        cd "$JOSHUTO_CWD"
+        ;;
+        # output selected files
+        102)
+        ;;
+    *)
+        echo "Exit code: $exit_code"
+        ;;
+esac
+}
