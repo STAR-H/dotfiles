@@ -150,7 +150,6 @@ Plug 'rktjmp/lush.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
 Plug 'nvim-lua/plenary.nvim'
-Plug 'cdelledonne/vim-cmake'
 Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'STAR-H/vim-snippets'
@@ -357,11 +356,8 @@ set pyx=3
 "switch .cpp file and .h file use <leader>a
 nmap <silent> <leader>a :CocCommand clangd.switchSourceHeader vsplit<CR>
 
-"coc-yank
-"show the list of yank
-nnoremap <silent> <space>y  :<C-u>CocList --normal yank<cr>
-"when leave the buffer clean the yank history
-autocmd BufWinLeave * :CocCommand yank.clean
+" To fix the highlight of comment
+autocmd FileType json syntax match Comment +\/\/.\+$+
 " 使用 <tab> 触发补全: >
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
@@ -406,17 +402,11 @@ augroup end
 nnoremap <silent> K :call ShowDocumentation()<CR>
 
 function! ShowDocumentation()
-
-    if CocAction('hasProvider', 'hover')
-        let ret  = CocAction('doHover')
-        if !ret
-            call feedkeys('K', 'in')
-        else
-            call CocActionAsync('doHover')
-        endif
-    else
-        call feedkeys('K', 'in')
-    endif
+  if CocAction('hasProvider', 'hover')
+    call CocActionAsync('doHover')
+  else
+    call feedkeys('K', 'in')
+  endif
 endfunction
 
 " Highlight symbol under cursor on CursorHold
@@ -603,7 +593,14 @@ require'nvim-treesitter.configs'.setup {
   auto_install = true,
   highlight = {
       enable = true;
-    additional_vim_regex_highlighting = false,
+      disable = function(lang, buf)
+      local max_filesize = 1024 * 1024 -- 1MB
+      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+          return true
+          end
+          end,
+     additional_vim_regex_highlighting = false,
   },
 }
 EOF
@@ -660,16 +657,15 @@ autocmd TermOpen * setlocal statusline=%{b:term_title}
 " remove unuseless wasteful whitespace end of line
 augroup HighlightTrailingWhiteSpace
     autocmd!
-    highlight ExtraWhitespace ctermbg=red guibg=red
-    match ExtraWhitespace /\s\+$/
-    autocmd BufWinEnter match ExtraWhitespace /\s\+$/
-    au InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-    au InsertLeave * match ExtraWhitespace /\s\+$/
-    au BufWinLeave * call clearmatches()
-    autocmd BufWritePost * :%s/\s\+$//ge
+    autocmd FileType cpp,c,h,hpp
+        \ highlight ExtraWhitespace ctermbg=red guibg=red |
+        \ match ExtraWhitespace /\s\+$/ |
+        \ autocmd BufWinEnter <buffer> match ExtraWhitespace /\s\+$/ |
+        \ au InsertEnter <buffer> match ExtraWhitespace /\s\+\%#\@<!$/ |
+        \ au InsertLeave <buffer> match ExtraWhitespace /\s\+$/ |
+        \ au BufWinLeave <buffer> call clearmatches() |
+        \ autocmd BufWritePost <buffer> :%s/\s\+$//ge
 augroup END
-"clear yank register
-autocmd BufWinLeave * :let @/ = ""
 
 " look up key mapping whether used
 " :verbose map <key>
@@ -681,3 +677,6 @@ autocmd BufWinLeave * :let @/ = ""
 "leetcode
 " let g:leetcode_china=1
 " let g:leetcode_browser='chrome'
+"unmap u in visula mode to avoid change case
+vnoremap u <Nop>
+vnoremap U <Nop>
