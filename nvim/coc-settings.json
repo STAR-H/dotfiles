@@ -87,6 +87,7 @@
     "git.addGBlameToVirtualText": true,
     "snippets.autoTrigger": true,
     "snippets.ultisnips.enable": false,
+    "snippets.priority": 100,
     "json.enable": true,
     "inlayHint.enable": false,
     "clangd.enabled": true,
