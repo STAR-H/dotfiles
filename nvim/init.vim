@@ -382,7 +382,29 @@ nmap ]g <Plug>(coc-git-nextchunk)
 nmap gs <Plug>(coc-git-chunkinfo)
 nmap <silent> gu :CocCommand git.chunkUndo<CR>
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent>dt :call CocAction('diagnosticToggle')<CR>
+function! GetDiagnosticsStatus()
+    return g:diagnostic_enable == 1 ? 'DIAG' : ''
+endfunction
+
+function! ResetDiagnosticEnable()
+    let g:diagnostic_enable = 0
+endfunction
+
+function! ToggleDiagnostics() abort
+    let g:diagnostic_enable = get(g:, 'diagnostic_enable', 0) == 0 ? 1 : 0
+    call CocAction('diagnosticToggle', g:diagnostic_enable)
+endfunction
+
+augroup DiagnosticEnable
+    autocmd!
+    autocmd VimEnter * call ResetDiagnosticEnable()
+    autocmd VimEnter * call GetDiagnosticsStatus()
+augroup END
+
+call airline#parts#define_function('foo', 'GetDiagnosticsStatus')
+let g:airline_section_b = airline#section#create_right(['branch','foo'])
+nmap <silent>dt :call ToggleDiagnostics()<CR>
+" nmap <silent>dt :call CocAction('diagnosticToggle')<CR>
 " Apply the most preferred quickfix action to fix diagnostic on the current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 " GoTo code navigation.

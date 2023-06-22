@@ -73,13 +73,17 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     git
-    zsh-autosuggestions
-    zsh-completions
-    zsh-syntax-highlighting)
+    zsh-completions)
+
+. /opt/homebrew/etc/profile.d/z.sh
+. /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+. /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 bindkey ',' autosuggest-accept
 autoload -U compinit && compinit
+
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080, italic"
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,7 +135,6 @@ export TMUX_PLUGIN_MANAGER_PATH='~/.tmux/plugins/tpm'
 export FZF_DEFAULT_OPTS=" --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
 PROMPT=%m\ $PROMPT
 
-. /opt/homebrew/etc/profile.d/z.sh
 
 function joshuto() {
     ID="$$"
