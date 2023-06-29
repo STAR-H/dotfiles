@@ -404,7 +404,6 @@ augroup END
 call airline#parts#define_function('foo', 'GetDiagnosticsStatus')
 let g:airline_section_b = airline#section#create_right(['branch','foo'])
 nmap <silent>dt :call ToggleDiagnostics()<CR>
-" nmap <silent>dt :call CocAction('diagnosticToggle')<CR>
 " Apply the most preferred quickfix action to fix diagnostic on the current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 " GoTo code navigation.
@@ -702,3 +701,8 @@ augroup END
 "unmap u in visula mode to avoid change case
 vnoremap u <Nop>
 vnoremap U <Nop>
+
+" Disable file with size > 1MB
+autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
+            \ let b:coc_enabled=0 |
+            \ endif
