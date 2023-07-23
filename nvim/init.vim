@@ -16,7 +16,7 @@ syntax enable       " 开启语法高亮
 syntax on
 set nocompatible
 set cmdheight=2
-set showcmd
+set noshowcmd
 set noruler
 set laststatus=2
 set number
@@ -28,6 +28,7 @@ set virtualedit=block,onemore
 set updatetime=100
 set termguicolors
 set shortmess+=c
+set shortmess+=S
 set signcolumn=yes
 " set lazyredraw
 set noshowmode
@@ -126,26 +127,18 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'preservim/tagbar'
-Plug 'godlygeek/tabular'
 Plug 'jiangmiao/auto-pairs'
 Plug 'ryanoasis/vim-devicons'
-Plug 'octol/vim-cpp-enhanced-highlight', {'for': ['c', 'h', 'cpp']}
-Plug 'jackguo380/vim-lsp-cxx-highlight', {'for': ['c', 'h', 'cpp']}
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'chxuan/vim-buffer'
 Plug 'tpope/vim-commentary'
 Plug 'Yggdroot/indentLine',{ 'for': ['c', 'h', 'cpp', 'py', 'json',  'vim'] }
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
-Plug 'luochen1990/rainbow'
 Plug 'inkarkat/vim-mark'
 " dependency for vim-mark
 Plug 'inkarkat/vim-ingo-library'
 "Plug 'guns/xterm-color-table.vim'
-Plug 'morhetz/gruvbox'
+Plug 'ellisonleao/gruvbox.nvim'
 Plug 'rktjmp/lush.nvim'
 Plug 'petertriho/nvim-scrollbar'
 Plug 'kevinhwang91/nvim-hlslens'
@@ -154,6 +147,12 @@ Plug 'STAR-H/vim-cppman', {'for': ['c', 'h', 'cpp']}
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'STAR-H/vim-snippets'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'Eandrju/cellular-automaton.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'folke/flash.nvim'
+Plug 'nvim-tree/nvim-tree.lua'
+Plug 'ahmedkhalf/project.nvim'
 " Plug 'ianding1/leetcode.vim'
 call plug#end()
 
@@ -187,17 +186,12 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-"===
-"=== rainbow
-"===
-let g:rainbow_active = 1
 
 "===
 "=== vim-buffer
 "===
 "
-nnoremap <silent> <leader>d :CloseBuffer<cr>
-nnoremap <silent> <leader>D :BufOnly<cr>
+nnoremap <silent> <leader>d :bd<cr>
 
 "===
 "=== Resize splits with arrow keys
@@ -232,6 +226,7 @@ let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = '☰ '
 let g:airline_symbols.maxlinenr = ' '
 let g:airline_symbols.dirty='⚡'
+let g:airline#extensions#searchcount#enabled = 0
 let g:airline#extensions#coc#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tab_type = 0
@@ -262,7 +257,7 @@ let g:airline#extensions#tabline#buffer_idx_format = {
             \ '8': '❽ ',
             \ '9': '❾ '
             \}
-
+let g:airline_exclude_filetypes = ['NvimTree']
 "===
 "=== tagbar
 "===
@@ -341,10 +336,6 @@ let g:coc_global_extensions = [
             \ 'coc-lists',
             \ 'coc-git',
             \ 'coc-clangd',
-            \ 'coc-floatinput',
-            \ 'coc-explorer',
-            \ 'coc-yank',
-            \ 'coc-jedi',
             \ 'coc-pyright',
             \ 'coc-actions',
             \ 'coc-cmake',
@@ -440,8 +431,6 @@ nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
 nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
-" coc-explorer
-nmap <leader>n <Cmd>CocCommand explorer<CR>
 
 "coc-snippets
 " Use <C-l> for trigger snippet expand.
@@ -474,40 +463,57 @@ let g:indentLine_bufTypeExclude = ['help', 'terminal']
 
 
 "===
-"=== fzf.vim
+"=== nvim-tree.lua
 "===
-"useful command from fzf.vim
-"Files [PATH]
-"GFiles? equal to git status
-"Buffers list opend buffer
-"Rg [PATTERN]
-"Tags  Tags in project read from ctags -R
-"History/ Search history
-"Commits show git commits
-"Maps show Normal mode mappings
-" [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
-let g:fzf_layout = { 'window': { 'width': 0.95, 'height': 0.95 } }
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+nnoremap <silent><nowait> <leader>n :NvimTreeToggle<cr>
+lua << EOF
+        local function my_on_attach(bufnr)
+            local api = require('nvim-tree.api')
+            local function opts(desc)
+                return { desc = 'nvim-tree: ' .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+            end
+            -- default mappings
+            -- api.config.mappings.default_on_attach(bufnr)
 
-command! -bang -nargs=* Rg
-  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}), <bang>0)
-" Hide statusline
-autocmd! FileType fzf set laststatus=0 noshowmode noruler
-            \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+            -- custom key mappings start
+            vim.keymap.set('n', 'h',     api.node.navigate.parent_close,        opts('Close'))
+            vim.keymap.set('n', 'l',     api.node.open.edit,                    opts('Open'))
+            vim.keymap.set('n', 'r',     api.fs.rename,                         opts('Rename'))
+            vim.keymap.set('n', 'y',     api.fs.copy.filename,                  opts('Copy Name'))
+            vim.keymap.set('n', 'Y',     api.fs.copy.relative_path,             opts('Copy Relative Path'))
+            vim.keymap.set('n', 'a',     api.fs.create,                         opts('Create'))
+            vim.keymap.set('n', 'd',     api.fs.remove,                         opts('Delete'))
+            vim.keymap.set('n', 'e',     api.tree.expand_all,                   opts('Expand All'))
+            vim.keymap.set('n', 'p',     api.node.navigate.parent,              opts('Parent Directory'))
+            vim.keymap.set('n', 'w',     api.tree.collapse_all,                 opts('Collapse'))
+            vim.keymap.set('n', 'H',     api.tree.toggle_hidden_filter,         opts('Toggle Dotfiles'))
+            vim.keymap.set('n', '<C-v>', api.node.open.vertical,                opts('Open: Vertical Split'))
+            vim.keymap.set('n', '<C-x>', api.node.open.horizontal,              opts('Open: Horizontal Split'))
+            vim.keymap.set('n', '<BS>',  api.tree.change_root_to_parent,        opts('Up'))
+            -- custom key mappings end
+
+        end
+        require("nvim-tree").setup({
+            sync_root_with_cwd = true,
+            respect_buf_cwd = true,
+            sort_by = "case_sensitive",
+            on_attach = my_on_attach,
+            view = {
+                width = 35,
+                side = "right",
+            },
+            update_focused_file = {
+                enable = true,
+                update_cwd = true,
+            },
+            renderer = {
+                group_empty = true,
+            },
+            filters = {
+                dotfiles = true,
+            },
+        })
+EOF
 "===
 "=== bookmark
 "===
@@ -565,7 +571,7 @@ show = true,
 show_in_active_only = false,
 handle = {
     text = " ",
-    color = "#282828",
+    blend = 100,
     hide_if_all_visible = true,
     },
 marks = {
@@ -573,9 +579,36 @@ marks = {
     Misc = { color = "purple" },
     },
 handlers = {
-    diagnostic = true,
+    diagnostic = false,
     search = true,
+    handle = true,
     },
+    excluded_buftypes = {
+        "terminal",
+    },
+})
+EOF
+"===
+"=== nvim-hlslens
+"===
+lua << EOF
+require('hlslens').setup({
+override_lens = function(render, posList, nearest, idx, relIdx)
+local sfw = vim.v.searchforward == 1
+local indicator, text, chunks
+local absRelIdx = math.abs(relIdx)
+local lnum, col = unpack(posList[idx])
+if nearest then
+    local cnt = #posList
+    text = ('[%d/%d]'):format(idx, cnt)
+    chunks = {{' ', 'Ignore'}, {text, 'HlSearchLensNear'}}
+else
+    text = ('[%d]'):format(idx)
+    chunks = {{' ', 'Ignore'}, {text, 'HlSearchLens'}}
+    end
+    render.setVirt(0, lnum - 1, col - 1, chunks, nearest)
+    end
+
 })
 EOF
 
@@ -626,6 +659,109 @@ require'nvim-treesitter.configs'.setup {
 }
 EOF
 
+"===
+"=== telescope
+"===
+lua << EOF
+local actions = require "telescope.actions"
+local builtin = require('telescope.builtin')
+
+vim.keymap.set('n', '<C-f>', builtin.find_files, { noremap = true, nowait = true })
+vim.keymap.set('n', '<C-p>', builtin.live_grep, { noremap = true, nowait = true })
+vim.keymap.set('n', '<leader>b', builtin.buffers, { noremap = true, nowait = true })
+require("telescope").load_extension("fzf")
+require('telescope').setup ({
+defaults = {
+    git_worktrees = vim.g.git_worktrees,
+    color_devicons = true,
+    prompt_prefix = " ",
+    selection_caret = " ",
+    path_display = { "truncate" },
+    sorting_strategy = "descending",
+    vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+        "--trim" --remove indentation
+        },
+    layout_config = {
+        horizontal = { prompt_position = "bottom", preview_width = 0.6 },
+        vertical = { mirror = false },
+        width = 0.95,
+        height = 0.95,
+        preview_cutoff = 120,
+        },
+    mappings = {
+        i = {
+            ["<C-n>"] = actions.cycle_history_next,
+            ["<C-p>"] = actions.cycle_history_prev,
+            ["<C-j>"] = actions.move_selection_next,
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-e>"] = actions.close,
+            },
+            n = { ["<C-e>"] = actions.close },
+            },
+    },
+    extensions = {
+        fzf = {
+            fuzzy = true,                    -- false will only do exact matching
+            override_generic_sorter = true,  -- override the generic sorter
+            override_file_sorter = true,     -- override the file sorter
+            case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+            -- the default case_mode is "smart_case"
+        }
+    }
+})
+EOF
+
+"===
+"=== project_nvim
+"===
+lua << EOF
+        require("project_nvim").setup {
+            detection_methods = { "pattern" },
+            patterns = { ".git", ".root", ".project" },
+        }
+EOF
+"===
+"=== flash.nvim
+"===
+:hi FlashLabel cterm=bold gui=bold guifg=#b8bb26
+lua << EOF
+ vim.keymap.set("n", 's', function() require("flash").jump() end, {noremap = true, silent = true})
+ require("flash").setup({
+ jump = {
+    -- save location in the jumplist
+    jumplist = false,
+    -- jump position
+    pos = "start", ---@type "start" | "end" | "range"
+    -- add pattern to search history
+    history = false,
+    -- add pattern to search register
+    register = false,
+    -- clear highlight after jump
+    nohlsearch = false,
+    -- automatically jump when there is only one match
+    autojump = false,
+    -- You can force inclusive/exclusive jumps by setting the
+    -- `inclusive` option. By default it will be automatically
+    -- set based on the mode.
+    inclusive = nil, ---@type boolean?
+    -- jump position offset. Not used for range jumps.
+    -- 0: default
+    -- 1: when pos == "end" and pos < current position
+    offset = nil, ---@type number
+  },
+ })
+EOF
+"===
+"=== cellular-automaton
+"===
+nnoremap <silent><nowait> <space><space> :CellularAutomaton make_it_rain<cr>
 "===
 "=== auto load cscope file
 "===
@@ -701,6 +837,8 @@ augroup END
 "unmap u in visula mode to avoid change case
 vnoremap u <Nop>
 vnoremap U <Nop>
+vnoremap gu <Nop>
+vnoremap gU <Nop>
 
 " Disable file with size > 1MB
 autocmd BufAdd * if getfsize(expand('<afile>')) > 1024*1024 |
