@@ -1,7 +1,6 @@
 return {
     "neoclide/coc.nvim",
     branch = 'release',
-    event = "InsertEnter",
     config = function()
         local keyset = vim.keymap.set
         -- Autocomplete
@@ -148,8 +147,15 @@ return {
         keyset("n", "<leader>a", ":CocCommand clangd.switchSourceHeader vsplit<CR>", opts)
         -- To fix the highlight of comment
         vim.cmd[[autocmd FileType json syntax match Comment +\/\/.\+$+]]
+        vim.g.diagnostic_enable = 0
+
+        function ToggleDiagnostics()
+            vim.cmd[[let g:diagnostic_enable = get(g:, 'diagnostic_enable', 0) == 0 ? 1 : 0]]
+            vim.cmd[[call CocAction('diagnosticToggle', diagnostic_enable)]]
+        end
+    keyset("n", "dt", ToggleDiagnostics, opts)
+
     end
 
-    -- nmap <silent>dt :call ToggleDiagnostics()<CR>
 
 }
