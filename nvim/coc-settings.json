@@ -60,31 +60,6 @@
     "coc.preferences.extensionUpdateCheck":"weekly",
     "coc.preferences.currentFunctionSymbolAutoUpdate":true,
     "coc.preferences.messageLevel": "error",
-    "explorer.position": "right",
-    "explorer.icon.enableNerdfont": true,
-    "explorer.icon.source": "vim-devicons",
-    "explorer.git.enable": true,
-    "explorer.root.customRules": {
-        "vcs": {
-            "patterns": [".root"]
-        },
-        "vcs-r": {
-            "patterns": [".git", ".root", ".project"],
-            "bottomUp": true
-        }
-    },
-    "explorer.root.strategies": [
-        "custom:vcs",
-        "custom:vcs-r",
-        "workspace",
-        "cwd",
-        "sourceBuffer",
-        "reveal"
-    ],
-    "git.blameUseRealTime": true,
-    "git.enableGlobalStatus": true,
-    "git.enableGutters": true,
-    "git.addGBlameToVirtualText": true,
     "snippets.autoTrigger": true,
     "snippets.ultisnips.enable": false,
     "snippets.priority": 100,
@@ -102,11 +77,4 @@
         "--header-insertion=never",
         "--pch-storage=disk"
     ],
-    "languageserver": {
-        "bash": {
-            "command": "bash-language-server",
-            "args": ["start"],
-            "filetypes": ["sh"]
-        }
-    }
 }
