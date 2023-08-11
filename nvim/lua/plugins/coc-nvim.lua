@@ -1,6 +1,8 @@
 return {
     "neoclide/coc.nvim",
     branch = 'release',
+    version = "v0.0.82",
+    dependencies = "STAR-H/vim-snippets",
     config = function()
         local keyset = vim.keymap.set
         -- Autocomplete
@@ -33,10 +35,10 @@ return {
         -- keyset("n", "]g", "<Plug>(coc-diagnostic-next)", {silent = true})
 
         -- GoTo code navigation
-        keyset("n", "gd", "<Plug>(coc-definition)", {silent = true})
+        keyset("n", "gd", "<Plug>(coc-definition)",      {silent = true})
         keyset("n", "gy", "<Plug>(coc-type-definition)", {silent = true})
-        keyset("n", "gi", "<Plug>(coc-implementation)", {silent = true})
-        keyset("n", "gr", "<Plug>(coc-references)", {silent = true})
+        keyset("n", "gi", "<Plug>(coc-implementation)",  {silent = true})
+        keyset("n", "gr", "<Plug>(coc-references)",      {silent = true})
 
 
         -- Use K to show documentation in preview window
@@ -90,40 +92,11 @@ return {
         -- Apply codeAction to the selected region
         -- Example: <leader>aap` for current paragraph
         local opts = {silent = true, nowait = true}
-        -- keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
-        -- keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", opts)
-
-        -- Remap keys for apply code actions at the cursor position.
-        -- keyset("n", "<leader>ac", "<Plug>(coc-codeaction-cursor)", opts)
-        -- Remap keys for apply source code actions for current file.
-        -- keyset("n", "<leader>as", "<Plug>(coc-codeaction-source)", opts)
-        -- Apply the most preferred quickfix action on the current line.
         keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", opts)
-
-        -- Remap keys for apply refactor code actions.
-        keyset("n", "<leader>re", "<Plug>(coc-codeaction-refactor)", { silent = true })
-        keyset("x", "<leader>r", "<Plug>(coc-codeaction-rfactor-selected)", { silent = true })
-        keyset("n", "<leader>r", "<Plug>(coc-codeaction-refactor-selected)", { silent = true })
-
-        -- Run the Code Lens actions on the current line
-        keyset("n", "<leader>cl", "<Plug>(coc-codelens-action)", opts)
-
-        -- Remap <C-f> and <C-b> to scroll float windows/popups
-        ---@diagnostic disable-next-line: redefined-local
-        local opts = {silent = true, nowait = true, expr = true}
 
         -- " Add `:Fold` command to fold current buffer
         vim.api.nvim_create_user_command("Fold", "call CocAction('fold', <f-args>)", {nargs = '?'})
 
-        -- Add (Neo)Vim's native statusline support
-        -- NOTE: Please see `:h coc-status` for integrations with external plugins that
-        -- provide custom statusline: lightline.vim, vim-airline
-        vim.opt.statusline:prepend("%{coc#status()}%{get(b:,'coc_current_function','')}")
-
-        -- Mappings for CoCList
-        -- code actions and coc stuff
-        ---@diagnostic disable-next-line: redefined-local
-        local opts = {silent = true, nowait = true}
         -- Show all diagnostics
         keyset("n", "<space>a", ":<C-u>CocList diagnostics<cr>", opts)
         -- Manage extensions
@@ -143,6 +116,8 @@ return {
 
         vim.g.coc_global_extensions = {'coc-json','coc-lists','coc-clangd','coc-pyright','coc-actions','coc-snippets','coc-syntax'}
 
+        -- Use <C-e> and <C-y> to cancel and confirm completion:
+        keyset("i", "C-e", [[coc#pum#visible() ? coc#pum#cancel() : "\<C-e>"]], opts)
         -- switch .cpp file and .h file use <leader>a
         keyset("n", "<leader>a", ":CocCommand clangd.switchSourceHeader vsplit<CR>", opts)
         -- To fix the highlight of comment
