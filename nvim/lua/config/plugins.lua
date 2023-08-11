@@ -26,7 +26,6 @@ require("lazy").setup({
     require("plugins.project"),
     require("plugins.tagbar"),
     require("plugins.nvimTree"),
-    {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
     require("plugins.cellular-automaton"),
     require("plugins.easy-align"),
     require("plugins.vim-bookmark"),
@@ -34,8 +33,8 @@ require("lazy").setup({
     require("plugins.vim-mark"),
     require("plugins.coc-nvim"),
 
-    {"STAR-H/vim-cppman", lazy = true},
-    {"STAR-H/vim-snippets", lazy = true},
+    {"STAR-H/vim-cppman", lazy = false},
+    {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
 },
 {
 ui = {

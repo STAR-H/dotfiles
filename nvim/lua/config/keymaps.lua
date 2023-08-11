@@ -35,7 +35,8 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Insert --
 -- Press jk fast to exit insert mode 
-keymap("i", "<C-k>", "<ESC>", opts)
+keymap("i", "jk", "<ESC>", opts)
+keymap("i", "kj", "<ESC>", opts)
 
 keymap("n", "<leader>d", ":bd<CR>", opts)
 

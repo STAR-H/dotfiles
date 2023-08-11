@@ -56,9 +56,10 @@ return {
                         unnamed  = '[No Name]', -- Text to show for unnamed buffers.
                         newfile  = '[New]',     -- Text to show for newly created file before first write
                     },
-                }
+                },
+                'g:coc_status'
             },
-            lualine_x = {'encoding', 'filesize', 'filetype'},
+            lualine_x = { 'b:coc_current_function', 'encoding', 'filesize', 'filetype'},
             lualine_y = {'progress', 'selectioncount'},
             lualine_z = {'location'}
         },
@@ -66,7 +67,7 @@ return {
             lualine_a = {},
             lualine_b = {},
             lualine_c = {'filename'},
-            lualine_x = {'location'},
+            lualine_x = {'b:coc_current_function','location'},
             lualine_y = {},
             lualine_z = {}
         },

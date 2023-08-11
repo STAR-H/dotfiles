@@ -49,7 +49,7 @@ return {
                 -- Navigation
                 map('n', ']g', "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
                 map('n', '[g', "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
-                map('n', 'gs', '<cmd>Gitsigns diffthis<CR>')
+                map('n', 'gs', '<cmd>Gitsigns preview_hunk_inline<CR>')
                 map('n', 'gu', ':Gitsigns reset_hunk<CR>')
                 map('v', 'gu', ':Gitsigns reset_hunk<CR>')
             end
