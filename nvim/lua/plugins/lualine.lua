@@ -22,6 +22,7 @@ return {
             },
             symbols = {added = ' ', modified = ' ', removed = ' '}, -- Changes the symbols used by the diff.
         }
+        local navic = require("nvim-navic")
 
         require('lualine').setup {
             options = {
@@ -60,10 +61,20 @@ return {
                 },
                 'g:coc_status'
             },
-            lualine_x = { 'b:coc_current_function', 'encoding', 'filesize', 'filetype'},
+            lualine_x = { 'b:coc_current_function',
+            {
+                function()
+                    return navic.get_location()
+                end,
+                cond = function()
+                    return navic.is_available()
+                end
+            },
+            'encoding', 'filesize', 'filetype'},
             lualine_y = {'progress', 'selectioncount'},
             lualine_z = {'location'}
         },
+        winbar = {},
         inactive_sections = {
             lualine_a = {},
             lualine_b = {},
