@@ -4,7 +4,7 @@ return {
     config = function()
         local diagnostics = {
             "diagnostics",
-            sources  = { "coc" },
+            sources  = { "nvim_diagnostic" },
             sections = { "error", "warn" },
             symbols  = { error = " ", warn = " " },
             colored  = true,
@@ -44,7 +44,8 @@ return {
             },
             sections = {
                 lualine_a = {'mode'},
-                lualine_b = {diagnostics, diff},
+                -- lualine_b = {diagnostics, diff},
+                lualine_b = {diff},
                 lualine_c = {
                     { 'filename',
                     file_status = true,      -- Displays file status (readonly status, modified status)

@@ -1,7 +1,8 @@
 return {
-    "nvim-telescope/telescope.nvim",
+    "nvim-telescope/telescope.nvim", tag = '0.1.2',
     dependencies = {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+        "nvim-lua/plenary.nvim",
     },
     config = function()
         local actions = require "telescope.actions"
@@ -45,11 +46,6 @@ return {
                         ["<C-e>"] = actions.close,
                     },
                     n = { ["<C-e>"] = actions.close },
-                },
-                picker = {
-                    find_files = {
-                        opts,
-                    }
                 },
             },
         })
