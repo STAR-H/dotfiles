@@ -35,7 +35,7 @@ return {
                     "terminal",
                 },
                 handlers = {
-                    diagnostic = true,
+                    diagnostic = false,
                     search = true,
                     handle = true,
                 },
