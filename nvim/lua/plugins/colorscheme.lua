@@ -1,5 +1,4 @@
 return {
-
     {
         "folke/tokyonight.nvim",
         enabled = false,
@@ -10,7 +9,7 @@ return {
             vim.cmd([[colorscheme tokyonight-moon]])
         end,
     },
-    { 
+    {
         "ellisonleao/gruvbox.nvim",
         enabled =true,
         lazy = false,

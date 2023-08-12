@@ -25,14 +25,15 @@ return {
                 delay = 300,
                 ignore_whitespace = true,
             },
-            current_line_blame_formatter = '<author> (<author_time:%R>):<summary>',
+            -- current_line_blame_formatter = '<author> (<author_time:%R>):<summary>',
+            current_line_blame_formatter = '<author> (<author_time:%y-%m-%d>):<summary>',
             sign_priority = 6,
             update_debounce = 100,
             status_formatter = nil, -- Use default
             max_file_length = 40000, -- Disable if file is longer than this (in lines)
             preview_config = {
                 -- Options passed to nvim_open_win
-                border = 'single',
+                border = 'rounded',
                 style = 'minimal',
                 relative = 'cursor',
                 row = 0,
@@ -49,7 +50,7 @@ return {
                 -- Navigation
                 map('n', ']g', "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", {expr=true})
                 map('n', '[g', "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", {expr=true})
-                map('n', 'gs', '<cmd>Gitsigns preview_hunk_inline<CR>')
+                map('n', 'gs', '<cmd>Gitsigns preview_hunk<CR>')
                 map('n', 'gu', ':Gitsigns reset_hunk<CR>')
                 map('v', 'gu', ':Gitsigns reset_hunk<CR>')
             end

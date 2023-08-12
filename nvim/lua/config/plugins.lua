@@ -11,7 +11,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup({
+require("lazy").setup(
+{
     {"nvim-lua/plenary.nvim"},
     require("plugins.colorscheme"),
     require("plugins.autopairs"),
@@ -31,7 +32,13 @@ require("lazy").setup({
     require("plugins.vim-bookmark"),
     require("plugins.flash"),
     require("plugins.vim-mark"),
-    require("plugins.coc-nvim"),
+    require("plugins.cmp"),
+    require("plugins.lsp.mason"),
+    require("plugins.trouble"),
+    require("plugins.which-key"),
+    require("plugins.noice"),
+    require("plugins.notify"),
+    -- "nvim-treesitter/playground",
 
     {"STAR-H/vim-cppman", lazy = false},
     {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
@@ -52,7 +59,7 @@ ui = {
         plugin = " ",
         runtime = " ",
         source = " ",
-        start = "",
+        start = "",
         task = "✔ ",
         list = {
             "●",

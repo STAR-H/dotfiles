@@ -1,8 +1,24 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    enabled = true,
     config = function()
         require'nvim-treesitter.configs'.setup {
-            ensure_installed = {  "html", "python", "diff", "bash", "json", "vim", "lua", "c", "cpp"},
+            ensure_installed = {
+                "html",
+                "python",
+                "diff",
+                "bash",
+                "json",
+                "vim",
+                "lua",
+                "c",
+                "cpp",
+                "comment",
+                "markdown",
+                "markdown_inline",
+                "vim",
+                "regex",
+            },
             sync_install = false,
             auto_install = false,
             highlight = {
