@@ -37,7 +37,9 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>",          opts)
 end
 
+local navic = require("nvim-navic")
 M.on_attach = function(client, bufnr)
+    navic.attach(client, bufnr)
     lsp_keymaps(bufnr)
 end
 
