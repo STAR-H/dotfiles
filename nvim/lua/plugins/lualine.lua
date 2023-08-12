@@ -79,7 +79,17 @@ return {
             lualine_a = {},
             lualine_b = {},
             lualine_c = {'filename'},
-            lualine_x = {'b:coc_current_function','location'},
+            lualine_x = {
+                'b:coc_current_function',
+                {
+                    function()
+                        return navic.get_location()
+                    end,
+                    cond = function()
+                        return navic.is_available()
+                    end
+                },
+                'location'},
             lualine_y = {},
             lualine_z = {}
         },
