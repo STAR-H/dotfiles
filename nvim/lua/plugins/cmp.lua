@@ -8,6 +8,21 @@ return {
         "hrsh7th/cmp-cmdline",
         "hrsh7th/cmp-nvim-lua",
         "folke/neodev.nvim",
+        {
+            "L3MON4D3/LuaSnip",
+            dependencies = {
+                "saadparwaiz1/cmp_luasnip",
+                "STAR-H/vim-snippets",
+            },
+            config = function()
+                local snippetpath = vim.fn.stdpath("data") .. "/lazy/vim-snippets/snippets"
+                require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippetpath })
+                local ls = require('luasnip')
+                vim.keymap.set({ "i" }, "<Tab>", function() ls.expand() end, { silent = true })
+                vim.keymap.set({ "i", "s" }, "<Tab>", function() ls.jump(1) end, { silent = true })
+                vim.keymap.set({ "i", "s" }, "<S-Tab>", function() ls.jump(-1) end, { silent = true })
+            end
+        },
     },
     config = function()
         local cmp = require 'cmp'
@@ -41,9 +56,9 @@ return {
         }
         cmp.setup({
             snippet = {
-                -- expand = function(args)
-                --     require'luasnip'.lsp_expand(args.body)
-                -- end,
+                expand = function(args)
+                    require 'luasnip'.lsp_expand(args.body)
+                end,
             },
             window = {
                 -- completion = cmp.config.window.bordered(),
@@ -90,11 +105,11 @@ return {
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
                 ['<C-e>'] = cmp.mapping.abort(),
-                ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),       -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp' },
-                -- { name = 'luasnip' },
+                { name = 'nvim_lsp', keyword_length = 3 },
+                { name = 'luasnip' },
                 { name = 'buffer' },
                 { name = 'path' },
                 { name = 'nvim_lua' },
@@ -107,10 +122,10 @@ return {
                     -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
                     vim_item.menu = ({
                         nvim_lsp = "[LSP]",
-                        -- luasnip  = "[SINP]",
+                        luasnip  = "[SINP]",
                         buffer   = "[BUF]",
                         path     = "[PATH]",
-                        nvim_lua = "[Lua]",
+                        nvim_lua = "[API]",
                     })[entry.source.name]
                     return vim_item
                 end,
