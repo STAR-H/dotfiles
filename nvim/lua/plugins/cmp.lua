@@ -8,55 +8,54 @@ return {
         "hrsh7th/cmp-cmdline",
         "hrsh7th/cmp-nvim-lua",
         "folke/neodev.nvim",
-        "SirVer/ultisnips",
     },
     config = function()
-        local cmp = require'cmp'
+        local cmp = require 'cmp'
         local kind_icons = {
-            Text          = "󰉿",
-            Method        = "ƒ",
-            Function      = "󰊕",
-            Constructor   = "",
-            Field         = "",
-            Variable      = "󰀫",
-            Class         = "󰠱",
-            Interface     = "",
-            Module        = "",
-            Property      = "󰜢",
-            Unit          = "󰑭",
-            Value         = "󰎠",
-            Enum          = "",
-            Keyword       = "󰌋",
-            Snippet       = "",
-            Color         = "󰏘",
-            File          = "󰈙",
-            Reference     = "",
-            Folder        = "󰉋",
-            EnumMember    = "",
-            Constant      = "󰏿",
-            Struct        = "󰆧",
-            Event         = "",
-            Operator      = "󰆕",
-            TypeParameter = "",
-            Misc          = "",
+            Text          = "󰉿「Text」",
+            Method        = "ƒ「Method」",
+            Function      = "󰊕「Function」",
+            Constructor   = "「Constructor」",
+            Field         = "「Field」",
+            Variable      = "󰀫「Variable」",
+            Class         = "󰠱「Class」",
+            Interface     = "「Interface」",
+            Module        = "「Module」",
+            Property      = "󰜢「Property」",
+            Unit          = "󰑭「Unit」",
+            Value         = "󰎠「Value」",
+            Enum          = "「Enum」",
+            Keyword       = "󰌋「Keyword」",
+            Snippet       = "「Snippet」",
+            Color         = "󰏘「Color」",
+            File          = "󰈙「File」",
+            Reference     = "「Reference」",
+            Folder        = "󰉋「Folder」",
+            EnumMember    = "「EnumMember」",
+            Constant      = "󰏿「Constant」",
+            Struct        = "󰆧「Struct」",
+            Event         = "「Event」",
+            Operator      = "󰆕「Operator」",
+            TypeParameter = "「TypeParameter」",
+            Misc          = "「Misc」",
         }
         cmp.setup({
             snippet = {
-                expand = function(args)
-                    vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-                end,
+                -- expand = function(args)
+                --     require'luasnip'.lsp_expand(args.body)
+                -- end,
             },
             window = {
                 -- completion = cmp.config.window.bordered(),
-                completion = {max_width = 80},
+                completion = { max_width = 80 },
                 documentation = {
                     max_width = 150,
                 },
             },
             mapping = cmp.mapping.preset.insert({
-                ["<C-k>"]     = cmp.mapping.select_prev_item(),
-                ["<C-j>"]     = cmp.mapping.select_next_item(),
-                -- ["<Tab>"] = cmp.mapping({
+                ["<C-k>"] = cmp.mapping.select_prev_item(),
+                ["<C-j>"] = cmp.mapping.select_next_item(),
+                -- ["<Tab>"]   = cmp.mapping({
                 --     c = function()
                 --         if cmp.visible() then
                 --             cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
@@ -88,27 +87,27 @@ return {
                 --         end
                 --     end,
                 -- }),
-                ['<C-b>']     = cmp.mapping.scroll_docs(-4),
-                ['<C-f>']     = cmp.mapping.scroll_docs(4),
-                ['<C-e>']     = cmp.mapping.abort(),
-                ['<CR>']      = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+                ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                ['<C-e>'] = cmp.mapping.abort(),
+                ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }),       -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
                 { name = 'nvim_lsp' },
-                { name = 'ultisnips' },
+                -- { name = 'luasnip' },
                 { name = 'buffer' },
                 { name = 'path' },
-                { name = 'nvim_lua'},
+                { name = 'nvim_lua' },
             }),
             formatting = {
-                fields = { "kind", "abbr", "menu" },
+                fields = { "abbr", "kind", "menu" },
                 format = function(entry, vim_item)
                     -- Kind icons
                     vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
                     -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
                     vim_item.menu = ({
                         nvim_lsp = "[LSP]",
-                        luasnip  = "[SINP]",
+                        -- luasnip  = "[SINP]",
                         buffer   = "[BUF]",
                         path     = "[PATH]",
                         nvim_lua = "[Lua]",
@@ -117,7 +116,7 @@ return {
                 end,
             },
             view = {
-                entries = {name = 'custom', selection_order = 'near_cursor' }
+                entries = { name = 'custom', selection_order = 'near_cursor' }
             },
         })
         -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
