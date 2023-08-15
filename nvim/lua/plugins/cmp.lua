@@ -64,7 +64,7 @@ return {
                 -- completion = cmp.config.window.bordered(),
                 completion = { max_width = 80 },
                 documentation = {
-                    max_width = 150,
+                    max_width = 120,
                 },
             },
             mapping = cmp.mapping.preset.insert({
@@ -108,12 +108,16 @@ return {
                 ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
-                { name = 'nvim_lsp', keyword_length = 3 },
-                { name = 'luasnip' },
-                { name = 'buffer' },
-                { name = 'path' },
-                { name = 'nvim_lua' },
-            }),
+                    { name = 'nvim_lsp', keyword_length = 3 },
+                    { name = 'luasnip' , keyword_length = 3},
+                    { name = 'nvim_lua' },
+                },
+                {
+                    { name = 'buffer', keyword_length = 3},
+                },
+                {
+                    { name = 'path' },
+                }),
             formatting = {
                 fields = { "abbr", "kind", "menu" },
                 format = function(entry, vim_item)
@@ -127,6 +131,14 @@ return {
                         path     = "[PATH]",
                         nvim_lua = "[API]",
                     })[entry.source.name]
+                    local function trim(text)
+                        local max_width = 50
+                        if text and text:len() > max_width then
+                            text = text:sub(1, max_width) .. "..."
+                        end
+                        return text
+                    end
+                    vim_item.abbr = trim(vim_item.abbr)
                     return vim_item
                 end,
             },
