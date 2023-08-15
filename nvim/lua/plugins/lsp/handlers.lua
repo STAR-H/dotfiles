@@ -6,7 +6,7 @@ if not status_cmp_ok then
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+M.capabilities.textDocument.completion.completionItem.snippetSupport = false
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {

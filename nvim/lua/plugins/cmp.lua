@@ -108,12 +108,19 @@ return {
                 ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
             }),
             sources = cmp.config.sources({
-                    { name = 'nvim_lsp', keyword_length = 3 },
-                    { name = 'luasnip' , keyword_length = 3},
+                    {
+                        name = 'nvim_lsp',
+                        keyword_length = 3,
+                        -- remove lsp snippet item from completion list
+                        entry_filter = function(entry)
+                            return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()
+                        end
+                    },
+                    { name = 'luasnip',  keyword_length = 3 },
                     { name = 'nvim_lua' },
                 },
                 {
-                    { name = 'buffer', keyword_length = 3},
+                    { name = 'buffer', keyword_length = 3 },
                 },
                 {
                     { name = 'path' },
