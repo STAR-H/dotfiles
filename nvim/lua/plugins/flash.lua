@@ -115,7 +115,7 @@ return {
                             -- [motion:match("%l") and motion:upper() or motion:lower()] = "prev",
                         }
                     end,
-                    search = { wrap = false },
+                    search = { wrap = true },
                     highlight = { backdrop = true },
                     jump = { register = false },
                 },
