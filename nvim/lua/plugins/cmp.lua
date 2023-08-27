@@ -26,12 +26,13 @@ return {
     },
     config = function()
         local cmp = require 'cmp'
+        local compare = require("cmp.config.compare")
         local kind_icons = {
             Text          = "󰉿「Text」",
             Method        = "ƒ「Method」",
             Function      = "󰊕「Function」",
             Constructor   = "「Constructor」",
-            Field         = "「Field」",
+            Field         = "󰮄「Field」",
             Variable      = "󰀫「Variable」",
             Class         = "󰠱「Class」",
             Interface     = "「Interface」",
@@ -152,7 +153,20 @@ return {
             view = {
                 entries = { name = 'custom', selection_order = 'near_cursor' }
             },
-        })
+            sorting = {
+                comparators = {
+                    compare.exact,
+                    compare.length,
+                },
+            },
+            matching = {
+                disallow_fuzzy_matching         = true,
+                disallow_fullfuzzy_matching     = true,
+                disallow_partial_fuzzy_matching = true,
+                disallow_partial_matching       = false,
+                disallow_prefix_unmatching      = false,
+            },
+    })
         -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
         cmp.setup.cmdline(':', {
             completion = { autocomplete = false },
