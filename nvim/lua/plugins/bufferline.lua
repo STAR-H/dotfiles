@@ -31,6 +31,12 @@ return {
                         text = "Tagbar",
                         text_align = "center",
                         separator = true
+                    },
+                    {
+                        filetype = "undotree",
+                        text = "UndoTree",
+                        text_align = "center",
+                        separator = true
                     }
                 },
                 groups = {
