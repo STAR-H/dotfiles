@@ -37,6 +37,9 @@ require("lazy").setup(
     require("plugins.trouble"),
     require("plugins.which-key"),
     require("plugins.noice"),
+    require("plugins.undotree"),
+    -- only for c++
+    require("plugins.nvim-dap"),
     -- "nvim-treesitter/playground",
 
     {"STAR-H/vim-cppman", lazy = false},

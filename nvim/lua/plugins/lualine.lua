@@ -31,8 +31,8 @@ return {
                 section_separators   = { left = '', right = '' },
                 component_separators = { left = '', right = '' },
                 disabled_filetypes = {
-                    statusline = {"NvimTree", "tagbar"},
-                    winbar     = {"NvimTree", "tagbar"},
+                    statusline = {"NvimTree", "tagbar", "undotree"},
+                    winbar     = {"NvimTree", "tagbar", "undotree"},
                 },
                 ignore_focus = {},
                 always_divide_middle = true,

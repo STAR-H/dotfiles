@@ -57,6 +57,11 @@ return {
           health = {
               checker = false, -- Disable if you don't want health checks to run
           },
+          views = {
+              mini = {
+                  timeout = 3000,
+              },
+          },
           hover = {
               enabled = true,
               silent = true, -- set to true to not show a message if hover is not available

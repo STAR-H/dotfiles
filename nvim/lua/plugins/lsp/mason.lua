@@ -1,8 +1,8 @@
 return {
     {
         "SmiteshP/nvim-navic",
-        dependencies= {"neovim/nvim-lspconfig"},
-        config = function ()
+        dependencies = { "neovim/nvim-lspconfig" },
+        config = function()
             require("nvim-navic").setup {
                 icons = {
                     File          = "󰈙 ",
@@ -100,4 +100,16 @@ return {
             end
         end
     },
+    {
+        "jay-babu/mason-nvim-dap.nvim",
+        dependencies = {
+            "williamboman/mason.nvim",
+            "mfussenegger/nvim-dap",
+        },
+        config = function()
+            require("mason-nvim-dap").setup({
+                ensure_installed = { "cppdbg" }
+            })
+        end
+    }
 }
