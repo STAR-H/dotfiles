@@ -35,7 +35,7 @@ function ToggleDiagnostics()
         vim.diagnostic.disable()
     end
 end
-vim.keymap.set("n", "dt", ToggleDiagnostics, {silent = true, noremap = true})
+vim.keymap.set("n", "dt", ToggleDiagnostics, {silent = true, noremap = true, desc = "[d]iagnostics [t]oggle"})
 
 -- function toggle_loclist()
 --     local wininfos = vim.fn.getwininfo()

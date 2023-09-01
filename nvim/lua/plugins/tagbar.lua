@@ -1,7 +1,7 @@
 return{
     "preservim/tagbar",
 keys = {
-    { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "Tagbar" },
+    { "<leader>t", "<cmd>TagbarToggle<cr>", desc = "[t]agbar Toggle" },
 },
 config = function ()
 vim.g.tagbar_width = 40

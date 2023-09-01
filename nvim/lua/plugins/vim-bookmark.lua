@@ -16,12 +16,12 @@ return {
         -- vim.cmd[[:highlight BookmarkSign guifg=#00ffff guibg=#3c3836]]
         -- vim.cmd[[:highlight BookmarkAnnotationSign guifg=#00ffff guibg=#3c3836]]
 
-        local opts = {noremap = true, noremap = true, silent = true, nowait = true}
-        vim.keymap.set('n', 'bb', ":BookmarkToggle<CR>",   opts)
-        vim.keymap.set('n', 'bi', ":BookmarkAnnotate<CR>", opts)
-        vim.keymap.set('n', 'bj', ":BookmarkNext<CR>",     opts)
-        vim.keymap.set('n', 'bk', ":BookmarkPrev<CR>",     opts)
-        vim.keymap.set('n', 'ba', ":BookmarkShowAll<CR>",  opts)
-        vim.keymap.set('n', 'bc', ":BookmarkClearAll<CR>", opts)
+        local opts = {noremap = true, silent = true, nowait = true}
+        vim.keymap.set('n', '<Space>bb', ":BookmarkToggle<CR>",   opts)
+        vim.keymap.set('n', '<Space>bi', ":BookmarkAnnotate<CR>", opts)
+        vim.keymap.set('n', '<Space>bj', ":BookmarkNext<CR>",     opts)
+        vim.keymap.set('n', '<Space>bk', ":BookmarkPrev<CR>",     opts)
+        vim.keymap.set('n', '<Space>ba', ":BookmarkShowAll<CR>",  opts)
+        vim.keymap.set('n', '<Space>bc', ":BookmarkClearAll<CR>", opts)
     end
 }
