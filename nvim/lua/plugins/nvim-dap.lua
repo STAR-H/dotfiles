@@ -70,11 +70,11 @@ return {
             vim.fn.sign_define('DapStopped', dap_breakpoint.stopped)
 
             local keymap = vim.keymap.set
-            local opts = { noremap = true, silent = true }
-            keymap("n", "<Space>p", ":lua require'dap'.toggle_breakpoint()<cr>", opts)
-            keymap("n", "<Space>r", ":lua require'dap'.continue()<cr>", opts)
-            keymap("n", "<Space>o", ":lua require'dap'.step_over()<cr>", opts)
-            keymap("n", "<Space>i", ":lua require'dap'.step_into()<cr>", opts)
+            local opts = 
+            keymap("n", "<Space>p", ":lua require'dap'.toggle_breakpoint()<cr>", { noremap = true, silent = true, desc = "dap toggle break[p]oint" })
+            keymap("n", "<Space>r", ":lua require'dap'.continue()<cr>",          { noremap = true, silent = true, desc = "dap [r]un"})
+            keymap("n", "<Space>o", ":lua require'dap'.step_over()<cr>",         { noremap = true, silent = true, desc = "dap setp [o]ver"})
+            keymap("n", "<Space>i", ":lua require'dap'.step_into()<cr>",         { noremap = true, silent = true, desc = "dap setp [i]nto"})
 
             local dap = require("dap")
 
@@ -95,18 +95,6 @@ return {
 
                     cwd = "${workspaceFolder}",
                     stopAtEntry = true,
-                },
-                {
-                    name = 'Attach to gdbserver :1234',
-                    type = 'cppdbg',
-                    request = 'launch',
-                    MIMode = 'gdb',
-                    miDebuggerServerAddress = 'localhost:1234',
-                    miDebuggerPath = '/opt/homebrew/bin/aarch64-elf-gdb',
-                    cwd = '${workspaceFolder}',
-                    program = function()
-                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-                    end,
                 },
             }
             dap.configurations.c = dap.configurations.cpp
@@ -135,8 +123,8 @@ return {
                 dapui.close()
             end
 
-            vim.keymap.set("n", "<Space>q", ":lua require('dapui').close()<cr>", { noremap = true, silent = true })
-            vim.keymap.set("n", "<Space>d", ":lua require('dapui').open()<cr>", { noremap = true, silent = true })
+            vim.keymap.set("n", "<Space>q", ":lua require('dapui').close()<cr>", { noremap = true, silent = true, desc = "dapui quit"})
+            vim.keymap.set("n", "<Space>d", ":lua require('dapui').open()<cr>",  { noremap = true, silent = true, desc = "dapui open"})
 
             require("nvim-dap-virtual-text").setup({
                 enabled = true,

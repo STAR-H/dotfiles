@@ -47,7 +47,7 @@ local function close_buffer()
     end
 end
 
-keymap("n", "<leader>d", close_buffer, opts)
+keymap("n", "<leader>d", close_buffer, { noremap = true, silent = true, desc = "[d]elete buffer"})
 
 keymap("t", "<Esc>", "<C-\\><C-n>", opts)
 vim.cmd[[autocmd TermOpen * setlocal statusline=%{b:term_title}]]

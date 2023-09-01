@@ -1,7 +1,7 @@
 return {
     "folke/flash.nvim",
     config = function()
-        vim.keymap.set("n", '<leader>s', function() require("flash").jump() end, {noremap = true, silent = true})
+        vim.keymap.set("n", '<leader>s', function() require("flash").jump() end, {noremap = true, silent = true, desc = "[s]earch jump"})
         require("flash").setup({
             jump = {
                 -- save location in the jumplist

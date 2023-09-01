@@ -50,7 +50,7 @@ local options = {
   cinoptions = "g0,:0,N-s,(0",
   softtabstop = 4,
   smarttab = true,
-  autowrite = true,
+  autowrite = false,
   confirm = true
 
 }

@@ -1,7 +1,7 @@
 return {
     "nvim-tree/nvim-tree.lua",
     keys = {
-        { "<leader>n", "<cmd>NvimTreeToggle<cr>", desc = "NvimTree" },
+        { "<leader>n", "<cmd>NvimTreeToggle<cr>", desc = "[n]vimTree Toggle" },
     },
     config = function()
         local function my_on_attach(bufnr)
@@ -27,6 +27,7 @@ return {
             vim.keymap.set('n', '<C-v>', api.node.open.vertical,                opts('Open: Vertical Split'))
             vim.keymap.set('n', '<C-x>', api.node.open.horizontal,              opts('Open: Horizontal Split'))
             vim.keymap.set('n', '<BS>',  api.tree.change_root_to_parent,        opts('Up'))
+            vim.keymap.set('n', '?',     api.tree.toggle_help,                  opts('Help'))
             -- custom key mappings end
 
         end
