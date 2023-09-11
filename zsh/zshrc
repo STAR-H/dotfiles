@@ -12,8 +12,6 @@ setopt prompt_subst
 
 
 # plugins
-source  $ZSH/plugins/z.sh
-
 source $ZSH/fzf/key-bindings.zsh
 
 source $ZSH/plugins/zsh-completions/zsh-completions.plugin.zsh
