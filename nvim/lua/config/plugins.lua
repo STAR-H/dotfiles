@@ -25,7 +25,7 @@ require("lazy").setup(
     require("plugins.gitsigns"),
     require("plugins.telescope"),
     require("plugins.project"),
-    require("plugins.tagbar"),
+    require("plugins.vista"),
     require("plugins.nvimTree"),
     require("plugins.cellular-automaton"),
     require("plugins.easy-align"),
@@ -42,7 +42,7 @@ require("lazy").setup(
     require("plugins.nvim-dap"),
     -- "nvim-treesitter/playground",
 
-    {"STAR-H/vim-cppman", lazy = false},
+    {"STAR-H/vim-cppman", lazy = true, ft = {"cpp"}},
     {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
 },
 {

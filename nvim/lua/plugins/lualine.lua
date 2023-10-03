@@ -31,8 +31,8 @@ return {
                 section_separators   = { left = '', right = '' },
                 component_separators = { left = '', right = '' },
                 disabled_filetypes = {
-                    statusline = {"NvimTree", "tagbar", "undotree"},
-                    winbar     = {"NvimTree", "tagbar", "undotree"},
+                    statusline = {"NvimTree", "tagbar", "undotree", "vista_kind"},
+                    winbar     = {"NvimTree", "tagbar", "undotree", "vista_kind"},
                 },
                 ignore_focus = {},
                 always_divide_middle = true,
@@ -58,6 +58,12 @@ return {
                         unnamed  = '[No Name]', -- Text to show for unnamed buffers.
                         newfile  = '[New]',     -- Text to show for newly created file before first write
                     },
+                },
+                -- Show @recording messages in statusline
+                {
+                    require("noice").api.statusline.mode.get,
+                    cond = require("noice").api.statusline.mode.has,
+                    color = { fg = "#ff9e64" },
                 },
                 'g:coc_status'
             },

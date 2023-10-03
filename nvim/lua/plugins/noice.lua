@@ -1,6 +1,7 @@
 return {
  "folke/noice.nvim",
   event = "VeryLazy",
+  enabled = true,
   dependencies = {
       "MunifTanjim/nui.nvim",
   },
@@ -12,6 +13,18 @@ return {
                   ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                   ["vim.lsp.util.stylize_markdown"] = true,
                   ["cmp.entry.get_documentation"] = true,
+              },
+              -- defaults for hover and signature help
+              documentation = {
+                  view = "hover",
+                  ---@type NoiceViewOptions
+                  opts = {
+                      lang = "markdown",
+                      replace = true,
+                      render = "plain",
+                      format = { "{message}" },
+                      win_options = { concealcursor = "n", conceallevel = 3 },
+                  },
               },
           },
           -- you can enable a preset for easier configuration

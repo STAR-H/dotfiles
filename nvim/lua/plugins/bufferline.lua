@@ -27,8 +27,8 @@ return {
                         separator = true
                     },
                     {
-                        filetype = "tagbar",
-                        text = "Tagbar",
+                        filetype = "vista_kind",
+                        text = "Symbol Outline",
                         text_align = "center",
                         separator = true
                     },

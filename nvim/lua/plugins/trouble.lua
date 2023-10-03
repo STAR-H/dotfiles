@@ -10,7 +10,7 @@ return {
     },
     config = function ()
         vim.keymap.set("n", "gr", function() require("trouble").open("lsp_references") end, {desc = "[g]o to [r]eference"})
-        vim.keymap.set("n", "dl", function ()
+        vim.keymap.set("n", "<leader>ld", function ()
             vim.diagnostic.setloclist({open = false})
             vim.cmd('TroubleToggle loclist')
         end, {desc = "[d]iagnostic [l]ist"})

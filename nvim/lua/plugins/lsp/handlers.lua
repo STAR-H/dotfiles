@@ -29,16 +29,12 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "v", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr><esc>", opts("Lsp buffer [f]ormat"))
     keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<cr>",               opts("Lsp [c]ode [a]ction"))
     keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<cr>",                    opts("Lsp [r]e[n]ame"))
-    keymap(bufnr, "n", "<leader>a", "<cmd>ClangdSwitchSourceHeader<CR>",                     opts)
+    keymap(bufnr, "n", "<leader>a", "<cmd>ClangdSwitchSourceHeader<CR>",                     opts("ClangdSwitchSourceHeader"))
     -- keymap(bufnr, "n", "<leader>ls", "<cmd>lua vim.lsp.buf.signature_help()<CR>",            opts)
     -- keymap(bufnr, "n", "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<CR>",             opts)
     -- keymap(bufnr, "n", "gI",         "<cmd>lua vim.lsp.buf.implementation()<CR>",            opts)
     -- keymap(bufnr, "n", "gl",         "<cmd>lua vim.diagnostic.open_float()<CR>",             opts)
     -- keymap(bufnr, "n", "gr",         "<cmd>lua vim.lsp.buf.references()<CR>",                opts)
-end
-
-function IncomingCalls()
-    vim.lsp.buf.incoming_calls()
 end
 
 vim.cmd("command! IncomingCalls lua IncomingCalls()")

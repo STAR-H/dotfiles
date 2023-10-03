@@ -34,7 +34,7 @@ return {
             Constructor   = "「Constructor」",
             Field         = "󰮄「Field」",
             Variable      = "󰀫「Variable」",
-            Class         = "󰠱「Class」",
+            Class         = "𝓒「Class」",
             Interface     = "「Interface」",
             Module        = "「Module」",
             Property      = "󰜢「Property」",
@@ -49,10 +49,10 @@ return {
             Folder        = "󰉋「Folder」",
             EnumMember    = "「EnumMember」",
             Constant      = "󰏿「Constant」",
-            Struct        = "󰆧「Struct」",
+            Struct        = "𝓢「Struct」",
             Event         = "「Event」",
             Operator      = "󰆕「Operator」",
-            TypeParameter = "「TypeParameter」",
+            TypeParameter = "𝙏「TypeParameter」",
             Misc          = "「Misc」",
         }
         cmp.setup({
