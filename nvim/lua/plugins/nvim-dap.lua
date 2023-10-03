@@ -2,10 +2,6 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        -- only load in linux
-        cond = function()
-            return vim.fn.has("unix") == 1 and vim.fn.has("macunix") == 0
-        end,
 
         config = function()
             local dap_breakpoint_color = {
@@ -77,24 +73,26 @@ return {
             keymap("n", "<Space>i", ":lua require'dap'.step_into()<cr>",         { noremap = true, silent = true, desc = "dap setp [i]nto"})
 
             local dap = require("dap")
-
-            dap.adapters.cppdbg = {
-                id = "cppdbg",
+            dap.adapters.lldb = {
                 type = 'executable',
-                command = "/Users/star/.local/share/nvim/mason/bin/OpenDebugAD7",
+                command = '/opt/homebrew/opt/llvm/bin/lldb-vscode',
+                name = 'lldb'
             }
 
             dap.configurations.cpp = {
                 {
-                    name = "Launch file",
-                    type = "cppdbg",
+                    name = "Launch lldb",
+                    type = "lldb",
                     request = "launch",
-                    program = function()
-                        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+                    args = function()
+                        local args_string = vim.fn.input("Input arguments: ")
+                        return vim.split(args_string, " ")
                     end,
-
+                    program = function()
+                        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                    end,
                     cwd = "${workspaceFolder}",
-                    stopAtEntry = true,
+                    stopAtEntry = false,
                 },
             }
             dap.configurations.c = dap.configurations.cpp
@@ -102,10 +100,6 @@ return {
     },
     {
         "rcarriga/nvim-dap-ui",
-        -- only load in linux
-        cond = function()
-            return vim.fn.has("unix") == 1 and vim.fn.has("macunix") == 0
-        end,
         dependencies = {
             "mfussenegger/nvim-dap",
             "theHamsta/nvim-dap-virtual-text",
@@ -123,8 +117,7 @@ return {
                 dapui.close()
             end
 
-            vim.keymap.set("n", "<Space>q", ":lua require('dapui').close()<cr>", { noremap = true, silent = true, desc = "dapui quit"})
-            vim.keymap.set("n", "<Space>d", ":lua require('dapui').open()<cr>",  { noremap = true, silent = true, desc = "dapui open"})
+            vim.keymap.set("n", "<Space>dt", ":lua require('dapui').toggle()<cr>",  { noremap = true, silent = true, desc = "[d]apui [t]oggle"})
 
             require("nvim-dap-virtual-text").setup({
                 enabled = true,

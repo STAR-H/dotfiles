@@ -39,10 +39,8 @@ keymap("i", "kj", "<ESC>", opts)
 local function close_buffer()
     local win_count = vim.fn.winnr('$')
     if win_count > 1 then
-        print("close", win_count)
         vim.cmd("close")
     else
-        print("bd", win_count)
         vim.cmd("bd")
     end
 end

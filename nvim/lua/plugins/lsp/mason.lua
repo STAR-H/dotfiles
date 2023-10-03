@@ -69,7 +69,8 @@ return {
                 "clangd",
                 "cmake",
                 "lua_ls",
-                "bashls"
+                "bashls",
+                "pyright"
             }
             require("mason-lspconfig").setup({
                 ensure_installed = servers,

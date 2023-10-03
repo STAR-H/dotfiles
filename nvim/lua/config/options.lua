@@ -20,7 +20,7 @@ local options = {
   termguicolors = true,                    -- set term gui colors (most terminals support this)
   timeoutlen = 500,                        -- time to wait for a mapped sequence to complete (in milliseconds)
   undofile = true,                         -- enable persistent undo
-  updatetime = 300,                        -- faster completion (4000ms default)
+  updatetime = 100,                        -- faster completion (4000ms default)
   writebackup = true,                      -- if a file is being edited by another program 
                                            --(or was written to file while editing with another program), it is not allowed to be edited
   expandtab = true,                        -- convert tabs to spaces
@@ -59,6 +59,8 @@ for k, v in pairs(options) do
   vim.opt[k] = v
 end
 
+-- imporve startup time neovim version > 0.9
+vim.loader.enable()
 -- disable netrw
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

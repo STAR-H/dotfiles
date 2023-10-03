@@ -33,6 +33,9 @@ return {
                 end,
                 additional_vim_regex_highlighting = false,
             },
+            indent = { enable = false },
+            incremental_selection = { enable = false },
+            textobjects = { enable = false },
         }
     end
 }
