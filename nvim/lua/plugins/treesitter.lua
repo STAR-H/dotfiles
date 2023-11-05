@@ -1,7 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    enabled = true,
-    build = ":TsUpdate",
+    enabled = not isDiffMode(),
     config = function()
         require'nvim-treesitter.configs'.setup {
             ensure_installed = {

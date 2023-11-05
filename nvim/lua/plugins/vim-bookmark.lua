@@ -1,5 +1,6 @@
 return {
     "MattesGroeger/vim-bookmarks",
+    keys = {{"<Space>bb"}},
     config = function()
         vim.g.bookmark_no_default_key_mappings = 1
         vim.g.bookmark_show_toggle_warning = 0

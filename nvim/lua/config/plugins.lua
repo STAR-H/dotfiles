@@ -40,6 +40,7 @@ require("lazy").setup(
     require("plugins.undotree"),
     -- only for c++
     require("plugins.nvim-dap"),
+    require("plugins.cpp-enhanced-hightlight"),
     -- "nvim-treesitter/playground",
 
     {"STAR-H/vim-cppman", lazy = true, ft = {"cpp"}},

@@ -1,5 +1,6 @@
 return {
     "lewis6991/gitsigns.nvim",
+    enabled = not isDiffMode(),
     config = function()
         require('gitsigns').setup {
             signs = {

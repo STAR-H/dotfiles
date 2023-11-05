@@ -1,5 +1,7 @@
 return {
     "mbbill/undotree",
+    enabled = not isDiffMode(),
+    keys = {{"<leader>u"}},
     config = function()
         local function opts(descs)
             return { desc = descs, noremap = true, silent = true, nowait = true }
