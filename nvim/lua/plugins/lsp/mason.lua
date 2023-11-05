@@ -48,6 +48,7 @@ return {
     },
     {
         "williamboman/mason.nvim",
+        enabled = not isDiffMode(),
         dependencies = "williamboman/mason-lspconfig.nvim",
         config = function()
             local settings = {
@@ -103,6 +104,7 @@ return {
     },
     {
         "jay-babu/mason-nvim-dap.nvim",
+        enabled = not isDiffMode(),
         dependencies = {
             "williamboman/mason.nvim",
             "mfussenegger/nvim-dap",

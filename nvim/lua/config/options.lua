@@ -69,6 +69,15 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python_provider = 0
 vim.g.python3_host_prog = "/usr/bin/python3"
+vim.g.diff_translations = 0
+
+function isDiffMode()
+    if vim.api.nvim_win_get_option(0, "diff") then
+        return true
+    else
+        return false
+    end
+end
 --vim.opt.listchars:append "tab:▸"
 --vim.opt.listchars:append "trail:▫"
 -- vim.opt.shortmess = "ilmnrx"                        -- flags to shorten vim messages, see :help 'shortmess'

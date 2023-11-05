@@ -35,6 +35,9 @@ keymap("n", "<S-h>", ":bprevious<CR>", opts)
 keymap("i", "jk", "<ESC>", opts)
 keymap("i", "kj", "<ESC>", opts)
 
+keymap("n", "n", "nzzzv", opts)
+keymap("n", "N", "Nzzzv", opts)
+
 -- 关闭缓冲区或窗口
 local function close_buffer()
     local win_count = vim.fn.winnr('$')
