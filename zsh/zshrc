@@ -54,7 +54,6 @@ export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
 export DISPLAY=:0
-alias ctags=/opt/homebrew/Cellar/universal-ctags/p5.9.20221120.0/bin/ctags
 
 # linux configuration
 # export LESSCHARSET=utf-8
@@ -98,3 +97,8 @@ function joshuto() {
         ;;
 esac
 }
+
+
+# temporary environment variables
+# fix ld: warning: dylib (/opt/homebrew/opt/llvm/lib/libunwind.dylib) was built for newer macOS version (13.0) than being linked (12.3)
+export MACOSX_DEPLOYMENT_TARGET=13.0
