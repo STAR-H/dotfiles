@@ -43,6 +43,7 @@ require("lazy").setup(
     require("plugins.cpp-enhanced-hightlight"),
     -- "nvim-treesitter/playground",
 
+    require("plugins.chatgpt"),
     {"STAR-H/vim-cppman", lazy = true, ft = {"cpp"}},
     {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
 },
