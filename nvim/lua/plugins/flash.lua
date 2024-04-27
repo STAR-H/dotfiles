@@ -25,7 +25,7 @@ return {
                 -- 1: when pos == "end" and pos < current position
                 offset = nil, ---@type number
             },
-            labels = "asdfghjklqwertyuiopzxcvbnm",
+            labels = "afghjklqwertyuiopzcvbnm",
             label = {
                 -- allow uppercase labels
                 uppercase = false,
