@@ -71,6 +71,8 @@ vim.g.loaded_python_provider = 0
 vim.g.python3_host_prog = "/usr/bin/python3"
 vim.g.diff_translations = 0
 
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
 function isDiffMode()
     if vim.api.nvim_win_get_option(0, "diff") then
         return true
@@ -78,8 +80,9 @@ function isDiffMode()
         return false
     end
 end
---vim.opt.listchars:append "tab:▸"
---vim.opt.listchars:append "trail:▫"
+
+-- Highlight when yanking (copying) text
+vim.cmd[[au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=300}]]
 -- vim.opt.shortmess = "ilmnrx"                        -- flags to shorten vim messages, see :help 'shortmess'
 -- Open the file to automatically locate to the last edited position
 vim.cmd[[autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]]
