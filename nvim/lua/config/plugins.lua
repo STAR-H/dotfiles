@@ -40,14 +40,14 @@ require("lazy").setup(
     require("plugins.noice"),
     require("plugins.undotree"),
     require("plugins.dressing"),
-    require("plugins.vim-tmux-navigator"),
     require("plugins.vim-maximizer"),
+    require("plugins.nvim_context_vt"),
     -- only for c++
     require("plugins.nvim-dap"),
     require("plugins.cpp-enhanced-hightlight"),
     -- "nvim-treesitter/playground",
 
-    require("plugins.chatgpt"),
+    -- require("plugins.chatgpt"),
     {"STAR-H/vim-cppman", lazy = true, ft = {"cpp"}},
     {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
 },
