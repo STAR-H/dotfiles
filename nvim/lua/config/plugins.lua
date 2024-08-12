@@ -28,7 +28,7 @@ require("lazy").setup(
     require("plugins.vista"),
     require("plugins.nvimTree"),
     -- just for fun
-    -- require("plugins.cellular-automaton"),
+    require("plugins.cellular-automaton"),
     require("plugins.easy-align"),
     require("plugins.vim-bookmark"),
     require("plugins.flash"),
@@ -40,7 +40,7 @@ require("lazy").setup(
     require("plugins.noice"),
     require("plugins.undotree"),
     require("plugins.dressing"),
-    require("plugins.vim-maximizer"),
+    -- require("plugins.vim-maximizer"),
     require("plugins.nvim_context_vt"),
     -- only for c++
     require("plugins.nvim-dap"),

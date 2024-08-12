@@ -1,13 +1,12 @@
 #copy this to ~/.clang-format
-BasedOnStyle: LLVM
+BasedOnStyle: Google
 AlignTrailingComments: true
 BreakBeforeBraces: Allman
-ColumnLimit: 80
+ColumnLimit: 160
 IndentWidth: 4
 KeepEmptyLinesAtTheStartOfBlocks: false
-ObjCSpaceAfterProperty: true
-ObjCSpaceBeforeProtocolList: true
-PointerBindsToType: false
+PointerBindsToType: true
+PointerAlignment: Left
 SpacesBeforeTrailingComments: 1
 TabWidth: 4
 UseTab: Never
