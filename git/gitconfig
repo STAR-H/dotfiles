@@ -12,5 +12,7 @@
     prompt = true
 [diff]
     tool = nvimdiff
+[difftool "meld"]
+    cmd = "meld \"$LOCAL\" \"$REMOTE\""
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
