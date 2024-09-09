@@ -1,6 +1,7 @@
 {
   "Comment.nvim": { "branch": "master", "commit": "0236521ea582747b58869cb72f70ccfa967d2e89" },
   "LuaSnip": { "branch": "master", "commit": "409535b8fc54c650eb845b0c35e0cc7f08810284" },
+  "blame.nvim": { "branch": "main", "commit": "dedbcdce857f708c63f261287ac7491a893912d0" },
   "bufferline.nvim": { "branch": "main", "commit": "417b303328118b6d836ae330142e88771c48a8a3" },
   "cellular-automaton.nvim": { "branch": "main", "commit": "11aea08aa084f9d523b0142c2cd9441b8ede09ed" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
@@ -47,6 +48,7 @@
   "vim-ingo-library": { "branch": "master", "commit": "69812c40b9ee0605de3790772950fc98bf0dd648" },
   "vim-mark": { "branch": "master", "commit": "63544e45c499fada9283bde63199dd82de19ccd2" },
   "vim-snippets": { "branch": "master", "commit": "86b3a849bd2f3e87cc08b6d64150547989d09eda" },
+  "vim-tmux-navigator": { "branch": "master", "commit": "5b3c701686fb4e6629c100ed32e827edf8dad01e" },
   "vista.vim": { "branch": "master", "commit": "40daf5e97be70a90465182fbbdfba92442bfd8e1" },
   "which-key.nvim": { "branch": "main", "commit": "7ccf476ebe0445a741b64e36c78a682c1c6118b7" }
 }
