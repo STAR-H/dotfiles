@@ -42,6 +42,7 @@ require("lazy").setup(
     require("plugins.dressing"),
     -- require("plugins.vim-maximizer"),
     require("plugins.nvim_context_vt"),
+    require("plugins.vim-tmux-navigator"),
     -- only for c++
     require("plugins.nvim-dap"),
     require("plugins.cpp-enhanced-hightlight"),

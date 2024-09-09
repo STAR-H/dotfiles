@@ -65,6 +65,7 @@ alias ra=joshuto
 alias genctags='ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
 alias gencscope='find . -name "*.h" -o -name "*.hpp" -o -name "*.cpp"  -o -name "*.c"> .cscope.files && cscope -Rbkq -i .cscope.files -f .cscope.out'
 alias vif='nvim $(fzf)'
+alias cl='clear'
 
 
 
