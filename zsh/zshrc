@@ -103,3 +103,23 @@ esac
 # temporary environment variables
 # fix ld: warning: dylib (/opt/homebrew/opt/llvm/lib/libunwind.dylib) was built for newer macOS version (13.0) than being linked (12.3)
 export MACOSX_DEPLOYMENT_TARGET=13.0
+
+export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
+export PATH="/opt/homebrew/Cellar/arm-none-eabi-gcc/14.2.0/bin:$PATH"
+
+# Ensure the maximum number of history records
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
+
+# Real-time writing of history
+setopt inc_append_history     # The command is appended to the history file immediately after execution
+setopt share_history          # Share history between all terminal windows
+
+# Preventing duplicate records
+setopt hist_ignore_dups       # Ignore duplicate history
+setopt hist_reduce_blanks     # Remove extra spaces at the beginning and end of the command
+setopt hist_ignore_space      # Ignore commands that begin with space (such as temporary commands)
+
+# disable homebrew auto update
+export HOMEBREW_NO_AUTO_UPDATE=1

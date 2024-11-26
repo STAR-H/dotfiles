@@ -1,6 +1,7 @@
 return {
     "nvim-treesitter/nvim-treesitter",
     enabled = not isDiffMode(),
+    build = ":TsUpdate", -- auto update installed parser
     config = function()
         require'nvim-treesitter.configs'.setup {
             ensure_installed = {
@@ -13,11 +14,11 @@ return {
                 "lua",
                 "c",
                 "cpp",
-                "comment",
                 "markdown",
                 "markdown_inline",
                 "vim",
                 "regex",
+                "query",
             },
             sync_install = false,
             auto_install = false,
