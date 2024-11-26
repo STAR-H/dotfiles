@@ -1,7 +1,7 @@
 return {
     "andersevenrud/nvim_context_vt",
     event = "VeryLazy",
-    ft = { 'cpp', 'lua', 'python' },
+    ft = { 'c', 'cpp', 'lua', 'python' },
     config = function()
         vim.api.nvim_set_hl(0, 'CustomContextVt', { fg = '#928374', bold = true, italic = true })
         require('nvim_context_vt').setup({
