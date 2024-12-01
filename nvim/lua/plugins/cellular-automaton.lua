@@ -1,6 +1,6 @@
 return {
     "Eandrju/cellular-automaton.nvim",
-    enabled = not isDiffMode(),
+    enabled = not IsDiffMode(),
     keys = {{"<space><space>"}},
     config = function()
         vim.keymap.set('n', '<space><space>', ":CellularAutomaton make_it_rain<cr>", {silent = true, nowait = true})

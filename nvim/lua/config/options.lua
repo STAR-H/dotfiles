@@ -68,25 +68,25 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python_provider = 0
-vim.g.python3_host_prog = "/usr/bin/python3"
-vim.g.diff_translations = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_node_provider = 0
+
+vim.g.diff_translations = 0 -- To disable localisations and speed up the syntax highlighting
 
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-
-function isDiffMode()
-    if vim.api.nvim_win_get_option(0, "diff") then
-        return true
-    else
-        return false
-    end
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = " ",
+}
+local function foldtext()
+  return vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1]
 end
+-- vim.opt.foldmethod = "indent"
+vim.opt.foldtext = foldtext()
 
--- Highlight when yanking (copying) text
-vim.cmd[[au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=300}]]
--- vim.opt.shortmess = "ilmnrx"                        -- flags to shorten vim messages, see :help 'shortmess'
--- Open the file to automatically locate to the last edited position
-vim.cmd[[autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif]]
-vim.diagnostic.disable()
+vim.diagnostic.disable() -- disable diagnostic by default
 vim.opt.shortmess:append "c"                           -- don't give |ins-completion-menu| messages
 vim.opt.iskeyword:append "-"                           -- hyphenated words recognized by searches
 vim.opt.formatoptions:remove({ "c", "r", "o" })        -- don't insert the current comment leader automatically 

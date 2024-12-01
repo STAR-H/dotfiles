@@ -19,7 +19,9 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
+-- Clear search hightlight
 keymap("n", "<ESC>", ":nohl<CR>", opts)
+
 -- Resize with arrows
 keymap("n", "<up>", ":resize -5<CR>",             opts)
 keymap("n", "<down>", ":resize +5<CR>",           opts)
@@ -38,17 +40,17 @@ keymap("i", "kj", "<ESC>", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
--- 关闭缓冲区或窗口
-local function close_buffer()
-    local win_count = vim.fn.winnr('$')
-    if win_count > 1 then
-        vim.cmd("close")
-    else
-        vim.cmd("bd")
-    end
-end
+-- Use q to quit visual selection
+keymap("v", "q", "<Esc>", opts)
 
-keymap("n", "<leader>d", close_buffer, { noremap = true, silent = true, desc = "[d]elete buffer"})
+-- Remap Q to q for macro recording
+keymap("n", "Q", "q", opts)
 
-keymap("t", "<Esc>", "<C-\\><C-n>", opts)
-vim.cmd[[autocmd TermOpen * setlocal statusline=%{b:term_title}]]
+keymap("n", "dt", ToggleDiagnostics, {silent = true, noremap = true, desc = "[d]iagnostics [t]oggle"})
+
+keymap("n", "<leader>d", CloseBuffer, { noremap = true, silent = true, desc = "[d]elete buffer"})
+
+-- Exit in terminal mode
+keymap("t", "jk", "<C-\\><C-n>", opts)
+keymap("t", "kj", "<C-\\><C-n>", opts)
+

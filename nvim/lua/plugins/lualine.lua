@@ -1,6 +1,10 @@
 return {
     "nvim-lualine/lualine.nvim",
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    event = "VeryLazy",
+    dependencies = {
+        'nvim-tree/nvim-web-devicons',
+        'nvim-navic',
+    },
     config = function()
         local diagnostics = {
             "diagnostics",
@@ -20,7 +24,7 @@ return {
                 modified = 'DiffChange', -- Changes the diff's modified color
                 removed  = 'DiffDelete', -- Changes the diff's removed color you
             },
-            symbols = {added = ' ', modified = ' ', removed = ' '}, -- Changes the symbols used by the diff.
+            symbols = {added = '  ', modified = '  ', removed = '  '}, -- Changes the symbols used by the diff.
         }
         local navic = require("nvim-navic")
 
@@ -45,8 +49,7 @@ return {
             },
             sections = {
                 lualine_a = {'mode'},
-                -- lualine_b = {diagnostics, diff},
-                lualine_b = {diff},
+                lualine_b = {diagnostics, diff},
                 lualine_c = {
                     { 'filename',
                     file_status = true,      -- Displays file status (readonly status, modified status)
@@ -54,7 +57,7 @@ return {
                     path = 1,
                     symbols = {
                         modified = '[+]',      -- Text to show when the file is modified.
-                        readonly = '[-]',      -- Text to show when the file is non-modifiable or readonly.
+                        readonly = '[RO]',      -- Text to show when the file is non-modifiable or readonly.
                         unnamed  = '[No Name]', -- Text to show for unnamed buffers.
                         newfile  = '[New]',     -- Text to show for newly created file before first write
                     },
@@ -65,9 +68,8 @@ return {
                     cond = require("noice").api.statusline.mode.has,
                     color = { fg = "#ff9e64" },
                 },
-                'g:coc_status'
             },
-            lualine_x = { 'b:coc_current_function',
+            lualine_x = {
             {
                 function()
                     return navic.get_location()
@@ -86,7 +88,6 @@ return {
             lualine_b = {},
             lualine_c = {'filename'},
             lualine_x = {
-                'b:coc_current_function',
                 {
                     function()
                         return navic.get_location()

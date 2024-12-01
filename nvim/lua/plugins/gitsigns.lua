@@ -1,7 +1,8 @@
 return {
     {
         "lewis6991/gitsigns.nvim",
-        enabled = not isDiffMode(),
+        enabled = not IsDiffMode(),
+        event = "VeryLazy",
         config = function()
             require('gitsigns').setup {
                 signs                        = {

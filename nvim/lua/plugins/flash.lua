@@ -1,5 +1,6 @@
 return {
     "folke/flash.nvim",
+    keys = {"<leader>s", "f"},
     config = function()
         vim.keymap.set("n", '<leader>s', function() require("flash").jump() end, {noremap = true, silent = true, desc = "[s]earch jump"})
         require("flash").setup({
@@ -122,6 +123,6 @@ return {
             },
         })
 
-        vim.cmd[[:hi FlashLabel cterm=bold gui=bold guifg=#FFFFFF guibg=#D80835]]
+        vim.api.nvim_set_hl(0, 'FlashLabel', {bold = true, fg = '#FFFFFF', bg = '#D80835'})
     end
 }

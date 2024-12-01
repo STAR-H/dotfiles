@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup(
 {
-    {"nvim-lua/plenary.nvim"},
     require("plugins.colorscheme"),
     require("plugins.autopairs"),
     require("plugins.indent-blankline"),
@@ -24,7 +23,7 @@ require("lazy").setup(
     require("plugins.treesitter"),
     require("plugins.gitsigns"),
     require("plugins.telescope"),
-    require("plugins.project"),
+    -- require("plugins.project"),
     require("plugins.vista"),
     require("plugins.nvimTree"),
     -- just for fun
@@ -40,17 +39,17 @@ require("lazy").setup(
     require("plugins.noice"),
     require("plugins.undotree"),
     require("plugins.dressing"),
-    -- require("plugins.vim-maximizer"),
+    require("plugins.vim-maximizer"),
     require("plugins.nvim_context_vt"),
-    -- require("plugins.vim-tmux-navigator"),
+    require("plugins.vim-tmux-navigator"),
     -- only for c++
     require("plugins.nvim-dap"),
     require("plugins.cpp-enhanced-hightlight"),
+    require("plugins.comment"),
     -- "nvim-treesitter/playground",
 
     -- require("plugins.chatgpt"),
-    {"STAR-H/vim-cppman", lazy = true, ft = {"cpp"}},
-    {"numToStr/Comment.nvim", config = function() require('Comment').setup() end },
+    -- {"STAR-H/vim-cppman", lazy = true, ft = {"cpp"}},
 },
 {
 ui = {

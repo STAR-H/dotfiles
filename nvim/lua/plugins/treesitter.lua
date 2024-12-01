@@ -1,6 +1,6 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    enabled = not isDiffMode(),
+    enabled = not IsDiffMode(),
     build = ":TsUpdate", -- auto update installed parser
     config = function()
         require'nvim-treesitter.configs'.setup {
@@ -33,7 +33,7 @@ return {
                 end,
                 additional_vim_regex_highlighting = false,
             },
-            indent = { enable = true },
+            indent = { enable = false }, -- influnce = indent
             incremental_selection = { enable = false },
             textobjects = { enable = false },
         }
