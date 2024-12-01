@@ -1,15 +1,17 @@
 return {
     "akinsho/bufferline.nvim",
+    event = "VeryLazy",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function()
         require("bufferline").setup {
             options = {
                 mode = "buffers", -- set to "tabs" to only show tabpages instead
                 indicator = {
-                    style = 'underline',
+                    icon = '▎', -- this should be omitted if indicator style is not 'icon'
+                    style = 'icon',
                 },
                 diagnostics = false,
-                numbers = "ordinal",
+                -- numbers = "ordinal",  -- Comment this to disable show number in bufferline
                 show_buffer_close_icons = false,
                 always_show_bufferline = true,
                 truncate_names = false,
@@ -61,5 +63,7 @@ return {
         keymap("n", "<leader>8", ":lua require'bufferline'.go_to(8, true)<CR>", opts("Go to buffer[8]"))
         keymap("n", "<leader>9", ":lua require'bufferline'.go_to(9, true)<CR>", opts("Go to buffer[9]"))
         keymap("n", "bp", ":BufferLineTogglePin<CR>", opts("Toggle [b]uffer [p]in"))
+        keymap("n", "gj", ":BufferLinePick<CR>", opts("bufferline pick buffer"))
+        keymap("n", "gk", ":BufferLinePickClose<CR>", opts("bufferline pick buffer close"))
     end
 }

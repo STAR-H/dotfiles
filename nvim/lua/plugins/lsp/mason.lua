@@ -33,7 +33,7 @@ return {
                     TypeParameter = " ",
                 },
                 lsp = {
-                    auto_attach = false,
+                    auto_attach = true,
                     preference = nil,
                 },
                 highlight = false,
@@ -48,7 +48,8 @@ return {
     },
     {
         "williamboman/mason.nvim",
-        enabled = not isDiffMode(),
+        event = "VeryLazy",
+        enabled = not IsDiffMode(),
         dependencies = "williamboman/mason-lspconfig.nvim",
         config = function()
             local settings = {
@@ -102,17 +103,4 @@ return {
             end
         end
     },
-    {
-        "jay-babu/mason-nvim-dap.nvim",
-        enabled = not isDiffMode(),
-        dependencies = {
-            "williamboman/mason.nvim",
-            "mfussenegger/nvim-dap",
-        },
-        config = function()
-            require("mason-nvim-dap").setup({
-                ensure_installed = { "cppdbg" }
-            })
-        end
-    }
 }

@@ -2,8 +2,8 @@
 return {
     {
         "mfussenegger/nvim-dap",
-        keys = {{":lua require'dap'.toggle_breakpoint()<cr>"}},
-        enabled = not isDiffMode(),
+        keys =  {"<Space>p", ":lua require'dap'.toggle_breakpoint()<cr>"},
+        enabled = not IsDiffMode(),
         config = function()
             local dap_breakpoint_color = {
                 breakpoint = {
@@ -101,9 +101,8 @@ return {
     },
     {
         "rcarriga/nvim-dap-ui",
-        cond = function()
-            return not isDiffMode()
-        end,
+        keys =  {"<Space>p", ":lua require'dap'.toggle_breakpoint()<cr>"},
+        cond = not IsDiffMode(),
         dependencies = {
             "mfussenegger/nvim-dap",
             "theHamsta/nvim-dap-virtual-text",

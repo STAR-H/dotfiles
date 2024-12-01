@@ -1,5 +1,6 @@
 return {
     "STAR-H/vim-mark",
+    keys = "mm",
     branch = "master",
     dependencies = "inkarkat/vim-ingo-library",
     -- do not add mark words to the search(/)  and input(@) history

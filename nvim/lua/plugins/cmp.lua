@@ -1,6 +1,7 @@
 return {
     "hrsh7th/nvim-cmp",
-    enabled = not isDiffMode(),
+    enabled = not IsDiffMode(),
+    event = "InsertEnter",
     dependencies = {
         "neovim/nvim-lspconfig",
         "hrsh7th/cmp-nvim-lsp",
