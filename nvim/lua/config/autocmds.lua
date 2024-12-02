@@ -67,3 +67,8 @@ vim.api.nvim_create_autocmd("TermOpen", {
   end,
 })
 
+vim.api.nvim_create_autocmd("DiagnosticChanged", {
+  callback = function()
+    require('lualine').refresh() -- flash lualine status
+  end,
+})

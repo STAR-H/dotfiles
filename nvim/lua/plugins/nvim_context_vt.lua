@@ -11,7 +11,7 @@ return {
             disable_ft = { 'markdown' },
             disable_virtual_lines = false,
             disable_virtual_lines_ft = { 'yaml' },
-            min_rows = 10,
+            min_rows = 20,
         })
     end,
 }

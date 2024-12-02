@@ -1,6 +1,13 @@
 return {
     "MattesGroeger/vim-bookmarks",
-    keys = {{"<Space>bb"}},
+    keys = {
+        {'<Space>bb', "<cmd>BookmarkToggle<CR>",   desc = "BookmarkToggle"},
+        {'<Space>bi', "<cmd>BookmarkAnnotate<CR>", desc = "BookmarkAnnotate"},
+        {'<Space>bj', "<cmd>BookmarkNext<CR>",     desc = "BookmarkNext"},
+        {'<Space>bk', "<cmd>BookmarkPrev<CR>",     desc = "BookmarkPrev"},
+        {'<Space>ba', "<cmd>BookmarkShowAll<CR>",  desc = "BookmarkShowAll"},
+        {'<Space>bc', "<cmd>BookmarkClearAll<CR>", desc = "BookmarkClearAll"},
+    },
     config = function()
         vim.g.bookmark_no_default_key_mappings = 1
         vim.g.bookmark_show_toggle_warning = 0
@@ -14,15 +21,7 @@ return {
         vim.g.bookmark_sign = ''
         vim.g.bookmark_annotation_sign = '﭅'
 
-        -- vim.cmd[[:highlight BookmarkSign guifg=#00ffff guibg=#3c3836]]
-        -- vim.cmd[[:highlight BookmarkAnnotationSign guifg=#00ffff guibg=#3c3836]]
-
-        local opts = {noremap = true, silent = true, nowait = true}
-        vim.keymap.set('n', '<Space>bb', ":BookmarkToggle<CR>",   opts)
-        vim.keymap.set('n', '<Space>bi', ":BookmarkAnnotate<CR>", opts)
-        vim.keymap.set('n', '<Space>bj', ":BookmarkNext<CR>",     opts)
-        vim.keymap.set('n', '<Space>bk', ":BookmarkPrev<CR>",     opts)
-        vim.keymap.set('n', '<Space>ba', ":BookmarkShowAll<CR>",  opts)
-        vim.keymap.set('n', '<Space>bc', ":BookmarkClearAll<CR>", opts)
+        vim.api.nvim_set_hl(0, 'BookmarkSign', {fg = '#00ffff', bg = '#3c3836'})
+        vim.api.nvim_set_hl(0, 'BookmarkAnnotationSign', {fg = '#00ffff', bg = '#3c3836'})
     end
 }

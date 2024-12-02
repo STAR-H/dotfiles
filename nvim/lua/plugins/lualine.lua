@@ -6,15 +6,34 @@ return {
         'nvim-navic',
     },
     config = function()
-        local diagnostics = {
-            "diagnostics",
-            sources  = { "nvim_diagnostic" },
-            sections = { "error", "warn" },
-            symbols  = { error = " ", warn = " " },
-            colored  = true,
-            update_in_insert = false,
-            always_visible   = false,
-        }
+        local function diagnostics_component()
+            local bufnr = vim.api.nvim_get_current_buf()
+            if vim.diagnostic.is_disabled(bufnr) then
+                return ""
+            end
+            -- 获取当前缓冲区的诊断统计信息
+            local diagnostics = vim.diagnostic.get(bufnr)
+            local error_count = 0
+            local warning_count = 0
+
+            for _, diag in ipairs(diagnostics) do
+                if diag.severity == vim.diagnostic.severity.ERROR then
+                    error_count = error_count + 1
+                elseif diag.severity == vim.diagnostic.severity.WARN then
+                    warning_count = warning_count + 1
+                end
+            end
+
+            if error_count == 0 and warning_count == 0 then
+                return ""
+            end
+
+            return string.format("%%#LualineError# %d %%#LualineWarning# %d", error_count, warning_count)
+        end
+
+        vim.api.nvim_set_hl(0, "LualineError", {fg = '#FF0000', bold = true})
+        vim.api.nvim_set_hl(0, "LualineWarning", {fg = '#FFA500', bold = true})
+
         local diff = {
             'diff',
             colored = true, -- Displays a colored diff status if set to true
@@ -49,7 +68,7 @@ return {
             },
             sections = {
                 lualine_a = {'mode'},
-                lualine_b = {diagnostics, diff},
+                lualine_b = {diagnostics_component, diff},
                 lualine_c = {
                     { 'filename',
                     file_status = true,      -- Displays file status (readonly status, modified status)
