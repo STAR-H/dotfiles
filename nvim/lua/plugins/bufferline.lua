@@ -7,7 +7,7 @@ return {
             options = {
                 mode = "buffers", -- set to "tabs" to only show tabpages instead
                 indicator = {
-                    icon = '▎', -- this should be omitted if indicator style is not 'icon'
+                    icon = '⏽', -- this should be omitted if indicator style is not 'icon'
                     style = 'icon',
                 },
                 diagnostics = false,
@@ -63,7 +63,9 @@ return {
         keymap("n", "<leader>8", ":lua require'bufferline'.go_to(8, true)<CR>", opts("Go to buffer[8]"))
         keymap("n", "<leader>9", ":lua require'bufferline'.go_to(9, true)<CR>", opts("Go to buffer[9]"))
         keymap("n", "bp", ":BufferLineTogglePin<CR>", opts("Toggle [b]uffer [p]in"))
-        keymap("n", "gj", ":BufferLinePick<CR>", opts("bufferline pick buffer"))
-        keymap("n", "gk", ":BufferLinePickClose<CR>", opts("bufferline pick buffer close"))
+        keymap("n", "fg", ":BufferLinePick<CR>", opts("bufferline pick buffer"))
+        keymap("n", "fj", ":BufferLinePickClose<CR>", opts("bufferline pick buffer close"))
+
+        vim.api.nvim_set_hl(0, 'BufferLineIndicatorSelected', {bold = true, fg = '#3498DB'})
     end
 }

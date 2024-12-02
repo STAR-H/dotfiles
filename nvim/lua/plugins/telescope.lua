@@ -3,11 +3,11 @@ return {
     -- and optimate the live grep behavior
     "nvim-telescope/telescope.nvim", branch = '0.1.x',
     keys = {
-        {"<leader>ff", ":lua require('telescope.builtin).find_files"},
-        {"<leader>fg", ":lua require('telescope.builtin).live_grep"},
-        {"<leader>fb", ":lua require('telescope.builtin).buffers"},
-        {"<leader>ft", ":lua require('telescope.builtin).current_buffer_fuzzy_find"},
-        {"<leader>fc", ":lua require('telescope.builtin).commands"},
+        {"<leader>ff", ":lua require('telescope.builtin).find_files", desc = 'telescope find files'},
+        {"<leader>fg", ":lua require('telescope.builtin).live_grep", desc = 'telescope live grep'},
+        {"<leader>fb", ":lua require('telescope.builtin).buffers", desc = 'telescope list buffers'},
+        {"<leader>ft", ":lua require('telescope.builtin).current_buffer_fuzzy_find", desc = 'telescope fuzzy search'},
+        {"<leader>fc", ":lua require('telescope.builtin).commands", desc = 'telescope list available commands'},
     },
     dependencies = {
         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },

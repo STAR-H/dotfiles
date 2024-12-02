@@ -1,8 +1,9 @@
 return {
     "folke/flash.nvim",
-    keys = {"<leader>s", "f"},
+    keys = {
+        {"<leader>s", "<cmd>lua require('flash').jump()<cr>", desc = "flash search jump"},
+        {"f"}},
     config = function()
-        vim.keymap.set("n", '<leader>s', function() require("flash").jump() end, {noremap = true, silent = true, desc = "[s]earch jump"})
         require("flash").setup({
             jump = {
                 -- save location in the jumplist
@@ -26,7 +27,7 @@ return {
                 -- 1: when pos == "end" and pos < current position
                 offset = nil, ---@type number
             },
-            labels = "afghjklqwertyuiopzcvbnm",
+            labels = "aghjklqwertyuiopzcvbnm",
             label = {
                 -- allow uppercase labels
                 uppercase = false,

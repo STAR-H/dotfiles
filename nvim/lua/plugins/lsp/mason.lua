@@ -1,6 +1,7 @@
 return {
     {
         "SmiteshP/nvim-navic",
+        event = "VeryLazy",
         dependencies = { "neovim/nvim-lspconfig" },
         config = function()
             require("nvim-navic").setup {
@@ -33,7 +34,7 @@ return {
                     TypeParameter = " ",
                 },
                 lsp = {
-                    auto_attach = true,
+                    auto_attach = false,
                     preference = nil,
                 },
                 highlight = false,
@@ -48,7 +49,7 @@ return {
     },
     {
         "williamboman/mason.nvim",
-        event = "VeryLazy",
+        event = "BufReadPre",
         enabled = not IsDiffMode(),
         dependencies = "williamboman/mason-lspconfig.nvim",
         config = function()

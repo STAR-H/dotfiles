@@ -40,6 +40,8 @@ keymap("i", "kj", "<ESC>", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
+keymap("n", "q", "<NOP>", opts)
+
 -- Use q to quit visual selection
 keymap("v", "q", "<Esc>", opts)
 
