@@ -1,6 +1,6 @@
 return {
     "STAR-H/vim-mark",
-    keys = "mm",
+    keys = {{"mm", mode = {"n", "x"}, "<Plug>MarkSet", desc = "MarkSet"}},
     branch = "master",
     dependencies = "inkarkat/vim-ingo-library",
     -- do not add mark words to the search(/)  and input(@) history
@@ -12,8 +12,6 @@ return {
         vim.g.mw_no_mappings = 1
 
         local opts = {silent = true, nowait = true}
-        vim.keymap.set('n', 'mm', "<Plug>MarkSet",            opts)
-        vim.keymap.set('x', 'mm', "<Plug>MarkSet",            opts)
         vim.keymap.set('n', 'mr', "<Plug>MarkRegex",          opts)
         vim.keymap.set('n', 'mc', "<Plug>MarkAllClear",       opts)
         vim.keymap.set('n', '*', "<Plug>MarkSearchOrCurNext", opts)
