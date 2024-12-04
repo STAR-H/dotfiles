@@ -21,7 +21,7 @@ return {
         vim.g.bookmark_sign = ''
         vim.g.bookmark_annotation_sign = '﭅'
 
-        vim.api.nvim_set_hl(0, 'BookmarkSign', {fg = '#00ffff', bg = '#3c3836'})
-        vim.api.nvim_set_hl(0, 'BookmarkAnnotationSign', {fg = '#00ffff', bg = '#3c3836'})
+        vim.api.nvim_set_hl(0, 'BookmarkSign', {fg = '#a9ddea', bg = '#3c3836'})
+        vim.api.nvim_set_hl(0, 'BookmarkAnnotationSign', {fg = '#a9ddea', bg = '#3c3836'})
     end
 }
