@@ -1,8 +1,7 @@
 return {
     "folke/flash.nvim",
-    keys = {
-        {"<leader>s", mode = "n", "<cmd>lua require('flash').jump()<cr>", desc = "flash search jump"},
-        {"f"}},
+    event = "VeryLazy",
+    keys = {"<leader>s", mode = "n", "<cmd>lua require('flash').jump()<cr>", desc = "flash search jump"},
     config = function()
         require("flash").setup({
             jump = {

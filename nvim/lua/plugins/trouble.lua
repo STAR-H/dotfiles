@@ -2,7 +2,7 @@ return {
     "folke/trouble.nvim",
     keys = {
         {"gr", "<cmd>lua require('trouble').open('lsp_references')<cr>", desc = "lsp reference"},
-        {"<leader>ld"},
+        {"<leader>ld", function() vim.diagnostic.setloclist({open = false}) vim.cmd('TroubleToggle loclist') end, desc = "diagnostic list"},
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
@@ -12,10 +12,4 @@ return {
         padding = false,
         cycle_results = false,
     },
-    config = function ()
-        vim.keymap.set("n", "<leader>ld", function ()
-            vim.diagnostic.setloclist({open = false})
-            vim.cmd('TroubleToggle loclist')
-        end, {desc = "[d]iagnostic [l]ist"})
-    end
 }
