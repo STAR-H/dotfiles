@@ -23,9 +23,9 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "<ESC>", ":nohl<CR>", opts)
 
 -- Resize with arrows
-keymap("n", "<up>", ":resize -5<CR>",             opts)
-keymap("n", "<down>", ":resize +5<CR>",           opts)
-keymap("n", "<left>", ":vertical resize -5<CR>",  opts)
+keymap("n", "<up>",    ":resize -5<CR>",          opts)
+keymap("n", "<down>",  ":resize +5<CR>",          opts)
+keymap("n", "<left>",  ":vertical resize -5<CR>", opts)
 keymap("n", "<right>", ":vertical resize +5<CR>", opts)
 
 -- Navigate buffers
