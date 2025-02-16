@@ -23,7 +23,7 @@ require("lazy").setup(
     require("plugins.treesitter"),
     require("plugins.gitsigns"),
     require("plugins.telescope"),
-    -- require("plugins.project"),
+    require("plugins.project"),
     require("plugins.vista"),
     require("plugins.nvimTree"),
     -- just for fun

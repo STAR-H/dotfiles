@@ -1,7 +1,9 @@
 return {
     "folke/flash.nvim",
     event = "VeryLazy",
-    keys = {"<leader>s", mode = "n", "<cmd>lua require('flash').jump()<cr>", desc = "flash search jump"},
+    keys = {
+      { "<leader>s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+    },
     config = function()
         require("flash").setup({
             jump = {
@@ -123,6 +125,7 @@ return {
             },
         })
 
+        vim.keymap.set('n', '<leader>s', "<cmd>lua require('flash').jump()<cr>", { noremap = true, nowait = true, desc = 'flash search jump' })
         vim.api.nvim_set_hl(0, 'FlashLabel', {bold = true, fg = '#FFFFFF', bg = '#D80835'})
     end
 }
