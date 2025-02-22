@@ -1,3 +1,0 @@
-#cp this to ~/.clangd
-CompileFlags:
-  Add: [-std=c++14]
