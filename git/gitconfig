@@ -16,3 +16,5 @@
     cmd = "meld \"$LOCAL\" \"$REMOTE\""
 [difftool "nvimdiff"]
     cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+[init]
+	defaultBranch = main
