@@ -28,7 +28,6 @@ export HISTSIZE=1000
 export SAVEHIST=1000
 # History won't save duplicates.
 setopt HIST_IGNORE_ALL_DUPS
-bindkey ',' autosuggest-accept
 autoload -U compinit && compinit
 # ignore uppercase
 zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
