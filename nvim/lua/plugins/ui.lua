@@ -215,10 +215,10 @@ return {
         return string.format("%%#LualineError# %d %%#LualineWarning# %d", error_count, warning_count)
       end
 
-      vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bold = true })
-      vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bold = true })
-      vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542' })
-      vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000' })
+      vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bg = "#32302f", bold = true })
+      vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bg = "#32302f", bold = true })
+      vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542', bg = "#32302f"})
+      vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000', bg = "#32302f"})
 
       local diff = {
         'diff',
@@ -318,8 +318,25 @@ return {
 
             },
             'filesize', 'filetype' },
-          lualine_y = { 'progress', 'selectioncount' },
-          lualine_z = { 'location' }
+          lualine_y = {
+            {
+              function()
+                return " " .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t')
+              end,
+              cond = function()
+                if vim.g.project_root_dir == nil or vim.g.project_root_dir == "" then
+                  return false
+                else
+                  return true
+                end
+              end,
+              color = {
+                bg = "#32302f",
+                fg = "#458588",
+              }
+            },
+            'selectioncount' },
+          lualine_z = { 'progress' }
         },
         winbar = {},
         inactive_sections = {
@@ -409,4 +426,20 @@ return {
       warn_no_results = false, -- show a warning when there are no results
     },
   },
+
+  {
+    'stevearc/dressing.nvim',
+    event = "VeryLazy",
+    opts = {
+      input = {
+        enabled = false,
+      },
+      select = {
+        enabled = true,
+      }
+    },
+    config = function(_, opts)
+      require("dressing").setup(opts)
+    end
+  }
 }

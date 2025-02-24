@@ -266,7 +266,7 @@ return {
         detection_methods = { "pattern" },
         patterns = { ".git", ".root", ".project", "compile_command.json" },
       }
-      vim.g.project_root_dir = require("project_nvim.project").get_project_root()
+      vim.g.project_root_dir = require("project_nvim.project").get_project_root() or vim.uv.cwd()
     end
   }
 }

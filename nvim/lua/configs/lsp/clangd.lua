@@ -3,10 +3,10 @@ return {
     "clangd",
     "--background-index",
     "--clang-tidy",
-    "--clang-tidy-checks=performance-*,bugprone-*",
     "--completion-style=detailed",
+    "--fallback-style=Google", -- default format style
     "--header-insertion=never",
-    "--pch-storage=disk",
+    "--pch-storage=memory",
     "-j=8"
   },
   -- capabilities = {

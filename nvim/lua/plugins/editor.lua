@@ -192,7 +192,8 @@ return {
           find_files = {
             theme = "dropdown",
             previewer = false,
-            cwd = vim.g.project_root_dir
+            cwd = vim.g.project_root_dir,
+            prompt_title = "Find Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') ..")"
           },
           buffers = {
             theme = "dropdown",
@@ -206,6 +207,7 @@ return {
           live_grep = {
             disable_coordinates = true,
             cwd = vim.g.project_root_dir,
+            prompt_title = "Live Grep at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') ..")"
           },
           current_buffer_fuzzy_find = {
             skip_empty_lines = true,
