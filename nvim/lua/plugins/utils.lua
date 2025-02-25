@@ -38,6 +38,7 @@ return {
 
   {
     "lukas-reineke/indent-blankline.nvim",
+    enabled = not require("configs.utils").is_diff_mode(),
     event = "User FilePost",
     opts = {
       indent = { char = "│", highlight = "IblChar" },

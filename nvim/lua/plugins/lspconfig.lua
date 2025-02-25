@@ -1,6 +1,5 @@
 return {
-  {
-    "williamboman/mason.nvim",
+  { "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     dependencies = "williamboman/mason-lspconfig.nvim",
     config = function()
@@ -29,8 +28,7 @@ return {
     end,
   },
 
-  {
-    "neovim/nvim-lspconfig",
+  { "neovim/nvim-lspconfig",
     event = "User FilePost",
     enabled = not require("configs.utils").is_diff_mode(),
     config = function()
@@ -88,8 +86,7 @@ return {
     end,
   },
 
-  {
-    "SmiteshP/nvim-navic",
+  { "SmiteshP/nvim-navic",
     event = "VeryLazy",
     dependencies = { "neovim/nvim-lspconfig" },
     init = function()
@@ -145,5 +142,49 @@ return {
         click = true
       }
     end,
+  },
+
+
+
+  { "nvimtools/none-ls.nvim",
+    event = "VeryLazy",
+    ft = { "cpp", "c" },
+    config = function()
+      local null_ls = require("null-ls")
+      local helpers = require("null-ls.helpers")
+
+
+      local clang_tidy = {
+        name = "clang-tidy",
+        method = null_ls.methods.DIAGNOSTICS,
+        filetypes = { "cpp", "c" },
+        generator = null_ls.generator({
+          command = "clang-tidy",
+          args = {
+            "--checks='-*, clang-diagnostic-*, clang-analyzer-*, concurrency-*, cppcoreguidelines-*, modernize-*, performance-*, readability-*, -readability-identifier-length, -cppcoreguidelines-avoid-magic-numbers, -modernize-use-trailing-return-type, -readability-magic-numbers, -cppcoreguidelines-owning-memory' ",
+            "$FILENAME",
+          },
+          ignore_stderr = true,
+          ignore_stdout = false,
+          format = "line",
+          check_exit_code = function(code)
+            return code >= 1
+          end,
+          -- use helpers to parse the output from string matchers,
+          -- or parse it manually with a function
+          on_output = helpers.diagnostics.from_pattern([[(%d+):(%d+): (%w+): (.*)]],
+            { "row", "col", "severity", "message" }, {
+              severities = {
+                note = helpers.diagnostics.severities["warning"],
+                style = helpers.diagnostics.severities["hint"],
+                performance = helpers.diagnostics.severities["warning"],
+                portability = helpers.diagnostics.severities["information"],
+              },
+            }),
+        }),
+      }
+
+      null_ls.register(clang_tidy)
+    end
   },
 }

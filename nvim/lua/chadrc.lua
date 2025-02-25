@@ -13,7 +13,6 @@ M.base46 = {
     "flash",
     "dap",
     "cmp",
-    "git",
     "lsp",
     "mason",
     "nvcheatsheet",
