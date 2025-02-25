@@ -152,7 +152,7 @@ return {
     config = function()
       local null_ls = require("null-ls")
       local helpers = require("null-ls.helpers")
-
+      local clang_tidy_conf = vim.fn.stdpath('config') .. "/lua/configs/lsp/clang-tidy"
 
       local clang_tidy = {
         name = "clang-tidy",
@@ -161,7 +161,7 @@ return {
         generator = null_ls.generator({
           command = "clang-tidy",
           args = {
-            "--checks='-*, clang-diagnostic-*, clang-analyzer-*, concurrency-*, cppcoreguidelines-*, modernize-*, performance-*, readability-*, -readability-identifier-length, -cppcoreguidelines-avoid-magic-numbers, -modernize-use-trailing-return-type, -readability-magic-numbers, -cppcoreguidelines-owning-memory' ",
+            "--config-file=" .. clang_tidy_conf,
             "$FILENAME",
           },
           ignore_stderr = true,
