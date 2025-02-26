@@ -417,7 +417,7 @@ return {
   {
     "folke/trouble.nvim",
     keys = {
-      { "gr",         "<cmd>Trouble lsp toggle<cr>" },
+      { "gr",         "<cmd>Trouble lsp_references focus=true<cr>", desc = "LSP Go to References"},
       { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics list diagnostics info(current buffer)" },
     },
     dependencies = { "nvim-tree/nvim-web-devicons" },

@@ -147,6 +147,7 @@ return {
 
 
   { "nvimtools/none-ls.nvim",
+    enabled = false,
     event = "VeryLazy",
     ft = { "cpp", "c" },
     config = function()
@@ -164,8 +165,10 @@ return {
             "--config-file=" .. clang_tidy_conf,
             "$FILENAME",
           },
+          to_temp_file = true,
           ignore_stderr = true,
           ignore_stdout = false,
+          timeout = 2000,
           format = "line",
           check_exit_code = function(code)
             return code >= 1

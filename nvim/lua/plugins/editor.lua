@@ -151,7 +151,7 @@ return {
           color_devicons = false,
           prompt_prefix = "  ",
           selection_caret = "  ",
-          path_display = { "truncate" },
+          path_display = { shorten = { len = 2, exclude = { -1, -2 } } },
           sorting_strategy = "descending",
           vimgrep_arguments = { -- use by live grep and grep string
             "rg",
