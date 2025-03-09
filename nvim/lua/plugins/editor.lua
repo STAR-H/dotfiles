@@ -364,7 +364,7 @@ return {
     keys = {
       { "<leader>t", "<cmd>Vista!!<cr>", desc = "Tagbar Toggle(On/Off)" },
     },
-    ft = { "cpp", "c", "python" },
+    ft = { "cpp", "c" , "markdown"},
     config = function()
       vim.g.vista_default_executive = 'ctags'
       vim.cmd("let g:vista_executive_for = {'cpp': 'ctags'}")
@@ -379,6 +379,17 @@ return {
       vim.cmd("let g:vista#render#ctags = 'kind'")
       vim.cmd("let g:vista#renderer#ctags = 'kind'")
       vim.cmd("let g:vista#renderer#default#vlnum_offset = 3")
+      vim.g.vista_update_on_text_changed = true
     end
   },
+
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup({
+        -- Configuration here, or leave empty to use defaults
+      })
+    end
+  }
 }

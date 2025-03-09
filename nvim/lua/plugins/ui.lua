@@ -42,20 +42,26 @@ return {
               filetype = "NvimTree",
               text = "File Explorer",
               text_align = "center",
-              separator = true
+              separator = false
             },
             {
               filetype = "vista_kind",
               text = "Symbol Outline",
               text_align = "center",
-              separator = true
+              separator = false
             },
             {
               filetype = "undotree",
               text = "UndoTree",
               text_align = "center",
-              separator = true
+              separator = false
             },
+            {
+              filetype = "vista_markdown",
+              text = "Table of contents",
+              text_align = "center",
+              separator = false
+            }
           },
           groups = {
             items = {
@@ -189,7 +195,7 @@ return {
     },
     config = function()
       vim.o.laststatus = vim.g.lualine_laststatus
-
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#32302f' })
       local function diagnostics_component()
         local bufnr = vim.api.nvim_get_current_buf()
         if not vim.diagnostic.is_enabled() then
@@ -210,24 +216,28 @@ return {
 
         if error_count == 0 and warning_count == 0 then
           return string.format("%%#LualineDiagOn#󰒘")
+        elseif error_count == 0 and warning_count ~= 0 then
+          return string.format("%%#LualineWarning# %d", warning_count)
+        elseif error_count ~= 0 and warning_count == 0 then
+          return string.format("%%#LualineError# %d", error_count)
         end
 
         return string.format("%%#LualineError# %d %%#LualineWarning# %d", error_count, warning_count)
       end
 
-      vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bg = "#32302f", bold = true })
-      vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bg = "#32302f", bold = true })
-      vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542', bg = "#32302f"})
-      vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000', bg = "#32302f"})
+      vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bg = '#32302f', bold = true })
+      vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bg = '#32302f', bold = true })
+      vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542', bg = '#32302f'})
+      vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000', bg = '#32302f'})
 
       local diff = {
         'diff',
         colored = true, -- Displays a colored diff status if set to true
         diff_color = {
           -- Same color values as the general color option can be used here.
-          added    = 'DiffAdd', -- Changes the diff's added color
-          modified = 'DiffModified', -- Changes the diff's modified color
-          removed  = 'DiffDelete', -- Changes the diff's removed color you
+          added    = 'stlDiffAdd', -- Changes the diff's added color
+          modified = 'stlDiffModified', -- Changes the diff's modified color
+          removed  = 'stlDiffDelete', -- Changes the diff's removed color you
         },
         symbols = { added = '  ', modified = '  ', removed = '  ' }, -- Changes the symbols used by the diff.
       }
@@ -242,8 +252,8 @@ return {
           section_separators   = { left = '', right = '' },
           component_separators = { left = '', right = '' },
           disabled_filetypes   = {
-            statusline = { "NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble" },
-            winbar     = { "NvimTree", "tagbar", "undotree", "vista_kind", "nvdash", "trouble" },
+            statusline = { "NvimTree", "tagbar", "undotree", "vista_kind", "vista_markdown", "nvdash", "trouble" },
+            winbar     = { "NvimTree", "tagbar", "undotree", "vista_kind", "vista_markdown", "nvdash", "trouble" },
           },
           ignore_focus         = {},
           always_divide_middle = true,
@@ -392,6 +402,7 @@ return {
           "vim",
           "regex",
           "query",
+          "latex",
         },
         sync_install = false,
         auto_install = false,
@@ -400,6 +411,7 @@ return {
           disable = function(lang, buf)
             local max_filesize = 1024 * 1024 -- 1MB
             local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+
             if ok and stats and stats.size > max_filesize then
               return true
             end

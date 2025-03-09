@@ -124,8 +124,16 @@ vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
+vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
   callback = function()
     vim.fn.setreg("/", "") -- reset search history register
   end
+})
+
+-- change auto indent for c/cpp file 4 space, default is 2
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "c", "cpp" },
+  callback = function()
+      vim.opt.shiftwidth = 4
+  end,
 })

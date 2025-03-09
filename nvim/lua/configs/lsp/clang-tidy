@@ -9,4 +9,11 @@ Checks: "
   -cppcoreguidelines-avoid-magic-numbers,
   -modernize-use-trailing-return-type,
   -readability-magic-numbers,
-  -cppcoreguidelines-owning-memory"
+  -cppcoreguidelines-owning-memory,
+  -modernize-use-auto,
+  -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+  -cppcoreguidelines-use-default-member-init,
+  -modernize-use-default-member-init,
+  -cppcoreguidelines-pro-bounds-array-to-pointer-decay,
+  -modernize-use-nodiscard,
+  -cppcoreguidelines-pro-type-vararg"

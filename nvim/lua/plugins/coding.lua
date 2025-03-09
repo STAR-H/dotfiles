@@ -112,7 +112,12 @@ return {
 
           {
             { name = 'path' },
-          }),
+          },
+
+          {
+            { name = 'render-markdown' },
+          }
+        ),
 
         formatting = {
           fields = { "abbr", "menu", "kind" },
