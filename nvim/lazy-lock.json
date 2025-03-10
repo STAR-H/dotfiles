@@ -51,7 +51,7 @@
   "vim-easy-align": { "branch": "master", "commit": "9815a55dbcd817784458df7a18acacc6f82b1241" },
   "vim-ingo-library": { "branch": "master", "commit": "c93c33f803356b16bf4b4d122404d8251dc7b24d" },
   "vim-mark": { "branch": "master", "commit": "63544e45c499fada9283bde63199dd82de19ccd2" },
-  "vim-snippets": { "branch": "master", "commit": "86b3a849bd2f3e87cc08b6d64150547989d09eda" },
+  "vim-snippets": { "branch": "master", "commit": "7e1239b2231660108a1e6a5d8f6a9c7f1361bb46" },
   "vista.vim": { "branch": "master", "commit": "1e90efad6e32c4f7d16b1ca8f49bf63d0693802e" },
   "volt": { "branch": "main", "commit": "3bedb1576db574af160643eea7df3b09dbe5ee9c" },
   "which-key.nvim": { "branch": "main", "commit": "5bf7a73fe851896d5ac26d313db849bf00f45b78" }

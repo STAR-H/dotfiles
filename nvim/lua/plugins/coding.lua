@@ -21,9 +21,9 @@ return {
           local snippetpath = vim.fn.stdpath("data") .. "/lazy/vim-snippets/snippets"
           require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippetpath })
           local ls = require('luasnip')
-          vim.keymap.set({ "i" }, "<Tab>", function() ls.expand() end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<Tab>", function() ls.jump(1) end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<S-Tab>", function() ls.jump(-1) end, { silent = true })
+          vim.keymap.set({ "i" }, "<C-j>", function() ls.expand() end, { silent = true })
+          vim.keymap.set({ "i", "s" }, "<C-j>", function() ls.jump(1) end, { silent = true })
+          vim.keymap.set({ "i", "s" }, "<C-k>", function() ls.jump(-1) end, { silent = true })
         end
       },
     },
@@ -96,13 +96,13 @@ return {
           {
             {
               name = 'nvim_lsp',
-              keyword_length = 3,
+              keyword_length = 2,
               -- remove lsp snippet item from completion list
               entry_filter = function(entry)
                 return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()
               end
             },
-            { name = 'luasnip', keyword_length = 3 },
+            { name = 'luasnip', },
             { name = 'nvim_lua' },
           },
 
@@ -111,7 +111,7 @@ return {
           },
 
           {
-            { name = 'path' },
+            { name = 'path', keyword_length = 3 },
           },
 
           {
