@@ -448,6 +448,7 @@ return {
       },
       select = {
         enabled = true,
+        telescope = require('telescope.themes').get_cursor({})
       }
     },
     config = function(_, opts)

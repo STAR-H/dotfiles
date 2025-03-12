@@ -21,9 +21,9 @@ return {
           local snippetpath = vim.fn.stdpath("data") .. "/lazy/vim-snippets/snippets"
           require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippetpath })
           local ls = require('luasnip')
-          vim.keymap.set({ "i" }, "<C-j>", function() ls.expand() end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-j>", function() ls.jump(1) end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<C-k>", function() ls.jump(-1) end, { silent = true })
+          vim.keymap.set({ "i" }, "<Tab>", function() ls.expand() end, { silent = true })
+          vim.keymap.set({ "i", "s" }, "<Tab>", function() ls.jump(1) end, { silent = true })
+          vim.keymap.set({ "i", "s" }, "<S-Tab>", function() ls.jump(-1) end, { silent = true })
         end
       },
     },
@@ -129,8 +129,8 @@ return {
             item.kind = icon .. " " .. kind
 
             local widths = {
-              abbr = 30,
-              menu = 40,
+              abbr = 40,
+              menu = 30,
             }
 
             for key, width in pairs(widths) do
