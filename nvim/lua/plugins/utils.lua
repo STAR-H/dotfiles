@@ -1,17 +1,12 @@
 return {
   {
-    "folke/ts-comments.nvim",
-    event = "VeryLazy",
-    opts = {},
-  },
-
-  {
     "folke/todo-comments.nvim",
     event = { "BufReadPre", "BufNewFile" },
     dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
       highlight = {
-        after = "", -- "fg" or "bg" or empty
+        after = "fg", -- "fg" or "bg" or empty
+        multiline = false
       },
     },
     keys = {
@@ -26,14 +21,6 @@ return {
     "octol/vim-cpp-enhanced-highlight",
     enabled = require("configs.utils").is_diff_mode(),
     ft = { "cpp" },
-  },
-
-  {
-    "junegunn/vim-easy-align",
-    keys = {
-      -- for unknown reason can use <Cmd> must use :
-      { "ga", mode = { "n", "x" }, ":EasyAlign<CR>", desc = "EasyAlign Toggle +" },
-    }
   },
 
   {
@@ -104,23 +91,6 @@ return {
       vim.api.nvim_set_keymap('n', '*', [[*<Cmd>lua require('hlslens').start()<CR>]], kopts)
       vim.api.nvim_set_keymap('n', '#', [[#<Cmd>lua require('hlslens').start()<CR>]], kopts)
     end
-  },
-
-  -- autopairing of (){}[] etc
-  {
-    "windwp/nvim-autopairs",
-    event = "InsertEnter",
-    opts = {
-      fast_wrap = {},
-      disable_filetype = { "TelescopePrompt", "vim" },
-    },
-    config = function(_, opts)
-      require("nvim-autopairs").setup(opts)
-
-      -- setup cmp for autopairs
-      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-      require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-    end,
   },
 
   {

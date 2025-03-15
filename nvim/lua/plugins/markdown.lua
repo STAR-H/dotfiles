@@ -14,6 +14,11 @@ return {
         position = 'overlay',
       },
 
+      checkbox = {
+        position = 'overlay',
+        checked = { scope_highlight = '@markup.strikethrough' }
+      },
+
       anti_conceal = { enabled = false },
 
       indent = {enabled = false},

@@ -137,6 +137,7 @@ return {
       { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = 'telescope list buffers' },
       { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = 'telescope fuzzy search' },
       { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",      desc = 'telescope current buffer tags' },
+      { "z=",         "<cmd>Telescope spell_suggest<cr>",             desc = 'telescope spell suggest'}
     },
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -212,7 +213,10 @@ return {
           current_buffer_fuzzy_find = {
             skip_empty_lines = true,
             results_ts_highlight = false,
-          }
+          },
+          spell_suggest = {
+            theme = "cursor"
+          },
         },
       })
     end
@@ -384,12 +388,69 @@ return {
   },
 
   {
-    "kylechui/nvim-surround",
+    "echasnovski/mini.surround",
+    version = "*",
     event = "VeryLazy",
+    keys = {
+      {"<C-h>", mode = "v", [[:<C-u>lua MiniSurround.add('visual')<CR>`]], {slient = true, desc = "Markdown highlight color"}}
+    },
     config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
+      require("mini.surround").setup({
+        mappings = {
+          add = '<leader>sa', -- Add surrounding in Normal and Visual modes
+          delete = '<leader>sd', -- Delete surrounding
+          find = '<leader>sf', -- Find surrounding (to the right)
+          find_left = '<leader>sF', -- Find surrounding (to the left)
+          highlight = '<leader>sh', -- Highlight surrounding
+          replace = '<leader>sr', -- Replace surrounding
+          update_n_lines = '<leader>sn', -- Update `n_lines`
+
+          suffix_last = 'l', -- Suffix to search with "prev" method
+          suffix_next = 'n', -- Suffix to search with "next" method
+        },
+        silent = true
       })
     end
-  }
+  },
+
+  {
+    "echasnovski/mini.pairs",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("mini.pairs").setup()
+    end
+  },
+
+  {
+    "echasnovski/mini.align",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+      require("mini.align").setup()
+    end
+  },
+
+  {
+    "echasnovski/mini.cursorword",
+    enabled = not require("configs.utils").is_diff_mode(),
+    ft = { "c", "cpp", "h", "hpp", "lua" },
+    version = "*",
+    init = function()
+      -- NOTE: disable mini cursorword for some file type
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = { "help", "NvimTree", "vista_kind", "vista_markdown", "markdown" },
+        callback = function()
+          vim.b.minicursorword_disable = true
+        end,
+      })
+    end,
+    config = function()
+      require("mini.cursorword").setup({delay=500})
+
+      vim.api.nvim_set_hl(0, 'MiniCursorword', {bg = "#35333c", bold = true})
+      vim.api.nvim_set_hl(0, 'MiniCursorwordCurrent', {underline = true})
+
+    end
+  },
 }

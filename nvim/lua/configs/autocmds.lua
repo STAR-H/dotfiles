@@ -132,8 +132,9 @@ vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
 
 -- change auto indent for c/cpp file 4 space, default is 2
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = { "c", "cpp" },
+  pattern = { "c", "cpp", "h", "hpp" },
   callback = function()
       vim.opt.shiftwidth = 4
+      vim.bo.commentstring = "// %s"
   end,
 })

@@ -95,8 +95,7 @@ return {
         sources = cmp.config.sources(
           {
             {
-              name = 'nvim_lsp',
-              keyword_length = 2,
+              name = 'nvim_lsp', keyword_length = 2,
               -- remove lsp snippet item from completion list
               entry_filter = function(entry)
                 return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()

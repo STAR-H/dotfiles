@@ -8,14 +8,15 @@ M.on_attach = function(_, bufnr)
   end
 
   -- keymaps releated to lsp
-  -- go to reference keymap by trouble
+  -- NOTE: lsp definitions references implications use keymaps set by trouble.nvim
   map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
-  map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
-  map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+  -- map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
+  -- map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+  -- map("n", "gr", vim.lsp.buf.references, opts "Go to reference")
   map("n", "<leader>rn", vim.lsp.buf.rename, opts "Rename")
   map("n", "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
   map("n", "<leader>ls", vim.lsp.buf.signature_help, opts "SignatureHelp")
-  map("n", "<leader>ls", "<cmd>ClangdSwitchSourceHeader<cr>", opts "Clangd Switch Source Header")
+  map("n", "<leader>a", "<cmd>ClangdSwitchSourceHeader<cr>", opts "Clangd Switch Source Header")
   map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",      opts "Buffer Format")
   map("v", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr><esc>", opts "Buffer Format")
 end

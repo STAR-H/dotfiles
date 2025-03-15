@@ -2,6 +2,12 @@ return {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
   checker = { enabled = false },
+  -- NOTE: disable annoying messages when change the config files
+  change_detection = {
+    -- automatically check for config file changes and reload the ui
+    enabled = false,
+    notify = false, -- get a notification when changes are found
+  },
 
   ui = {
     icons = {
