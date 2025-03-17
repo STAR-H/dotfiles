@@ -61,3 +61,6 @@ keymap("t", "kj", "<C-\\><C-n>", { noremap = true, silent = true })
 keymap("n", "<leader>th", function() require("nvchad.themes").open() end, { desc = "nvchad themes change" })
 
 keymap("n", "<leader>ch", "<Cmd>NvCheatsheet<CR>", { desc = "nvchad nvcheatsheet toggle" })
+
+-- NOTE: remove the "`" key in neovim due to this key use prefix key in tmux
+keymap("n", "`", "<NOP>", { noremap = true, silent = true })

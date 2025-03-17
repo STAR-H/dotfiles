@@ -145,7 +145,6 @@ return {
     },
     config = function()
       local actions = require "telescope.actions"
-      require("telescope").load_extension("fzf")
       require('telescope').setup({
         defaults = {
           git_worktrees = vim.g.project_root_dir, -- use project.nvim update root dir
@@ -219,6 +218,10 @@ return {
           },
         },
       })
+
+      -- load the extension here
+      require('telescope').load_extension('bookmarks')
+      require("telescope").load_extension("fzf")
     end
   },
 
@@ -413,13 +416,21 @@ return {
     end
   },
 
+  -- autopairing of (){}[] etc
   {
-    "echasnovski/mini.pairs",
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("mini.pairs").setup()
-    end
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    opts = {
+      fast_wrap = {},
+      disable_filetype = { "TelescopePrompt", "vim" },
+    },
+    config = function(_, opts)
+      require("nvim-autopairs").setup(opts)
+
+      -- setup cmp for autopairs
+      local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+      require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+    end,
   },
 
   {

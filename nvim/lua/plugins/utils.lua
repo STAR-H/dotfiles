@@ -6,7 +6,7 @@ return {
     opts = {
       highlight = {
         after = "fg", -- "fg" or "bg" or empty
-        multiline = false
+        multiline = true
       },
     },
     keys = {
@@ -226,6 +226,36 @@ return {
 
       vim.api.nvim_set_hl(0, 'BookmarkSign', { fg = '#a9ddea', bg = '#3c3836' })
       vim.api.nvim_set_hl(0, 'BookmarkAnnotationSign', { fg = '#a9ddea', bg = '#3c3836' })
+    end
+  },
+
+  {
+    "tomasky/bookmarks.nvim",
+    event = "VeryLazy",
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    config = function()
+      require('bookmarks').setup {
+        -- sign_priority = 8,  --set bookmark sign priority to cover other sign
+        save_file = vim.fn.expand "$HOME/.bookmarks", -- bookmarks save file path
+        keywords = {},
+        signs = {
+          add = { text = "" },
+          ann = { text = "󰙆" },
+        },
+        on_attach = function(bufnr)
+          local bm = require "bookmarks"
+          local map = vim.keymap.set
+          map("n", "<Space>bb", bm.bookmark_toggle)                -- add or remove bookmark at current line
+          map("n", "<Space>bi", bm.bookmark_ann)                   -- add or edit mark annotation at current line
+          map("n", "<Space>bj", bm.bookmark_next)                  -- jump to next mark in local buffer
+          map("n", "<Space>bk", bm.bookmark_prev)                  -- jump to previous mark in local buffer
+          map("n", "<Space>ba", "<cmd>Telescope bookmarks list<cr>") -- show marked file list in quickfix window
+          map("n", "<Space>bc", bm.bookmark_clear_all)             -- removes all bookmarks
+          map("n", "<Space>bc", bm.bookmark_clean)
+        end
+      }
+      vim.api.nvim_set_hl(0, 'BookMarksAdd', { fg = '#a9ddea' })
+      vim.api.nvim_set_hl(0, 'BookMarksAnn', { fg = '#a9ddea' })
     end
   },
 
