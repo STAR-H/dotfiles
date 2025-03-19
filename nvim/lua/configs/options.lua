@@ -27,8 +27,7 @@ vim.opt.number = true                                   -- set numbered lines
 vim.opt.relativenumber = true                           -- set relative numbered lines
 vim.opt.numberwidth = 4                                 -- set number column width to 2 {default 4}
 
-vim.opt.signcolumn =
-"yes"                                                   -- always show the sign column, otherwise it would shift the text each time
+vim.opt.signcolumn = "yes"                              -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = true                                     -- display lines as one long line
 vim.opt.linebreak = true                                -- companion to wrap, don't split words
 vim.opt.scrolloff = 10                                  -- minimal number of screen lines to keep above and below the cursor
@@ -67,13 +66,10 @@ vim.opt.fillchars = {
   foldopen = "",
   foldclose = "",
   fold = " ",
-  foldsep = " ",
+  foldsep = "│",
 }
-local function foldtext()
-  return vim.api.nvim_buf_get_lines(0, vim.v.lnum - 1, vim.v.lnum, false)[1]
-end
--- vim.opt.foldmethod = "indent"
-vim.opt.foldtext = foldtext()
+vim.opt.foldcolumn = '0'
+vim.opt.smoothscroll = true
 
 vim.diagnostic.enable(false)                          -- disable diagnostic by default
 

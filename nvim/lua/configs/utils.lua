@@ -29,4 +29,24 @@ M.close_buffer = function()
     end
 end
 
+
+M.update_foldcolumn = function()
+  if not vim.wo.foldenable then
+    vim.wo.foldcolumn = "0"
+    return
+  end
+
+  local has_fold = false
+  local line_count = vim.api.nvim_buf_line_count(0)
+  for lnum = 1, line_count do
+    if vim.fn.foldlevel(lnum) > 0 then
+      has_fold = true
+      break
+    end
+  end
+
+  vim.wo.foldcolumn = has_fold and "1" or "0"
+end
+
+
 return M

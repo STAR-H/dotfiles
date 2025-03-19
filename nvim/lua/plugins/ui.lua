@@ -449,7 +449,14 @@ return {
       },
       select = {
         enabled = true,
-        telescope = require('telescope.themes').get_cursor({})
+        -- change codeaction telescope theme to get_cursor
+        get_config = function(opts)
+          if opts.kind == 'codeaction' then
+            return {
+              telescope = require('telescope.themes').get_cursor({})
+            }
+          end
+        end,
       }
     },
     config = function(_, opts)

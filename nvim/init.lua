@@ -25,7 +25,6 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- TODO: check git diff color
 -- load theme
 -- Load all cached colors in prevent
 local base46_cache = require "chadrc".base46.integrations or {}
@@ -58,3 +57,4 @@ vim.schedule(function()
   require "configs.mappings"
 end)
 
+-- WARNING:  the whole configuration is need nvim V0.10.4

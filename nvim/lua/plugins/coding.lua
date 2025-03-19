@@ -20,16 +20,13 @@ return {
         config = function()
           local snippetpath = vim.fn.stdpath("data") .. "/lazy/vim-snippets/snippets"
           require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippetpath })
-          local ls = require('luasnip')
-          vim.keymap.set({ "i" }, "<Tab>", function() ls.expand() end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<Tab>", function() ls.jump(1) end, { silent = true })
-          vim.keymap.set({ "i", "s" }, "<S-Tab>", function() ls.jump(-1) end, { silent = true })
         end
       },
     },
     config = function()
       local cmp = require 'cmp'
       local compare = require("cmp.config.compare")
+      local luasnip = require('luasnip')
 
       local options = {
         snippet = {
@@ -50,46 +47,48 @@ return {
           },
         },
 
+        experimental = { ghost_text = true },
+
         mapping = cmp.mapping.preset.insert({
           ["<C-k>"] = cmp.mapping.select_prev_item(),
           ["<C-j>"] = cmp.mapping.select_next_item(),
           ['<C-b>'] = cmp.mapping.scroll_docs(-4),
           ['<C-f>'] = cmp.mapping.scroll_docs(4),
           ['<C-e>'] = cmp.mapping.abort(),
-          ['<CR>']  = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-          -- use super tab uncomment below
-          -- ["<Tab>"]   = cmp.mapping({
-          --     c = function()
-          --         if cmp.visible() then
-          --             cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-          --         else
-          --             cmp.complete()
-          --         end
-          --     end,
-          --     i = function(fallback)
-          --         if cmp.visible() then
-          --             cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-          --         else
-          --             fallback()
-          --         end
-          --     end,
-          -- }),
-          -- ["<S-Tab>"] = cmp.mapping({
-          --     c = function()
-          --         if cmp.visible() then
-          --             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-          --         else
-          --             cmp.complete()
-          --         end
-          --     end,
-          --     i = function(fallback)
-          --         if cmp.visible() then
-          --             cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
-          --         else
-          --             fallback()
-          --         end
-          --     end,
-          -- }),
+          -- use super tab
+          ['<CR>'] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if luasnip.expandable() then
+                luasnip.expand()
+              else
+                cmp.confirm({
+                  select = true,
+                })
+              end
+            else
+              fallback()
+            end
+          end),
+
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif luasnip.locally_jumpable(1) then
+              luasnip.jump(1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif luasnip.locally_jumpable(-1) then
+              luasnip.jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
 
         sources = cmp.config.sources(
@@ -161,9 +160,10 @@ return {
           disallow_prefix_unmatching      = false,
         },
       }
+
       cmp.setup(options)
 
-      -- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
       cmp.setup.cmdline(':', {
         completion = { autocomplete = false },
         mapping = cmp.mapping.preset.cmdline(),
@@ -175,6 +175,9 @@ return {
             { name = 'cmdline' }
           })
       })
+
+      -- override the deprecate abbr item highlight add strikethrough line
+      vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecatedDefault', { bg = 'NONE', strikethrough = true, fg = '#656565' })
     end
   },
 }

@@ -112,15 +112,15 @@ vim.api.nvim_create_autocmd({ "VimResized" }, {
 -- quit diff mode when unmodified
 vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter" }, {
   callback = function()
-    vim.keymap.set("n", "q", function()
-      if require("configs.utils").is_diff_mode() then
+    if require("configs.utils").is_diff_mode() then
+      vim.keymap.set("n", "q", function()
         if not vim.bo.modified then
           vim.cmd("qa") -- 退出所有窗口
         else
           vim.notify("Buffer has unsaved changes. Use `:qa!` to quit without saving.", vim.log.levels.WARN)
         end
-      end
-    end, { buffer = true, desc = "Quit if no changes" })
+      end, { buffer = true, desc = "Quit if no changes" })
+    end
   end,
 })
 
@@ -137,4 +137,10 @@ vim.api.nvim_create_autocmd("FileType", {
       vim.opt.shiftwidth = 4
       vim.bo.commentstring = "// %s"
   end,
+})
+
+vim.api.nvim_create_autocmd({"BufWinEnter", "CursorHold", "InsertLeave"}, {
+  callback = function()
+    require("configs.utils").update_foldcolumn()
+  end
 })
