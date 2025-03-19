@@ -71,6 +71,8 @@ vim.opt.fillchars = {
 vim.opt.foldcolumn = '0'
 vim.opt.smoothscroll = true
 
+vim.opt.diffopt:append{ 'algorithm:histogram', 'foldcolumn:1'}
+
 vim.diagnostic.enable(false)                          -- disable diagnostic by default
 
 vim.opt.shortmess:append "c"                          -- don't give |ins-completion-menu| messages
