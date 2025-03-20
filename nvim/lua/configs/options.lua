@@ -71,7 +71,7 @@ vim.opt.fillchars = {
 vim.opt.foldcolumn = '0'
 vim.opt.smoothscroll = true
 
-vim.opt.diffopt:append{ 'algorithm:histogram', 'foldcolumn:1'}
+vim.opt.diffopt:append { 'algorithm:histogram', 'foldcolumn:1', 'indent-heuristic' }
 
 vim.diagnostic.enable(false)                          -- disable diagnostic by default
 
