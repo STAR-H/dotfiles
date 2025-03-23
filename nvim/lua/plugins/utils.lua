@@ -25,34 +25,6 @@ return {
   },
 
   {
-    "lukas-reineke/indent-blankline.nvim",
-    enabled = not require("configs.utils").is_diff_mode(),
-    event = "User FilePost",
-    opts = {
-      indent = { char = "│", highlight = "IblChar" },
-      scope = { show_start = false, show_end = false, char = "│", highlight = "IblScopeChar" },
-      exclude = {
-        filetypes = {
-          "Trouble",
-          "alpha",
-          "dashboard",
-          "help",
-          "lazy",
-          "mason",
-          "nvim-tree",
-          "notify",
-          "trouble",
-        },
-      },
-    },
-    config = function(_, opts)
-      local hooks = require "ibl.hooks"
-      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-      require("ibl").setup(opts)
-    end,
-  },
-
-  {
     "andersevenrud/nvim_context_vt",
     event = "VeryLazy",
     enabled = not require("configs.utils").is_diff_mode(),
@@ -242,5 +214,35 @@ return {
       }
       vim.g.project_root_dir = require("project_nvim.project").get_project_root() or vim.uv.cwd()
     end
+  },
+
+  {
+    "folke/snacks.nvim",
+    priority = 1000,
+    lazy = false,
+    ---@type snacks.Config
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+      animate = { enabled = true },
+      bufdelete = { enabled = true },
+      bigfile = { enabled = true },
+      image = { enabled = true },
+      indent = { enabled = true },
+      quickfile = { enabled = true },
+      scope = { enabled = true },
+      scroll = { enabled = true },
+      profiler = { enabled = true },
+
+      dashboard = { enabled = false },
+      explorer = { enabled = false },
+      input = { enabled = false },
+      picker = { enabled = false },
+      notifier = { enabled = false },
+      statuscolumn = { enabled = false },
+      words = { enabled = false },
+      lazygit = {enabled = false }
+    },
   }
 }

@@ -54,6 +54,9 @@ keymap("n", "dt", function() require("configs.utils").toggle_diagnostics() end,
 keymap("n", "<leader>d", function() require("configs.utils").close_buffer() end,
   { silent = true, noremap = true, desc = "Global delete buffer" })
 
+keymap("n", "<leader>D", function() require("snacks").bufdelete.other() end,
+  { silent = true, noremap = true, desc = "Global delete all buffer except the current one" })
+
 -- Exit in terminal mode
 keymap("t", "jk", "<C-\\><C-n>", { noremap = true, silent = true })
 keymap("t", "kj", "<C-\\><C-n>", { noremap = true, silent = true })
