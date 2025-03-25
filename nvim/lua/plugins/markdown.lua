@@ -3,6 +3,7 @@ return {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown' },
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
+    keys = { { "<C-e>", "<cmd>RenderMarkdown toggle<cr>", desc = "RenderMarkdown toggle" } },
     opts = {
       completions = { lsp = { enabled = true } },
 
@@ -22,6 +23,8 @@ return {
       anti_conceal = { enabled = false },
 
       indent = {enabled = false},
+
+      preset = 'obsidian',
     },
   },
   -- install with yarn or npm

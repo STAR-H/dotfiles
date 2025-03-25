@@ -74,6 +74,7 @@ M.ui = {
   statusline = {
     enabled = false,
   },
+  telescope = { style = "bordered" }
 }
 
 M.cheatsheet = {

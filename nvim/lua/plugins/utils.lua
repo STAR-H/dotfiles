@@ -228,8 +228,13 @@ return {
       animate = { enabled = true },
       bufdelete = { enabled = true },
       bigfile = { enabled = true },
-      image = { enabled = true },
-      indent = { enabled = true },
+      image = {
+        enabled = true,
+        doc = {
+          inline = false, -- use float window show the image
+        }
+      },
+      indent = { enabled = false },
       quickfile = { enabled = true },
       scope = { enabled = true },
       scroll = { enabled = true },

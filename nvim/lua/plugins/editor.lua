@@ -163,12 +163,22 @@ return {
             "--smart-case",
             "--trim" --remove indentation
           },
+          layout_strategy = 'vertical', -- horizontal or vertical
           layout_config = {
-            horizontal = { prompt_position = "bottom", preview_width = 0.6 },
-            vertical = { mirror = false },
-            width = 0.9,
-            height = 0.9,
-            preview_cutoff = 120,
+            horizontal = {
+              prompt_position = "bottom",
+              preview_width = 0.6,
+              width = 0.9,
+              height = 0.8,
+              preview_cutoff = 120
+            },
+            vertical = {
+              mirror = false,
+              preview_height = 0.7,
+              width = 0.65,
+              height = 0.95,
+              preview_cutoff = 40
+            },
           },
           mappings = {
             i = {
@@ -324,15 +334,17 @@ return {
         vim.keymap.set('n', 'a', api.fs.create, opts('Create File or Dir'))
         vim.keymap.set('n', 'd', api.fs.remove, opts('Delete'))
         vim.keymap.set('n', 'e', api.tree.expand_all, opts('Expand All'))
-        vim.keymap.set('n', 'p', api.node.navigate.parent, opts('Parent Directory'))
-        vim.keymap.set('n', 'w', api.tree.collapse_all, opts('Collapse'))
+        vim.keymap.set('n', 'gp', api.node.navigate.parent, opts('Parent Directory'))
+        vim.keymap.set('n', 'E', api.tree.collapse_all, opts('Collapse All'))
         vim.keymap.set('n', 'H', api.tree.toggle_hidden_filter, opts('Toggle Dotfiles'))
         vim.keymap.set('n', '<C-v>', api.node.open.vertical, opts('Open: Vertical Split'))
         vim.keymap.set('n', '<C-x>', api.node.open.horizontal, opts('Open: Horizontal Split'))
         vim.keymap.set('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
         vim.keymap.set('n', 'c', api.tree.change_root_to_node, opts('Change Root Dir'))
-        vim.keymap.set('n', 'x', api.fs.cut, opts('Cut'))
+        vim.keymap.set('n', 'x', api.fs.cut, opts('Cut file'))
         vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
+        vim.keymap.set('n', 'p', api.fs.paste, opts('Paste file'))
+        vim.keymap.set('n', 'yy', api.fs.copy.node, opts('Copy file'))
         -- custom key mappings end
       end
 

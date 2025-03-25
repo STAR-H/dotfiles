@@ -136,6 +136,7 @@ vim.api.nvim_create_autocmd("FileType", {
   callback = function()
       vim.opt.shiftwidth = 4
       vim.bo.commentstring = "// %s"
+      Snacks.indent.enable() -- only enable indent in c, cpp, h, hpp
   end,
 })
 

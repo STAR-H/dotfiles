@@ -30,8 +30,8 @@ vim.opt.numberwidth = 4                                 -- set number column wid
 vim.opt.signcolumn = "yes"                              -- always show the sign column, otherwise it would shift the text each time
 vim.opt.wrap = true                                     -- display lines as one long line
 vim.opt.linebreak = true                                -- companion to wrap, don't split words
-vim.opt.scrolloff = 10                                  -- minimal number of screen lines to keep above and below the cursor
-vim.opt.sidescrolloff = 10                              -- minimal number of screen columns either side of cursor if wrap is `false`
+-- vim.opt.scrolloff = 10                                  -- minimal number of screen lines to keep above and below the cursor
+-- vim.opt.sidescrolloff = 10                              -- minimal number of screen columns either side of cursor if wrap is `false`
 vim.opt.whichwrap = "bs<>[]hl"                          -- which "horizontal" keys are allowed to travel to prev/next line
 
 vim.opt.ruler = false
