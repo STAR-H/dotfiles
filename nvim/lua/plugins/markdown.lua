@@ -5,6 +5,7 @@ return {
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
     keys = { { "<C-e>", "<cmd>RenderMarkdown toggle<cr>", desc = "RenderMarkdown toggle" } },
     opts = {
+      enabled = false, -- default not render the markdown file
       completions = { lsp = { enabled = true } },
 
       sign = { enabled = false },
@@ -47,7 +48,7 @@ return {
 
   {
     "HakonHarnes/img-clip.nvim",
-    event = "VeryLazy",
+    ft = { 'markdown' },
     opts = {
       -- add options here
       -- or leave it empty to use the default settings

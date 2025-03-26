@@ -140,8 +140,17 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- dynamic add foldcolumn
 vim.api.nvim_create_autocmd({"BufWinEnter", "CursorHold", "InsertLeave"}, {
   callback = function()
     require("configs.utils").update_foldcolumn()
   end
+})
+
+-- only enable indent by below filetype
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp", "h", "hpp", "lua", "python" },
+  callback = function()
+    Snacks.indent.enable()
+  end,
 })

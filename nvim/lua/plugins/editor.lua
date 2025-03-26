@@ -137,7 +137,7 @@ return {
       { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = 'telescope list buffers' },
       { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = 'telescope fuzzy search' },
       { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",      desc = 'telescope current buffer tags' },
-      { "z=",         "<cmd>Telescope spell_suggest<cr>",             desc = 'telescope spell suggest'}
+      { "z=",         "<cmd>Telescope spell_suggest<cr>",             { desc = 'telescope spell suggest', noremap = true } }
     },
     dependencies = {
       { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -174,9 +174,9 @@ return {
             },
             vertical = {
               mirror = false,
-              preview_height = 0.7,
-              width = 0.65,
-              height = 0.95,
+              preview_height = 0.75,
+              width = 0.7,
+              height = 0.9,
               preview_cutoff = 40
             },
           },
@@ -206,9 +206,11 @@ return {
             prompt_title = "Find Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') ..")"
           },
           buffers = {
+            prompt_title = "Switch Buffers",
+            sort_lastused = true,
             theme = "dropdown",
             previewer = false,
-            ignore_current_buffer = true,
+            ignore_current_buffer = false,
           },
           commands = {
             theme = "dropdown",
@@ -224,7 +226,11 @@ return {
             results_ts_highlight = false,
           },
           spell_suggest = {
-            theme = "cursor"
+            theme = "cursor",
+            layout_config = {
+              width = 0.15,
+              height = 0.1
+            }
           },
         },
       })
@@ -330,7 +336,7 @@ return {
         vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
         vim.keymap.set('n', 'r', api.fs.rename, opts('Rename'))
         vim.keymap.set('n', 'y', api.fs.copy.filename, opts('Copy Name'))
-        vim.keymap.set('n', 'Y', api.fs.copy.relative_path, opts('Copy Relative Path'))
+        vim.keymap.set('n', 'Y', api.fs.copy.absolute_path, opts('Copy Absolute Path'))
         vim.keymap.set('n', 'a', api.fs.create, opts('Create File or Dir'))
         vim.keymap.set('n', 'd', api.fs.remove, opts('Delete'))
         vim.keymap.set('n', 'e', api.tree.expand_all, opts('Expand All'))
@@ -407,21 +413,21 @@ return {
     version = "*",
     event = "VeryLazy",
     keys = {
-      {"<C-h>", mode = "v", [[:<C-u>lua MiniSurround.add('visual')<CR>`]], {slient = true, desc = "Markdown highlight color"}}
+      { "<C-h>", mode = "v", [[:<C-u>lua MiniSurround.add('visual')<CR>`]], { slient = true, desc = "Markdown highlight color" } }
     },
     config = function()
       require("mini.surround").setup({
         mappings = {
-          add = '<leader>sa', -- Add surrounding in Normal and Visual modes
-          delete = '<leader>sd', -- Delete surrounding
-          find = '<leader>sf', -- Find surrounding (to the right)
-          find_left = '<leader>sF', -- Find surrounding (to the left)
-          highlight = '<leader>sh', -- Highlight surrounding
-          replace = '<leader>sr', -- Replace surrounding
-          update_n_lines = '<leader>sn', -- Update `n_lines`
+          add = 'gsa',            -- Add surrounding in Normal and Visual modes
+          delete = 'gsd',         -- Delete surrounding
+          find = 'gsf',           -- Find surrounding (to the right)
+          find_left = 'gsF',      -- Find surrounding (to the left)
+          highlight = 'gsh',      -- Highlight surrounding
+          replace = 'gsr',        -- Replace surrounding
+          update_n_lines = 'gsn', -- Update `n_lines`
 
-          suffix_last = 'l', -- Suffix to search with "prev" method
-          suffix_next = 'n', -- Suffix to search with "next" method
+          suffix_last = 'l',      -- Suffix to search with "prev" method
+          suffix_next = 'n',      -- Suffix to search with "next" method
         },
         silent = true
       })
