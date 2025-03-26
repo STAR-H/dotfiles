@@ -232,7 +232,7 @@ return {
       bufdelete = { enabled = true },
       bigfile = { enabled = true },
       image = {
-        enabled = true,
+        enabled = false,
         doc = {
           inline = false, -- use float window show the image
         }
@@ -252,7 +252,11 @@ return {
       words = { enabled = false },
       lazygit = { enabled = false }
     },
-    keys = { { "<leader>z", function() Snacks.zen.zoom() end, desc = "Snacks Zen Toggle Zoom" } },
+    keys = {
+      { "<leader>z",        function() Snacks.zen.zoom() end,    desc = "Snacks Zen Toggle Zoom" },
+      { "<leader><leader>", function() Snacks.image.hover() end, desc = "Snacks show image at cursor" },
+  },
+
 
 
   }
