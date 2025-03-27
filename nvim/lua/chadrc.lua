@@ -22,7 +22,6 @@ M.base46 = {
     "trouble",
     "whichkey",
     "codeactionmenu",
-    "blankline",
   },
 }
 

@@ -67,3 +67,15 @@ keymap("n", "<leader>ch", "<Cmd>NvCheatsheet<CR>", { desc = "nvchad nvcheatsheet
 
 -- NOTE: remove the "`" key in neovim due to this key use prefix key in tmux
 keymap("n", "`", "<NOP>", { noremap = true, silent = true })
+
+keymap('n', '<leader>ul', function()
+  local number = vim.o.number
+  local relativenumber = vim.o.relativenumber
+  if number or relativenumber then
+    vim.o.number = false
+    vim.o.relativenumber = false
+  else
+    vim.o.number = true
+    vim.o.relativenumber = true
+  end
+end, { desc = "toogle show line number and relativenumber" })
