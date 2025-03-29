@@ -163,7 +163,7 @@ vim.api.nvim_create_augroup("MarkdownAutoSave", { clear = true })
 local save_timer = nil -- 保存定时器对象
 
 -- 退出插入模式后触发
-vim.api.nvim_create_autocmd({ "InsertLeave", "BufModifiedSet" }, {
+vim.api.nvim_create_autocmd({ "InsertLeave", "BufModifiedSet", "FocusLost" }, {
   group = "MarkdownAutoSave",
   pattern = "*.md",
   callback = function()
@@ -182,7 +182,7 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufModifiedSet" }, {
       if vim.bo.filetype == "markdown" and vim.api.nvim_buf_is_valid(0) and is_normal_mode and vim.bo.modified then
         -- 保存并显示提示
         vim.cmd("silent! update")
-        vim.notify("🔄 Auto Saved at " .. os.date("%H:%M:%S"), vim.log.levels.INFO, {
+        vim.notify(" Auto Saved at " .. os.date("%H:%M:%S"), vim.log.levels.INFO, {
           timeout = 800,
         })
       end
