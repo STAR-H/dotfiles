@@ -81,7 +81,7 @@ return {
   {
     "folke/noice.nvim",
     enabled = true,
-    event = "UIEnter",
+    event = "VeryLazy",
     dependencies = {
       "MunifTanjim/nui.nvim",
     },
@@ -187,15 +187,30 @@ return {
 
   {
     "nvim-lualine/lualine.nvim",
-    event = "UIEnter",
+    event = "VeryLazy",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
       "SmiteshP/nvim-navic",
       "folke/noice.nvim"
     },
+    init = function()
+      vim.g.lualine_laststatus = vim.o.laststatus
+      if vim.fn.argc(-1) > 0 then
+        -- set an empty statusline till lualine loads
+        vim.o.statusline = " "
+      else
+        -- hide the statusline on the starter page
+        vim.o.laststatus = 0
+      end
+
+      vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#32302f' })
+      -- lualine diff status highlight override
+      vim.api.nvim_set_hl(0, 'stlDiffAdd', { fg = '#b8bb26', bg = '#32302f' })
+      vim.api.nvim_set_hl(0, 'stlDiffDelete', { fg = '#fb4934', bg = '#32302f' })
+      vim.api.nvim_set_hl(0, 'stlDiffModified', { fg = '#f18019', bg = '#32302f' })
+    end,
     config = function()
       vim.o.laststatus = vim.g.lualine_laststatus
-      vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#32302f' })
       local function diagnostics_component()
         local bufnr = vim.api.nvim_get_current_buf()
         if not vim.diagnostic.is_enabled() then
@@ -252,12 +267,21 @@ return {
           section_separators   = { left = '', right = '' },
           component_separators = { left = '', right = '' },
           disabled_filetypes   = {
-            statusline = { "NvimTree", "tagbar", "undotree", "vista_kind", "vista_markdown", "nvdash", "trouble" },
-            winbar     = { "NvimTree", "tagbar", "undotree", "vista_kind", "vista_markdown", "nvdash", "trouble" },
+            statusline = { "nvdash" },
           },
-          ignore_focus         = {},
+          ignore_focus         = {
+            "NvimTree",
+            "tagbar",
+            "undotree",
+            "vista_kind",
+            "vista_markdown",
+            "trouble",
+            "AvanteInput",
+            "AvanteSelectedFiles",
+            "Avante"
+          },
           always_divide_middle = true,
-          globalstatus         = false,
+          globalstatus         = true,
           refresh              = {
             statusline = 500,
             tabline    = 1000,
@@ -422,6 +446,9 @@ return {
         textobjects = { enable = true },
       }
       require 'nvim-treesitter.configs'.setup(opts)
+
+      -- treesitter highlight override
+      vim.api.nvim_set_hl(0, '@comment', { fg = '#808080', italic = true })
     end,
   },
 

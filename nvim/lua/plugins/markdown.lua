@@ -1,11 +1,12 @@
 return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    ft = { 'markdown' },
+    ft = { "markdown", "Avante" },
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-    keys = { { "<C-e>", "<cmd>RenderMarkdown toggle<cr>", desc = "RenderMarkdown toggle" } },
+    keys = { { "<C-e>", "<cmd>RenderMarkdown buf_toggle<cr>", desc = "RenderMarkdown toggle" } },
     opts = {
-      enabled = false, -- default not render the markdown file
+      enabled = true,
+      file_types = { "markdown", "Avante" },
       completions = { lsp = { enabled = true } },
 
       sign = { enabled = false },
@@ -13,15 +14,19 @@ return {
       heading = {
         icons = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' },
         width = 'block',
-        position = 'overlay',
+        position = 'inline',
       },
 
       checkbox = {
         position = 'overlay',
         checked = { scope_highlight = '@markup.strikethrough' }
       },
+      pipe_table = {
+        cell = 'trimmed',
+        preset = 'round',
+      },
 
-      anti_conceal = { enabled = false },
+      anti_conceal = { enabled = true },
 
       indent = {enabled = false},
 

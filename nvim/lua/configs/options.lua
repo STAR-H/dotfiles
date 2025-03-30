@@ -35,7 +35,7 @@ vim.opt.sidescrolloff = 10                              -- minimal number of scr
 vim.opt.whichwrap = "bs<>[]hl"                          -- which "horizontal" keys are allowed to travel to prev/next line
 
 vim.opt.ruler = false
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 vim.opt.list = true
 vim.opt.magic = true
 vim.opt.redrawtime = 300

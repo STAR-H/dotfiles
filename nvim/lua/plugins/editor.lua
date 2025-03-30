@@ -381,6 +381,8 @@ return {
           dotfiles = true,
         },
       })
+      -- nvim-tree highlight override
+      vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', { bg = '#2e2e2e', bold = true })
     end
   },
 
