@@ -10,6 +10,18 @@ return {
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-cmdline",
       "hrsh7th/cmp-nvim-lua",
+      {
+        "uga-rosa/cmp-dictionary",
+        config = function()
+          -- 定义词典保存路径
+          local dict_path = vim.fn.stdpath('config') .. '/dictionary/words_alpha.txt'
+
+          require("cmp_dictionary").setup({
+            paths = { dict_path, },
+            exact_length = 2,
+          })
+        end
+      },
       --- snippets plugins
       {
         "L3MON4D3/LuaSnip",
@@ -94,7 +106,8 @@ return {
         sources = cmp.config.sources(
           {
             {
-              name = 'nvim_lsp', keyword_length = 2,
+              name = 'nvim_lsp',
+              keyword_length = 2,
               -- remove lsp snippet item from completion list
               entry_filter = function(entry)
                 return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()
@@ -159,6 +172,9 @@ return {
           disallow_partial_matching       = false,
           disallow_prefix_unmatching      = false,
         },
+        performance = {
+          max_view_entries = 15,
+        }
       }
 
       cmp.setup(options)
@@ -176,6 +192,20 @@ return {
           })
       })
 
+      cmp.setup.filetype({ 'markdown', 'Avante' }, {
+        sources = {
+          { name = 'luasnip',         group_index = 1, priority = 100 },
+          { name = 'render-markdown', group_index = 1, priority = 100 },
+          { name = 'buffer',          group_index = 3, priority = 40 },
+          { name = 'path',            group_index = 3, priority = 40 },
+          {
+            name = "dictionary",
+            keyword_length = 2,
+            group_index = 1,
+            priority = 80
+          },
+        }
+      })
       -- override the deprecate abbr item highlight add strikethrough line
       vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecatedDefault', { bg = 'NONE', strikethrough = true, fg = '#656565' })
     end

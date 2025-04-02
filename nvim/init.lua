@@ -33,11 +33,11 @@ for _, v in ipairs(base46_cache) do
 end
 
 -- diff highlight override
-vim.api.nvim_set_hl(0, 'DiffAdd', { bg = '#b8bb26', fg = '#232323', })
-vim.api.nvim_set_hl(0, 'DiffChange', { bg = '#444444' })
-vim.api.nvim_set_hl(0, 'DiffDelete', { fg = '#fb4934' })
+vim.api.nvim_set_hl(0, 'DiffAdd',      { bg = '#b8bb26', fg = '#232323', })
+vim.api.nvim_set_hl(0, 'DiffChange',   { bg = '#444444' })
+vim.api.nvim_set_hl(0, 'DiffDelete',   { fg = '#fb4934' })
 vim.api.nvim_set_hl(0, 'DiffModified', { fg = '#f18019' })
-vim.api.nvim_set_hl(0, 'DiffText', { bg = '#fabd2f', fg = '#232323', bold = true })
+vim.api.nvim_set_hl(0, 'DiffText',     { bg = '#fabd2f', fg = '#232323', bold = true })
 
 require "configs.options"
 require "configs.autocmds"

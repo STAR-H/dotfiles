@@ -255,9 +255,6 @@ return {
     keys = {
       { "<leader>z",        function() Snacks.zen.zoom() end,    desc = "Snacks Zen Toggle Zoom" },
       { "<leader><leader>", function() Snacks.image.hover() end, desc = "Snacks show image at cursor" },
-  },
-
-
-
+    }
   }
 }

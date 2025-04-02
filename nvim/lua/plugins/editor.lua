@@ -161,7 +161,7 @@ return {
             "--line-number",
             "--column",
             "--smart-case",
-            "--trim" --remove indentation
+            "--trim"                    --remove indentation
           },
           layout_strategy = 'vertical', -- horizontal or vertical
           layout_config = {
@@ -195,6 +195,8 @@ return {
               ["q"]     = actions.close,
               ["<C-f>"] = actions.preview_scrolling_down,
               ["<C-b>"] = actions.preview_scrolling_up,
+              ["<C-j>"] = actions.move_selection_next,
+              ["<C-k>"] = actions.move_selection_previous,
             },
           },
         },
@@ -203,7 +205,7 @@ return {
             theme = "dropdown",
             previewer = false,
             cwd = vim.g.project_root_dir,
-            prompt_title = "Find Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') ..")"
+            prompt_title = "Find Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")"
           },
           buffers = {
             prompt_title = "Switch Buffers",
@@ -219,19 +221,24 @@ return {
           live_grep = {
             disable_coordinates = true,
             cwd = vim.g.project_root_dir,
-            prompt_title = "Live Grep at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') ..")"
+            prompt_title = "Live Grep at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")"
           },
           current_buffer_fuzzy_find = {
             skip_empty_lines = true,
             results_ts_highlight = false,
           },
           spell_suggest = {
+            prompt_title = "Spell Suggestion",
             theme = "cursor",
             layout_config = {
               width = 0.15,
               height = 0.1
             }
           },
+          lsp_document_symbols = {
+            symbol_width = 60,
+            symbol_type_width = 10,
+          }
         },
       })
 
@@ -332,25 +339,25 @@ return {
         -- api.config.mappings.default_on_attach(bufnr)
 
         -- custom key mappings start
-        vim.keymap.set('n', 'h', api.node.navigate.parent_close, opts('Close'))
-        vim.keymap.set('n', 'l', api.node.open.edit, opts('Open'))
-        vim.keymap.set('n', 'r', api.fs.rename, opts('Rename'))
-        vim.keymap.set('n', 'y', api.fs.copy.filename, opts('Copy Name'))
-        vim.keymap.set('n', 'Y', api.fs.copy.absolute_path, opts('Copy Absolute Path'))
-        vim.keymap.set('n', 'a', api.fs.create, opts('Create File or Dir'))
-        vim.keymap.set('n', 'd', api.fs.remove, opts('Delete'))
-        vim.keymap.set('n', 'e', api.tree.expand_all, opts('Expand All'))
-        vim.keymap.set('n', 'gp', api.node.navigate.parent, opts('Parent Directory'))
-        vim.keymap.set('n', 'E', api.tree.collapse_all, opts('Collapse All'))
-        vim.keymap.set('n', 'H', api.tree.toggle_hidden_filter, opts('Toggle Dotfiles'))
-        vim.keymap.set('n', '<C-v>', api.node.open.vertical, opts('Open: Vertical Split'))
-        vim.keymap.set('n', '<C-x>', api.node.open.horizontal, opts('Open: Horizontal Split'))
-        vim.keymap.set('n', '<BS>', api.tree.change_root_to_parent, opts('Up'))
-        vim.keymap.set('n', 'c', api.tree.change_root_to_node, opts('Change Root Dir'))
-        vim.keymap.set('n', 'x', api.fs.cut, opts('Cut file'))
-        vim.keymap.set('n', '?', api.tree.toggle_help, opts('Help'))
-        vim.keymap.set('n', 'p', api.fs.paste, opts('Paste file'))
-        vim.keymap.set('n', 'yy', api.fs.copy.node, opts('Copy file'))
+        vim.keymap.set('n', 'h',     api.node.navigate.parent_close, opts('Close'))
+        vim.keymap.set('n', 'l',     api.node.open.edit,             opts('Open'))
+        vim.keymap.set('n', 'r',     api.fs.rename,                  opts('Rename'))
+        vim.keymap.set('n', 'y',     api.fs.copy.filename,           opts('Copy Name'))
+        vim.keymap.set('n', 'Y',     api.fs.copy.absolute_path,      opts('Copy Absolute Path'))
+        vim.keymap.set('n', 'a',     api.fs.create,                  opts('Create File or Dir'))
+        vim.keymap.set('n', 'd',     api.fs.remove,                  opts('Delete'))
+        vim.keymap.set('n', 'e',     api.tree.expand_all,            opts('Expand All'))
+        vim.keymap.set('n', 'gp',    api.node.navigate.parent,       opts('Parent Directory'))
+        vim.keymap.set('n', 'E',     api.tree.collapse_all,          opts('Collapse All'))
+        vim.keymap.set('n', 'H',     api.tree.toggle_hidden_filter,  opts('Toggle Dotfiles'))
+        vim.keymap.set('n', '<C-v>', api.node.open.vertical,         opts('Open: Vertical Split'))
+        vim.keymap.set('n', '<C-x>', api.node.open.horizontal,       opts('Open: Horizontal Split'))
+        vim.keymap.set('n', '<BS>',  api.tree.change_root_to_parent, opts('Up'))
+        vim.keymap.set('n', 'c',     api.tree.change_root_to_node,   opts('Change Root Dir'))
+        vim.keymap.set('n', 'x',     api.fs.cut,                     opts('Cut file'))
+        vim.keymap.set('n', '?',     api.tree.toggle_help,           opts('Help'))
+        vim.keymap.set('n', 'p',     api.fs.paste,                   opts('Paste file'))
+        vim.keymap.set('n', 'yy',    api.fs.copy.node,               opts('Copy file'))
         -- custom key mappings end
       end
 
@@ -391,7 +398,7 @@ return {
     keys = {
       { "<leader>t", "<cmd>Vista!!<cr>", desc = "Tagbar Toggle(On/Off)" },
     },
-    ft = { "cpp", "c" , "markdown"},
+    ft = { "cpp", "c", "markdown" },
     config = function()
       vim.g.vista_default_executive = 'ctags'
       vim.cmd("let g:vista_executive_for = {'cpp': 'ctags'}")
@@ -477,11 +484,10 @@ return {
       })
     end,
     config = function()
-      require("mini.cursorword").setup({delay=500})
+      require("mini.cursorword").setup({ delay = 500 })
 
-      vim.api.nvim_set_hl(0, 'MiniCursorword', {bg = "#35333c", bold = true})
-      vim.api.nvim_set_hl(0, 'MiniCursorwordCurrent', {underline = true})
-
+      vim.api.nvim_set_hl(0, 'MiniCursorword',        { bg = "#35333c", bold = true })
+      vim.api.nvim_set_hl(0, 'MiniCursorwordCurrent', { underline = true })
     end
   },
 }

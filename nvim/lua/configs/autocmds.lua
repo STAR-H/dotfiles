@@ -134,13 +134,13 @@ vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
 vim.api.nvim_create_autocmd("FileType", {
   pattern = { "c", "cpp", "h", "hpp" },
   callback = function()
-      vim.opt.shiftwidth = 4
-      vim.bo.commentstring = "// %s"
+    vim.opt.shiftwidth = 4
+    vim.bo.commentstring = "// %s"
   end,
 })
 
 -- dynamic add foldcolumn
-vim.api.nvim_create_autocmd({"BufWinEnter", "CursorHold", "InsertLeave"}, {
+vim.api.nvim_create_autocmd({ "BufWinEnter", "CursorHold", "InsertLeave" }, {
   callback = function()
     require("configs.utils").update_foldcolumn()
   end

@@ -17,7 +17,8 @@ keymap("n", "<C-l>", "<C-w>l", { noremap = true, silent = true, desc = "Navigate
 
 -- Clear search hightlight
 keymap("n", "<ESC>", function()
-  vim.cmd("nohlsearch") -- clear highlight
+  -- clear highlight
+  vim.cmd("nohlsearch")
   vim.fn.setreg("/", "")
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>", true, false, true), "n", false) -- send original <ESC> key
 end, { noremap = true, silent = true })

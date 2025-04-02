@@ -28,7 +28,7 @@ return {
 
       anti_conceal = { enabled = true },
 
-      indent = {enabled = false},
+      indent = { enabled = false },
 
       preset = 'obsidian',
     },
@@ -47,7 +47,6 @@ return {
       vim.g.mkdp_markdown_css = vim.fn.stdpath('config') .. "/lua/configs/markdown/notion-light-enhanced.css"
       -- vim.g.mkdp_theme = 'dark' -- light or dark
       -- vim.g.mkdp_markdown_css = vim.fn.stdpath('config') .. "/lua/configs/markdown/notion-dark-enhanced.css"
-
     end
   },
 

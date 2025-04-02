@@ -1,5 +1,6 @@
 return {
-  { "williamboman/mason.nvim",
+  {
+    "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     dependencies = "williamboman/mason-lspconfig.nvim",
     config = function()
@@ -28,7 +29,8 @@ return {
     end,
   },
 
-  { "neovim/nvim-lspconfig",
+  {
+    "neovim/nvim-lspconfig",
     event = "User FilePost",
     enabled = not require("configs.utils").is_diff_mode(),
     config = function()
@@ -86,7 +88,8 @@ return {
     end,
   },
 
-  { "SmiteshP/nvim-navic",
+  {
+    "SmiteshP/nvim-navic",
     event = "VeryLazy",
     dependencies = { "neovim/nvim-lspconfig" },
     init = function()
@@ -146,7 +149,8 @@ return {
 
 
 
-  { "nvimtools/none-ls.nvim",
+  {
+    "nvimtools/none-ls.nvim",
     enabled = false,
     event = "VeryLazy",
     ft = { "cpp", "c" },

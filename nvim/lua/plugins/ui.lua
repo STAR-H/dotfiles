@@ -123,7 +123,7 @@ return {
           filter = {
             any = {
               { find = "mark%-%d.-" }, -- vim-mark mark-1
-              { find = ".(%w+)\\>$"}, -- vim-mark /\<xxxxx\>
+              { find = ".(%w+)\\>$" }, -- vim-mark /\<xxxxx\>
             },
           },
           opts = { skip = true },
@@ -205,8 +205,8 @@ return {
 
       vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#32302f' })
       -- lualine diff status highlight override
-      vim.api.nvim_set_hl(0, 'stlDiffAdd', { fg = '#b8bb26', bg = '#32302f' })
-      vim.api.nvim_set_hl(0, 'stlDiffDelete', { fg = '#fb4934', bg = '#32302f' })
+      vim.api.nvim_set_hl(0, 'stlDiffAdd',      { fg = '#b8bb26', bg = '#32302f' })
+      vim.api.nvim_set_hl(0, 'stlDiffDelete',   { fg = '#fb4934', bg = '#32302f' })
       vim.api.nvim_set_hl(0, 'stlDiffModified', { fg = '#f18019', bg = '#32302f' })
     end,
     config = function()
@@ -240,10 +240,10 @@ return {
         return string.format("%%#LualineError# %d %%#LualineWarning# %d", error_count, warning_count)
       end
 
-      vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bg = '#32302f', bold = true })
+      vim.api.nvim_set_hl(0, "LualineError",   { fg = '#FF0000', bg = '#32302f', bold = true })
       vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bg = '#32302f', bold = true })
-      vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542', bg = '#32302f'})
-      vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000', bg = '#32302f'})
+      vim.api.nvim_set_hl(0, "LualineDiagOn",  { fg = '#93f542', bg = '#32302f' })
+      vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000', bg = '#32302f' })
 
       local diff = {
         'diff',

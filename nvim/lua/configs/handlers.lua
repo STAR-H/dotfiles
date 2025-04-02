@@ -13,10 +13,10 @@ M.on_attach = function(_, bufnr)
   -- map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
   -- map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
   -- map("n", "gr", vim.lsp.buf.references, opts "Go to reference")
-  map("n", "<leader>rn", vim.lsp.buf.rename, opts "Rename")
-  map("n", "<leader>ca", vim.lsp.buf.code_action, opts "Code action")
-  map("n", "<leader>ls", vim.lsp.buf.signature_help, opts "SignatureHelp")
-  map("n", "<leader>a", "<cmd>ClangdSwitchSourceHeader<cr>", opts "Clangd Switch Source Header")
+  map("n", "<leader>rn", vim.lsp.buf.rename,                                     opts "Rename")
+  map("n", "<leader>ca", vim.lsp.buf.code_action,                                opts "Code action")
+  map("n", "<leader>ls", vim.lsp.buf.signature_help,                             opts "SignatureHelp")
+  map("n", "<leader>a",  "<cmd>ClangdSwitchSourceHeader<cr>",                    opts "Clangd Switch Source Header")
   map("n", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr>",      opts "Buffer Format")
   map("v", "<leader>lf", "<cmd>lua vim.lsp.buf.format{ async = true }<cr><esc>", opts "Buffer Format")
 end
@@ -50,7 +50,7 @@ M.capabilities.textDocument.completion.completionItem = {
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
 if not status_cmp_ok then
-    return
+  return
 end
 M.capabilities = cmp_nvim_lsp.default_capabilities(M.capabilities)
 
