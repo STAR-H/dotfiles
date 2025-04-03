@@ -160,6 +160,12 @@ return {
       views = {
         mini = {
           timeout = 3000,
+          align = "message-left",
+          position = {
+            row = -1,
+            col = "50%",
+            -- col = 0,
+          },
         },
         confirm = {
           position = {

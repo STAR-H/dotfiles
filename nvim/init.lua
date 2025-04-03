@@ -39,6 +39,7 @@ vim.api.nvim_set_hl(0, 'DiffDelete',   { fg = '#fb4934' })
 vim.api.nvim_set_hl(0, 'DiffModified', { fg = '#f18019' })
 vim.api.nvim_set_hl(0, 'DiffText',     { bg = '#fabd2f', fg = '#232323', bold = true })
 
+vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#808080' })
 require "configs.options"
 require "configs.autocmds"
 

@@ -223,6 +223,15 @@ return {
     "folke/snacks.nvim",
     priority = 1000,
     lazy = false,
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "VeryLazy",
+        callback = function()
+          -- Create some toggle mappings
+          Snacks.toggle.dim():map("<leader>ud")
+        end,
+      })
+    end,
     ---@type snacks.Config
     opts = {
       -- your configuration comes here
@@ -232,9 +241,9 @@ return {
       bufdelete = { enabled = true },
       bigfile = { enabled = true },
       image = {
-        enabled = false,
+        enabled = true,
         doc = {
-          inline = false, -- use float window show the image
+          inline = true, -- use float window show the image
         }
       },
       indent = { enabled = false },

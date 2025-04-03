@@ -1,16 +1,7 @@
 return {
   {
     "yetone/avante.nvim",
-    cmd = {
-      "AvanteAsk",
-      "AvanteBuild",
-      "AvanteEdit",
-      "AvanteRefresh",
-      "AvanteSwitchProvider",
-      "AvanteChat",
-      "AvanteToggle",
-      "AvanteClear",
-    },
+    event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
       provider = "deepseek",
@@ -42,8 +33,8 @@ return {
     },
     config = function(_, opts)
       require("avante").setup(opts)
-
-      vim.api.nvim_set_hl(0, 'AvanteSidebarWinSeparator', { fg = '#232323', bg = '#232323' })
+      -- fg need same as WinSeparator
+      vim.api.nvim_set_hl(0, 'AvanteSidebarWinSeparator', { fg = '#808080', bg = '#232323' })
       vim.api.nvim_set_hl(0, 'AvanteSidebarWinHorizontalSeparator', { fg = '#36393a', bg = '#232323' })
     end,
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
