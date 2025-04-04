@@ -201,7 +201,7 @@ return {
           {
             name = "dictionary",
             keyword_length = 2,
-            group_index = 1,
+            group_index = 2,
             priority = 80
           },
         }

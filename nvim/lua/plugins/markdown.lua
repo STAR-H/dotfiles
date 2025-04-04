@@ -60,13 +60,14 @@ return {
             return vim.g.project_root_dir .. "/assets/" .. vim.fn.expand("%:t:r")
           end,
           template = function(context)
-            local filename = vim.fn.fnamemodify(context.file_path, ":t")  -- 获取文件名（如 img.png）
-            local dirname = vim.fn.fnamemodify(context.file_path, ":h:t") -- 获取父目录名（如 note1）
+            local filename = vim.fs.basename(context.file_path)  -- 获取文件名（如 img.png）
+            local dirname = vim.fs.basename(vim.fs.dirname(context.file_path))  -- 获取父目录名（如 note1）
             -- 拼接为 assets/<filename>/img.png
             return string.format("![[assets/%s/%s]]", dirname, filename)
           end,
           download_images = true,
           use_absolute_path = false,
+          url_encode_path = false,
         },
       }
     },
