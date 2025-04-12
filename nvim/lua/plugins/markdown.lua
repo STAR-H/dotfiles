@@ -18,7 +18,6 @@ return {
       },
 
       checkbox = {
-        position = 'overlay',
         checked = { scope_highlight = '@markup.strikethrough' }
       },
       pipe_table = {

@@ -48,6 +48,7 @@ return {
     event = "VeryLazy",
     config = function()
       require('hlslens').setup({
+        enable_incsearch = false, -- disable for flicker issue when enable incsearch
         override_lens = function(render, posList, nearest, idx)
           local text, chunks
           local lnum, col = unpack(posList[idx])
