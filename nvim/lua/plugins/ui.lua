@@ -122,10 +122,14 @@ return {
         {
           filter = {
             any = {
-              { find = "mark%-%d.-" }, -- vim-mark mark-1
-              { find = ".(%w+)\\>$" }, -- vim-mark /\<xxxxx\>
+              { find = "^mark%-?%d?%s?" }, -- vim-mark mark-1
+              { find = ".(%w+)\\>$" },     -- vim-mark /\<xxxxx\>
+              { find = "^%s?cleared" },
+              { find = "^Cleared%sall" },
+              { find = "^%d%s?$" }
             },
           },
+          view = "mini",
           opts = { skip = true },
         },
       },
@@ -166,6 +170,9 @@ return {
             col = "50%",
             -- col = 0,
           },
+          win_options = {
+            winblend = 0,
+          }
         },
         confirm = {
           position = {
