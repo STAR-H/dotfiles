@@ -43,6 +43,10 @@ vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#808080' })
 require "configs.options"
 require "configs.autocmds"
 
+-- transpanrency
+-- vim.api.nvim_set_hl(0, 'Normal', { bg = none })
+-- vim.api.nvim_set_hl(0, 'NonText', { bg = none })
+
 vim.schedule(function()
   require "configs.mappings"
 end)

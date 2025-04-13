@@ -260,11 +260,25 @@ return {
       notifier = { enabled = false },
       statuscolumn = { enabled = false },
       words = { enabled = false },
-      lazygit = { enabled = false }
+      lazygit = { enabled = false },
+
+      zen = {
+        toggles = {
+          dim = false,
+          git_signs = false,
+          mini_diff_signs = false,
+          diagnostics = false,
+          -- inlay_hints = false,
+        },
+        win = {
+          backdrop = { transparent = false, blend = 40 },
+        },
+      }
     },
     keys = {
-      { "<leader>z",        function() Snacks.zen.zoom() end,    desc = "Snacks Zen Toggle Zoom" },
+      { "<Space><Space>",   function() Snacks.zen.zoom() end,    desc = "Snacks Zen Toggle Zoom" },
       { "<leader><leader>", function() Snacks.image.hover() end, desc = "Snacks show image at cursor" },
+      { "<leader>uz",       function() Snacks.zen() end,         desc = "Toggle Zen Mode" },
     }
   }
 }
