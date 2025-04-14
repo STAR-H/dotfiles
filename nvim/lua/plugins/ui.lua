@@ -459,9 +459,6 @@ return {
         textobjects = { enable = true },
       }
       require 'nvim-treesitter.configs'.setup(opts)
-
-      -- treesitter highlight override
-      vim.api.nvim_set_hl(0, '@comment', { fg = '#808080', italic = true })
     end,
   },
 
