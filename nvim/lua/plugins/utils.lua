@@ -238,7 +238,7 @@ return {
           -- inlay_hints = false,
         },
         win = {
-          backdrop = { transparent = false, blend = 40 },
+          backdrop = { transparent = false, blend = 0, bg = '#282828'},
         },
       }
     },
