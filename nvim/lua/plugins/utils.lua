@@ -216,7 +216,7 @@ return {
       },
       indent = { enabled = false },
       quickfile = { enabled = true },
-      scope = { enabled = true },
+      scope = { enabled = false },
       scroll = { enabled = true },
       profiler = { enabled = true },
 

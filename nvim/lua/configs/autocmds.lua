@@ -156,3 +156,55 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+-- add cursorline highlight flash when enter window
+vim.api.nvim_set_hl(0, 'FlashWindow', { bg = '#fff143' })
+local group = vim.api.nvim_create_augroup('WindowFlash', { clear = true })
+
+-- Create a window state tracking table
+local window_states = {}
+
+vim.api.nvim_create_autocmd('WinEnter', {
+  group = group,
+  callback = function()
+    -- Skip if cursorline is disabled or the buffer has no file extension
+    if not vim.wo.cursorline and vim.fn.expand("%:e") == "" then return end
+    local winid = vim.api.nvim_get_current_win()
+
+    -- Stop any pending timer for this window
+    if window_states[winid] then
+      vim.fn.timer_stop(window_states[winid].timer)
+    end
+
+    -- Save the original state (including window ID)
+    window_states[winid] = {
+      original_hl = vim.wo.winhighlight,
+      timer = nil
+    }
+
+    -- Apply highlight
+    vim.wo.winhighlight = 'CursorLine:FlashWindow'
+
+    -- Schedule delayed restoration (linked to the current window)
+    window_states[winid].timer = vim.defer_fn(function()
+      -- Restore only if the window still exists
+      if vim.api.nvim_win_is_valid(winid) then
+        vim.wo[winid].winhighlight = window_states[winid].original_hl
+      end
+      -- Clean up state
+      window_states[winid] = nil
+    end, 200)
+  end
+})
+
+-- Clean up resources when a window is closed
+vim.api.nvim_create_autocmd('WinClosed', {
+  group = group,
+  callback = function(event)
+    local winid = tonumber(event.match)
+    if window_states[winid] then
+      vim.fn.timer_stop(window_states[winid].timer)
+      window_states[winid] = nil
+    end
+  end
+})
