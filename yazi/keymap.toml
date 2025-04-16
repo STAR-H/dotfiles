@@ -126,7 +126,9 @@ keymap = [
 	# Goto
 	{ on = [ "g", "h" ],       run = "cd ~",             desc = "Go home" },
 	{ on = [ "g", "c" ],       run = "cd ~/.config",     desc = "Go ~/.config" },
-	{ on = [ "g", "d" ],       run = "cd ~/Downloads",   desc = "Go ~/Downloads" },
+	{ on = [ "g", "D" ],       run = "cd ~/Downloads",   desc = "Go ~/Downloads" },
+	{ on = [ "g", "d" ],       run = "cd ~/.dotfiles",   desc = "Go ~/.dotfiles" },
+	{ on = [ "g", "n" ],       run = "cd ~/Personal/obsidian",   desc = "Go notes dir" },
 	{ on = [ "g", "<Space>" ], run = "cd --interactive", desc = "Jump interactively" },
 	{ on = [ "g", "f" ],       run = "follow",           desc = "Follow hovered symlink" },
 
@@ -339,8 +341,8 @@ keymap = [
 	{ on = "<Up>",   run = "arrow prev", desc = "Previous item" },
 	{ on = "<Down>", run = "arrow next", desc = "Next item" },
 
-	{ on = "<C-p>", run = "arrow prev", desc = "Previous item" },
-	{ on = "<C-n>", run = "arrow next", desc = "Next item" },
+	{ on = "<C-k>", run = "arrow prev", desc = "Previous item" },
+	{ on = "<C-j>", run = "arrow next", desc = "Next item" },
 
 	# Help
 	{ on = "~",    run = "help", desc = "Open help" },
