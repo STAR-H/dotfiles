@@ -167,43 +167,46 @@ local window_states = {}
 vim.api.nvim_create_autocmd('WinEnter', {
   group = group,
   callback = function()
-    -- Skip if cursorline is disabled or the buffer has no file extension
-    if not vim.wo.cursorline and vim.fn.expand("%:e") == "" then return end
     local winid = vim.api.nvim_get_current_win()
+    local win_config = vim.api.nvim_win_get_config(winid)
 
-    -- Stop any pending timer for this window
-    if window_states[winid] then
-      vim.fn.timer_stop(window_states[winid].timer)
+    -- Skip conditions
+    if vim.bo.buftype == "prompt" or win_config.relative ~= "" or not vim.wo.cursorline or vim.fn.expand("%:e") == "" then
+      return
     end
 
-    -- Save the original state (including window ID)
-    window_states[winid] = {
-      original_hl = vim.wo.winhighlight,
-      timer = nil
-    }
-
-    -- Apply highlight
-    vim.wo.winhighlight = 'CursorLine:FlashWindow'
-
-    -- Schedule delayed restoration (linked to the current window)
-    window_states[winid].timer = vim.defer_fn(function()
-      -- Restore only if the window still exists
-      if vim.api.nvim_win_is_valid(winid) then
-        vim.wo[winid].winhighlight = window_states[winid].original_hl
-      end
-      -- Clean up state
+    -- Force-clean previous state
+    if window_states[winid] then
+      pcall(vim.fn.timer_stop, window_states[winid].timer)
       window_states[winid] = nil
-    end, 200)
+    end
+
+    -- Save original_hl
+    local original_hl = vim.wo.winhighlight
+    if original_hl == "" or original_hl:match("FlashWindow") then
+      original_hl = "CursorLine:" .. (vim.api.nvim_get_hl(0, { name = "CursorLine" }).bg or "NONE")
+    end
+
+    -- Apply and schedule restore
+    window_states[winid] = {
+      original_hl = original_hl,
+      timer = vim.defer_fn(function()
+        if vim.api.nvim_win_is_valid(winid) then
+          vim.wo[winid].winhighlight = window_states[winid].original_hl
+        end
+        window_states[winid] = nil
+      end, 200)
+    }
+    vim.wo.winhighlight = 'CursorLine:FlashWindow'
   end
 })
 
--- Clean up resources when a window is closed
 vim.api.nvim_create_autocmd('WinClosed', {
   group = group,
   callback = function(event)
     local winid = tonumber(event.match)
     if window_states[winid] then
-      vim.fn.timer_stop(window_states[winid].timer)
+      pcall(vim.fn.timer_stop, window_states[winid].timer)
       window_states[winid] = nil
     end
   end
