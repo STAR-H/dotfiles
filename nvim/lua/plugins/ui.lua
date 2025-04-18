@@ -124,9 +124,10 @@ return {
             any = {
               { find = "^mark%-?%d?%s?" }, -- vim-mark mark-1
               { find = ".(%w+)\\>$" },     -- vim-mark /\<xxxxx\>
-              { find = "^%s?cleared" },
-              { find = "^Cleared%sall" },
-              { find = "^%d%s?$" }
+              { find = "^%s?cleared" },    -- mark-1 cleared
+              { find = "^Cleared%sall" },  -- all marks cleared
+              { find = "^%d%s?$" },
+              { find = "^/.*" }            --mark-1/word
             },
           },
           view = "mini",

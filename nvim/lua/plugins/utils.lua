@@ -111,11 +111,13 @@ return {
         local is_marked = vim.fn["mark#CurrentMark"]()
         local is_marked_string = tostring(is_marked[1])
         if is_marked_string == nil or is_marked_string == "" then -- current not marked
+          local status = nil
           if not is_backward then
-            vim.cmd("execute('normal! ' . v:count1 . 'n')")
-            require("hlslens").start()
+            status = pcall(function() vim.cmd("execute('normal! ' . v:count1 . 'n')") end)
           else
-            vim.cmd("execute('normal! ' . v:count1 . 'N')")
+            status = pcall(function() vim.cmd("execute('normal! ' . v:count1 . 'N')") end)
+          end
+          if status then
             require("hlslens").start()
           end
         else -- is marked
