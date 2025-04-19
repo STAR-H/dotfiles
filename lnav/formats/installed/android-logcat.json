@@ -1,0 +1,48 @@
+{
+    "$schema": "https://lnav.org/schemas/format-v1.schema.json",
+    "logcat": {
+      "title": "Android Logcat",
+      "description": "Android Logcat log definition.",
+      "url": "https://github.com/phoenixuprising/lnav-android-scheme",
+      "timestamp-format": [
+        "%m-%d %H:%M:%S.%L"
+      ],
+      "regex": {
+        "basic": {
+          "pattern": "^(?<timestamp>\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2}\\.\\d{3})\\s+(?<pid>\\d+)\\s+(?<tid>\\d+)\\s+(?<level>\\w)\\s+(?<tag>.*?):(?<body>.*)$"
+        }
+      },
+      "level-field": "level",
+      "level": {
+        "error": "E",
+        "warning": "W",
+        "info": "I",
+        "debug": "D",
+        "verbose": "V"
+      },
+      "value": {
+        "pid": {
+          "kind": "integer",
+          "identifier": true
+        },
+        "tid": {
+          "kind": "integer",
+          "identifier": true
+        },
+        "tag": {
+          "kind": "string",
+          "identifier": true
+        },
+        "body": {
+          "kind": "string",
+          "identifier": false
+        }
+      },
+      "sample": [
+        {
+          "line": "04-15 21:26:54.208  25147  25187 V CamX: [ VERB][STATS_AWB] camxcawbmain.cpp:2051: PopulateOutput AWB Algo Output. CamID:1,Frame:1,Role:0,Gain:(R:1.853898,G:1.000000,B:1.949244) CCT: 4389,State:0,Mode:1,Lock:0,Final Decision:5"
+
+        }
+      ]
+    }
+  }

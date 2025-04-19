@@ -1,0 +1,28 @@
+{
+    "ui": {
+        "clock-format": "%m-%d %H:%M:%S",
+        "keymap": "us",
+        "theme": "dracula_custom",
+        "theme-defs": {
+            "default": {
+                "highlights": {
+                    "colors": {
+                        "pattern": "(?:#[a-fA-F0-9]{6}|#[a-fA-F0-9]{3}\\b)"
+                    },
+                    "ipv4": {
+                        "pattern": "\\b(?<!\\d\\.)\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\b(?!\\.\\d)"
+                    },
+                    "xml": {
+                        "pattern": "</?([^ >=!]+)[^>]*>"
+                    },
+                    "xml-decl": {
+                        "pattern": "<!([^ >=!]+)[^>]*>"
+                    }
+                }
+            }
+        },
+        "mouse": {
+            "mode": "enabled"
+        }
+    }
+}
