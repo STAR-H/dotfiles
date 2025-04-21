@@ -240,7 +240,7 @@ return {
           -- inlay_hints = false,
         },
         win = {
-          backdrop = { transparent = false, blend = 0, bg = '#282828'},
+          backdrop = { transparent = false, blend = 0, bg = '#282828' },
         },
       }
     },
@@ -255,44 +255,46 @@ return {
     'nvim-focus/focus.nvim',
     enabled = not require("configs.utils").is_diff_mode(),
     event = "VeryLazy",
-    version = '*',
+    version = false,
     config = function()
-      require("focus").setup({
-        enable = true,        -- Enable module
-        commands = false,      -- Create Focus commands
+      local opts = {
+        enable = true,              -- Enable module
+        commands = false,           -- Create Focus commands
         autoresize = {
-          enable = false,      -- Enable or disable auto-resizing of splits
-          width = 0,          -- Force width for the focused window
-          height = 0,         -- Force height for the focused window
-          minwidth = 0,       -- Force minimum width for the unfocused window
-          minheight = 0,      -- Force minimum height for the unfocused window
-          height_quickfix = 10, -- Set the height of quickfix panel
+          enable = false,           -- Enable or disable auto-resizing of splits
+          width = 0,                -- Force width for the focused window
+          height = 0,               -- Force height for the focused window
+          minwidth = 0,             -- Force minimum width for the unfocused window
+          minheight = 0,            -- Force minimum height for the unfocused window
+          height_quickfix = 10,     -- Set the height of quickfix panel
         },
         split = {
-          bufnew = false, -- Create blank buffer for new split windows
-          tmux = false, -- Create tmux splits instead of neovim splits
+          bufnew = false,     -- Create blank buffer for new split windows
+          tmux = false,       -- Create tmux splits instead of neovim splits
         },
         ui = {
-          number = false,                  -- Display line numbers in the focussed window only
-          relativenumber = false,          -- Display relative line numbers in the focussed window only
-          hybridnumber = false,            -- Display hybrid line numbers in the focussed window only
-          absolutenumber_unfocussed = false, -- Preserve absolute numbers in the unfocussed windows
+          number = false,                        -- Display line numbers in the focussed window only
+          relativenumber = false,                -- Display relative line numbers in the focussed window only
+          hybridnumber = false,                  -- Display hybrid line numbers in the focussed window only
+          absolutenumber_unfocussed = false,     -- Preserve absolute numbers in the unfocussed windows
 
-          cursorline = true,               -- Display a cursorline in the focussed window only
-          cursorcolumn = false,            -- Display cursorcolumn in the focussed window only
+          cursorline = true,                     -- Display a cursorline in the focussed window only
+          cursorcolumn = false,                  -- Display cursorcolumn in the focussed window only
           colorcolumn = {
-            enable = false,                -- Display colorcolumn in the foccused window only
-            list = '+1',                   -- Set the comma-saperated list for the colorcolumn
+            enable = false,                      -- Display colorcolumn in the foccused window only
+            list = '+1',                         -- Set the comma-saperated list for the colorcolumn
           },
-          signcolumn = true,               -- Display signcolumn in the focussed window only
-          winhighlight = true,            -- Auto highlighting for focussed/unfocussed windows
+          signcolumn = true,                     -- Display signcolumn in the focussed window only
+          winhighlight = true,                   -- Auto highlighting for focussed/unfocussed windows
         }
-      })
+      }
+
+      require("focus").setup(opts)
 
       vim.api.nvim_set_hl(0, 'FocusedWindow', { link = 'Normal' })
       vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = '#3a3a3a' })
 
-      local ignore_filetypes = { 
+      local ignore_filetypes = {
         "NvimTree",
         "tagbar",
         "undotree",
@@ -301,7 +303,10 @@ return {
         "trouble",
         "AvanteInput",
         "AvanteSelectedFiles",
-        "Avante"
+        "Avante",
+        "noice",
+        "TelescopePrompt",
+        "TelescopeResults",
       }
       local ignore_buftypes = {
         "nofile",
@@ -309,33 +314,36 @@ return {
         "popup",
       }
 
-      local augroup =
-      vim.api.nvim_create_augroup('FocusDisable', { clear = true })
+      local augroup = vim.api.nvim_create_augroup('FocusDisable', { clear = true })
 
       vim.api.nvim_create_autocmd('WinEnter', {
         group = augroup,
         callback = function(_)
           if vim.tbl_contains(ignore_buftypes, vim.bo.buftype)
-            then
-              vim.w.focus_disable = true
-            else
-              vim.w.focus_disable = false
-            end
-          end,
-          desc = 'Disable focus autoresize for BufType',
-        })
+          then
+            vim.w.focus_disable = true
+            vim.wo.cursorline = not opts.ui.cursorline
+          else
+            vim.w.focus_disable = false
+            vim.wo.cursorline = opts.ui.cursorline
+          end
+        end,
+        desc = 'Disable focus autoresize for BufType',
+      })
 
-        vim.api.nvim_create_autocmd('FileType', {
-          group = augroup,
-          callback = function(_)
-            if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
-              vim.b.focus_disable = true
-            else
-              vim.b.focus_disable = false
-            end
-          end,
-          desc = 'Disable focus autoresize for FileType',
-        })
+      vim.api.nvim_create_autocmd('FileType', {
+        group = augroup,
+        callback = function(_)
+          if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+            vim.b.focus_disable = true
+            vim.wo.cursorline = not opts.ui.cursorline
+          else
+            vim.b.focus_disable = false
+            vim.wo.cursorline = opts.ui.cursorline
+          end
+        end,
+        desc = 'Disable focus autoresize for FileType',
+      })
     end
   },
 }
