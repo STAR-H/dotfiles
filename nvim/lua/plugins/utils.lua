@@ -291,9 +291,9 @@ return {
 
       require("focus").setup(opts)
 
+      -- local blend = Snacks.util.blend('#FFFFFF', '#282828',0.15)
       vim.api.nvim_set_hl(0, 'FocusedWindow', { link = 'Normal' })
-      vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = '#3a3a3a' })
-
+      vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = '#484848' })
       local ignore_filetypes = {
         "NvimTree",
         "tagbar",
