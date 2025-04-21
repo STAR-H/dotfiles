@@ -1,7 +1,7 @@
 {
     "ui": {
         "clock-format": "%m-%d %H:%M:%S",
-        "keymap": "us",
+        "keymap": "us_custom",
         "theme": "dracula_custom",
         "theme-defs": {
             "default": {
