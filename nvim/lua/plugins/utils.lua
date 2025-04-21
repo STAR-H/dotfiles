@@ -284,7 +284,7 @@ return {
             enable = false,                      -- Display colorcolumn in the foccused window only
             list = '+1',                         -- Set the comma-saperated list for the colorcolumn
           },
-          signcolumn = true,                     -- Display signcolumn in the focussed window only
+          signcolumn = false,                     -- Display signcolumn in the focussed window only
           winhighlight = true,                   -- Auto highlighting for focussed/unfocussed windows
         }
       }
