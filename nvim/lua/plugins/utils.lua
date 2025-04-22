@@ -214,6 +214,9 @@ return {
         enabled = true,
         doc = {
           inline = true, -- use float window show the image
+        },
+        convert = {
+          notify = false, -- show a notification on error
         }
       },
       indent = { enabled = false },
@@ -291,9 +294,9 @@ return {
 
       require("focus").setup(opts)
 
-      -- local blend = Snacks.util.blend('#FFFFFF', '#282828',0.15)
+      local blend = Snacks.util.blend('#282828', '#3d3b4f',0.8)
       vim.api.nvim_set_hl(0, 'FocusedWindow', { link = 'Normal' })
-      vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = '#484848' })
+      vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = blend })
       local ignore_filetypes = {
         "NvimTree",
         "tagbar",
