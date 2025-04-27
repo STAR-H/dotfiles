@@ -156,3 +156,68 @@ vim.api.nvim_create_autocmd("FileType", {
     end
   end,
 })
+
+local blend = Snacks.util.blend('#282828', '#3d3b4f',0.8)
+vim.api.nvim_set_hl(0, 'FocusedWindow', { link = 'Normal' })
+vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = blend })
+local ignore_filetypes = {
+  "NvimTree",
+  "tagbar",
+  "undotree",
+  "vista_kind",
+  "vista_markdown",
+  "trouble",
+  "AvanteInput",
+  "AvanteSelectedFiles",
+  "Avante",
+  "noice",
+  "TelescopePrompt",
+  "TelescopeResults",
+}
+local ignore_buftypes = {
+  "nofile",
+  "prompt",
+  "popup",
+}
+
+local focusWindow = vim.api.nvim_create_augroup('FocusDisable', { clear = true })
+
+vim.api.nvim_create_autocmd('WinEnter', {
+  group = focusWindow,
+  callback = function(_)
+    if not vim.tbl_contains(ignore_buftypes, vim.bo.buftype) then
+      vim.wo.winhighlight = 'Normal:FocusedWindow,NormalNC:UnfocusedWindow'
+    end
+  end,
+  desc = 'Disable change window bg for BufType',
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  group = focusWindow,
+  callback = function(_)
+    if not vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+      vim.wo.winhighlight = 'Normal:FocusedWindow,NormalNC:UnfocusedWindow'
+    end
+  end,
+  desc = 'Disable change window bg for FileType',
+})
+vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
+  group = focusWindow,
+  callback = function(_)
+    if not vim.tbl_contains(ignore_buftypes, vim.bo.buftype) and
+      not vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+      vim.wo.cursorline = true
+    end
+  end,
+  desc = 'Enable cursorline',
+})
+vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
+  group = focusWindow,
+  callback = function(_)
+    if not vim.tbl_contains(ignore_buftypes, vim.bo.buftype) and
+      not vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+      vim.wo.cursorline = false
+    end
+  end,
+  desc = 'Disable cursorline',
+})
