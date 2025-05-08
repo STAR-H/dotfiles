@@ -265,10 +265,22 @@ return {
         signs                        = {
           add          = { text = "+" },
           change       = { text = "~" },
-          delete       = { text = "-" },
-          topdelete    = { text = '▔' },
+          delete       = { text = "-", show_count = true },
+          topdelete    = { text = '▔', show_count = true },
           changedelete = { text = '~' },
           untracked    = { text = '┆' },
+        },
+        count_chars = {
+          [1] = '₁',
+          [2] = '₂',
+          [3] = '₃',
+          [4] = '₄',
+          [5] = '₅',
+          [6] = '₆',
+          [7] = '₇',
+          [8] = '₈',
+          [9] = '₉',
+          ['+'] = '₊',
         },
         signcolumn                   = true,  -- Toggle with `:Gitsigns toggle_signs`
         numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`

@@ -292,7 +292,8 @@ return {
             "trouble",
             "AvanteInput",
             "AvanteSelectedFiles",
-            "Avante"
+            "Avante",
+            "gitsigns-blame"
           },
           always_divide_middle = true,
           globalstatus         = true,

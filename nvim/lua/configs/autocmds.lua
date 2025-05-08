@@ -48,7 +48,8 @@ vim.api.nvim_create_autocmd("FileType", {
     "help",
     "lspinfo",
     "nvcheatsheet",
-    "nvdash"
+    "nvdash",
+    "gitsigns-blame"
   },
   callback = function(event)
     vim.bo[event.buf].buflisted = false
@@ -173,6 +174,7 @@ local ignore_filetypes = {
   "noice",
   "TelescopePrompt",
   "TelescopeResults",
+  "gitsigns-blame",
 }
 local ignore_buftypes = {
   "nofile",
