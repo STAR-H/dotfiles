@@ -6,13 +6,16 @@ return {
     version = false, -- Never set this value to "*"! Never!
     opts = {
       provider = "deepseek",
-      vendors = {
+      providers = {
         deepseek = {
           __inherited_from = "openai",
           api_key_name = "DEEPSEEK_API_KEY",
           endpoint = "https://api.deepseek.com",
           model = "deepseek-coder",
-          max_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+          extra_request_body = {
+            max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
+            -- reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+          },
         },
       },
 

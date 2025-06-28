@@ -249,8 +249,14 @@ return {
     },
     keys = {
       { "<Space><Space>",   function() Snacks.zen.zoom() end,    desc = "Snacks Zen Toggle Zoom" },
-      { "<leader><leader>", function() Snacks.image.hover() end, desc = "Snacks show image at cursor" },
       { "<leader>uz",       function() Snacks.zen() end,         desc = "Toggle Zen Mode" },
     }
   },
+
+  {
+    "nvzone/typr",
+    dependencies = "nvzone/volt",
+    opts = {},
+    cmd = { "Typr", "TyprStats" },
+  }
 }
