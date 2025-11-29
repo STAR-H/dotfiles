@@ -8,7 +8,8 @@ return {
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {
-    auto_close = true,       -- auto close when there are no items
+    auto_close = false,      -- auto close when there are no items
+    auto_refresh = false,    -- auto refresh when open
     warn_no_results = false, -- show a warning when there are no results
   },
 }
