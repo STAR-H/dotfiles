@@ -63,3 +63,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.md",
   callback = update_modified_timestamp,
 })
+
+-- enable spell check
+vim.opt_local.spell = true
+vim.opt_local.spelllang = { "en_us", "cjk" }

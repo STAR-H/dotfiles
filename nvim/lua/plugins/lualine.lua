@@ -151,6 +151,16 @@ return {
           },
           {
             function()
+                return "󰓆[" .. table.concat(vim.opt.spelllang:get(), ",") .. "]"
+            end,
+            color = { fg = "#ffaa00", gui = "bold" },
+            cond = function()
+              return vim.wo.spell
+            end
+          },
+
+          {
+            function()
               local stbufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
               if rawget(vim, "lsp") then
                 for _, client in ipairs(vim.lsp.get_clients()) do

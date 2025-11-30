@@ -66,6 +66,10 @@ keymap("n", "<leader>th", function() require("nvchad.themes").open() end, { desc
 
 keymap("n", "<leader>ch", "<Cmd>NvCheatsheet<CR>", { desc = "nvchad nvcheatsheet toggle" })
 
+-- Use j/k navigate warp lines
+keymap('n', 'j', 'gj', { noremap = true, silent = true })
+keymap('n', 'k', 'gk', { noremap = true, silent = true })
+
 -- NOTE: remove the "`" key in neovim due to this key use prefix key in tmux
 keymap("n", "`", "<NOP>", { noremap = true, silent = true })
 

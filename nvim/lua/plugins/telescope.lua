@@ -8,7 +8,7 @@ return {
     { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = 'telescope list buffers' },
     { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = 'telescope fuzzy search' },
     { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",      desc = 'telescope current buffer tags' },
-    { "z=",         "<cmd>Telescope spell_suggest<cr>",             { desc = 'telescope spell suggest', noremap = true } }
+    { "<leader>z=",         "<cmd>Telescope spell_suggest<cr>",     { desc = 'telescope spell suggest', noremap = true } }
   },
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -102,7 +102,7 @@ return {
           prompt_title = "Spell Suggestion",
           theme = "cursor",
           layout_config = {
-            width = 0.15,
+            width = 0.2,
             height = 0.1
           }
         },

@@ -20,8 +20,9 @@ return {
       checkbox = {
         checked = { scope_highlight = '@markup.strikethrough' }
       },
+
       pipe_table = {
-        cell = 'trimmed',
+        cell = 'padded',
         preset = 'round',
       },
 
@@ -35,6 +36,7 @@ return {
   -- install with yarn or npm
   {
     "iamcco/markdown-preview.nvim",
+    enabled = false,
     ft = { "markdown" },
     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
     build = "cd app && yarn install", -- need manually install
