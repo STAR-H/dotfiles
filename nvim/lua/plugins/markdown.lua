@@ -26,12 +26,41 @@ return {
         preset = 'round',
       },
 
-      anti_conceal = { enabled = true },
+      code = {
+        width = 'block',
+        -- Minimum width to use for code blocks when width is 'block'.
+        min_width = 120,
+        left_margin = 5,
+        left_pad = 1,
+        right_pad = 1,
+      },
+
+      anti_conceal = { enabled = false },
 
       indent = { enabled = false },
 
       preset = 'obsidian',
     },
+
+    init = function()
+      vim.api.nvim_create_autocmd("ModeChanged", {
+        pattern = "*",
+        callback = function()
+          if vim.bo.filetype ~= "markdown" then
+            return
+          end
+
+          local mode = vim.fn.mode()
+
+          if mode == "n" or mode == "c" then
+            vim.cmd("RenderMarkdown enable")
+          else
+            vim.cmd("RenderMarkdown disable")
+          end
+        end,
+      })
+    end
+
   },
   -- install with yarn or npm
   {
