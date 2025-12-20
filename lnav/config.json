@@ -1,6 +1,8 @@
 {
     "ui": {
         "clock-format": "%m-%d %H:%M:%S",
+        "dim-text": true,
+        "default-colors": false,
         "keymap": "us_custom",
         "theme": "dracula_custom",
         "theme-defs": {
@@ -23,6 +25,25 @@
         },
         "mouse": {
             "mode": "enabled"
+        },
+        "views": {
+            "log": {
+                "time-column": "enabled"
+            }
+        }
+    },
+    "log": {
+        "demux": {
+            "container": {
+                "pattern": "^(?:\\x1b\\[\\d*K)?(?<mux_id>[a-zA-Z0-9][\\@a-zA-Z0-9_\\.\\-]*)\\s+\\| (?<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}.\\d{9}Z )?(?<body>.*)"
+            },
+            "container-with-type": {
+                "pattern": "^(?<mux_id>[a-zA-Z][\\w\\-]{3,}) (?<container_type>[a-zA-Z][\\w\\-]{3,}) (?<body>.*)"
+            },
+            "recv-with-pod": {
+                "pattern": "^(?<timestamp>\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}(?:Z|[+\\-]\\d{2}:\\d{2})) source=[a-zA-Z0-9][a-zA-Z0-9_\\.\\-]* (?<body>.*) kubernetes_host=(?<k8s_host>[a-zA-Z0-9][a-zA-Z0-9_\\.\\-]*) kubernetes_pod_name=(?<mux_id>[a-zA-Z0-9][a-zA-Z0-9_\\.\\-]*)",
+                "control-pattern": "^===== (?:START|END) =====$"
+            }
         }
     }
 }

@@ -3,8 +3,46 @@
     "ui": {
         "theme-defs": {
             "dracula_custom": {
+                "icons": {
+                    "hidden": {
+                        "value": "\u22EE"
+                    },
+                    "ok": {
+                        "value": "\u2714"
+                    },
+                    "info": {
+                        "value": "\uf129"
+                    },
+                    "warning": {
+                        "value": "\udb84\ude38"
+                    },
+                    "error": {
+                        "value": "\u2718"
+                    },
+                    "log-level-trace": {
+                        "value": "V"
+                    },
+                    "log-level-debug": {
+                        "value": "D"
+                    },
+                    "log-level-info": {
+                        "value": "I"
+                    },
+                    "log-level-warning": {
+                        "value": "W"
+                    },
+                    "log-level-error": {
+                        "value": "E"
+                    },
+                    "play": {
+                        "value": "\u25b6"
+                    },
+                    "edit": {
+                        "value": "\u270F\uFE0F"
+                    }
+                },
                 "vars": {
-                    "black": "#282A36",
+                    "black": "#2d2a2e",
                     "red": "#FF5555",
                     "green": "#50FA7B",
                     "yellow": "#F1FA8C",
@@ -26,6 +64,7 @@
                         "background-color": "$black"
                     },
                     "selected-text": {
+                        "color": "#1c1c1c",
                         "background-color": "$cyan"
                     },
                     "alt-text": {
