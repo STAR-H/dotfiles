@@ -33,6 +33,13 @@ return {
         left_margin = 5,
         left_pad = 1,
         right_pad = 1,
+        -- Whether to include the language icon above code blocks.
+        language_icon = true,
+        -- Whether to include the language name above code blocks.
+        language_name = true,
+        -- Whether to include the language info above code blocks.
+        language_info = true,
+        language = true,
       },
 
       anti_conceal = { enabled = false },
