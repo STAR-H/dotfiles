@@ -40,6 +40,7 @@ vim.api.nvim_set_hl(0, 'DiffModified', { fg = '#f18019' })
 vim.api.nvim_set_hl(0, 'DiffText',     { bg = '#fabd2f', fg = '#232323', bold = true })
 
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#808080' })
+vim.api.nvim_set_hl(0, 'NonText', { fg = '#808080' })
 
 -- treesitter highlight override
 vim.api.nvim_set_hl(0, '@comment', { fg = '#808080', italic = true })
