@@ -65,5 +65,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 -- enable spell check
-vim.opt_local.spell = true
+vim.opt_local.spell = false
 vim.opt_local.spelllang = { "en_us", "cjk" }
+
+-- NOTE: override markdown highlights
+vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline',    { bg = none })
+vim.api.nvim_set_hl(0, '@markup.raw.block.markdown',  { fg = '#c2ccd0' })
+vim.api.nvim_set_hl(0, '@markup.raw.markdown_inline', { bg = '#434343', fg = '#ff4c00' })

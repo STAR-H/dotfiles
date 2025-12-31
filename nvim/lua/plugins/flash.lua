@@ -9,7 +9,7 @@ return {
         -- save location in the jumplist
         jumplist = false,
         -- jump position
-        pos = "start", ---@type "start" | "end" | "range"
+        pos = "end", ---@type "start" | "end" | "range"
         -- add pattern to search history
         history = false,
         -- add pattern to search register

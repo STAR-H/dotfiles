@@ -33,7 +33,7 @@ for _, v in ipairs(base46_cache) do
 end
 
 -- diff highlight override
-vim.api.nvim_set_hl(0, 'DiffAdd',      { bg = '#b8bb26', fg = '#232323', })
+vim.api.nvim_set_hl(0, 'DiffAdd',      { bg = '#b8bb26', fg = '#232323' })
 vim.api.nvim_set_hl(0, 'DiffChange',   { bg = '#444444' })
 vim.api.nvim_set_hl(0, 'DiffDelete',   { fg = '#fb4934' })
 vim.api.nvim_set_hl(0, 'DiffModified', { fg = '#f18019' })
@@ -41,6 +41,9 @@ vim.api.nvim_set_hl(0, 'DiffText',     { bg = '#fabd2f', fg = '#232323', bold = 
 
 vim.api.nvim_set_hl(0, 'WinSeparator', { fg = '#808080' })
 vim.api.nvim_set_hl(0, 'NonText', { fg = '#808080' })
+
+
+vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#3a3a3a' })
 
 -- treesitter highlight override
 vim.api.nvim_set_hl(0, '@comment', { fg = '#808080', italic = true })

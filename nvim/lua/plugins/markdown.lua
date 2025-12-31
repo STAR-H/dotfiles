@@ -15,6 +15,8 @@ return {
         icons = { '󰉫 ', '󰉬 ', '󰉭 ', '󰉮 ', '󰉯 ', '󰉰 ' },
         width = 'block',
         position = 'inline',
+        left_pad = 1,
+        right_pad = 1,
       },
 
       checkbox = {
@@ -50,22 +52,25 @@ return {
     },
 
     init = function()
-      vim.api.nvim_create_autocmd("ModeChanged", {
-        pattern = "*",
+
+      vim.api.nvim_create_autocmd("InsertEnter", {
         callback = function()
           if vim.bo.filetype ~= "markdown" then
             return
           end
-
-          local mode = vim.fn.mode()
-
-          if mode == "n" or mode == "c" then
-            vim.cmd("RenderMarkdown enable")
-          else
-            vim.cmd("RenderMarkdown disable")
-          end
+          vim.cmd("RenderMarkdown disable")
         end,
       })
+
+      vim.api.nvim_create_autocmd("BufWritePost", {
+        callback = function()
+          if vim.bo.filetype ~= "markdown" then
+            return
+          end
+          vim.cmd("RenderMarkdown enable")
+        end,
+      })
+
     end
 
   },
