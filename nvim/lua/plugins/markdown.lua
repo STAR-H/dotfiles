@@ -20,7 +20,8 @@ return {
       },
 
       checkbox = {
-        checked = { scope_highlight = '@markup.strikethrough' }
+        checked = { scope_highlight = '@markup.strikethrough' },
+        right_pad = 0
       },
 
       pipe_table = {
@@ -29,12 +30,15 @@ return {
       },
 
       code = {
-        width = 'block',
+        width = 'full',
+        -- WARNING: due to block mode is can not set rightt mragin and can deal with 
+        -- wraped lines, so fallback to full mode.
+
         -- Minimum width to use for code blocks when width is 'block'.
-        min_width = 120,
-        left_margin = 5,
-        left_pad = 1,
-        right_pad = 1,
+        -- min_width = 120,
+        -- left_margin = 0,
+        -- left_pad = 0,
+        -- right_pad = 0,
         -- Whether to include the language icon above code blocks.
         language_icon = true,
         -- Whether to include the language name above code blocks.
@@ -71,6 +75,26 @@ return {
         end,
       })
 
+    end,
+
+    config = function(_, opts)
+      require("render-markdown").setup(opts)
+
+      -- NOTE: override markdown highlights
+      vim.api.nvim_set_hl(0, 'RenderMarkdownCodeInline', { bg = none })
+      vim.api.nvim_set_hl(0, '@markup.raw.block.markdown', { fg = '#c2ccd0' })
+      vim.api.nvim_set_hl(0, '@markup.raw.markdown_inline', { bg = '#434343', fg = '#ff4c00' })
+      vim.api.nvim_set_hl(0, 'RenderMarkdownInlineHighlight', { bg = '#6b3f1d', bold = true })
+
+      vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = '#3a3735' })
+      vim.api.nvim_set_hl(0, 'RenderMarkdown_RendermarkdownCodeBorder_bg_as_fg', { link = 'RenderMarkdownCode' })
+
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', {fg = '#32302f', bg = '#fabd2f', bold = true})
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH2Bg', {fg = '#32302f', bg = '#fe8019', bold = true})
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH3Bg', {fg = '#32302f', bg = '#83a598', bold = true})
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH4Bg', {fg = '#32302f', bg = '#458588', bold = true})
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH5Bg', {fg = '#32302f', bg = '#b8bb26', bold = true})
+      vim.api.nvim_set_hl(0, 'RenderMarkdownH6Bg', {fg = '#32302f', bg = '#a89984', bold = true})
     end
 
   },
