@@ -1,0 +1,17 @@
+#!/opt/homebrew/bin/bash
+
+# OS judge
+case "$(uname -s)" in
+  Darwin) export PLATFORM=macos ;;
+  Linux)  export PLATFORM=linux ;;
+  *)      export PLATFORM=unknown ;;
+esac
+
+# platform
+if [[ "$PLATFORM" == "macos" ]]; then
+  source $HOME/.config/bash/macos.sh
+elif [[ "$PLATFORM" == "linux" ]]; then
+  source $HOME/.config/bash/linux.sh
+fi
+
+source $HOME/.config/bash/common.sh
