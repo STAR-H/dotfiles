@@ -45,7 +45,7 @@ main()
     smiley)
       left_icon="☺";;
     session)
-      left_icon=" #S";;
+      left_icon=" #S";;
     window)
       left_icon="#W";;
     *)
@@ -78,7 +78,9 @@ main()
       flags=""
       current_flags="";;
     true)
-      flags="#{?window_flags,#[fg=${dark_purple}]#{window_flags},}"
+      # flags="#{?window_flags,#[fg=${dark_purple}]#{window_flags},}"
+      # current_flags="#{?window_flags,#[fg=${light_purple}]#{window_flags},}"
+      flags="#{?window_last_flag,#[fg=${dark_purple}]󰁯,}"
       current_flags="#{?window_flags,#[fg=${light_purple}]#{window_flags},}"
   esac
 
@@ -218,14 +220,20 @@ main()
     fi
   done
 
+  window_number_full="#($current_dir/custom-number.sh #I fsquare)"
+  window_number_zoom="#($current_dir/custom-number.sh #I fdsquare)"
+
+  pane_number_zoom="#($current_dir/custom-number.sh #{window_panes} sub)"
+  pane_numbers="#{?#{&&:#{window_zoomed_flag},#{>:#{window_panes},1}},$pane_number_zoom,}"
+
   # Window option
   if $show_powerline; then
-    tmux set-window-option -g window-status-current-format "#[fg=${gray},bg=${dark_purple}]${left_sep}#[fg=${white},bg=${dark_purple}] #I #W${current_flags} #[fg=${dark_purple},bg=${gray}]${left_sep}"
+    tmux set-window-option -g window-status-current-format "#[fg=${gray},bg=${dark_purple}]${left_sep}#[fg=${white},bg=${dark_purple}] #{?window_zoomed_flag,$window_number_zoom,$window_number_full}#W$pane_numbers#[fg=${dark_purple},bg=${gray}]${left_sep}"
   else
     tmux set-window-option -g window-status-current-format "#[fg=${white},bg=${dark_purple}] #I #W${current_flags} "
   fi
 
-  tmux set-window-option -g window-status-format "#[fg=${white}]#[bg=${gray}] #I #W${flags}"
+  tmux set-window-option -g window-status-format "#[fg=${white}]#[bg=${gray}] #{?window_zoomed_flag,$window_number_zoom,$window_number_full}#W$pane_numbers${flags}"
   tmux set-window-option -g window-status-activity-style "bold"
   tmux set-window-option -g window-status-bell-style "bold"
 }
