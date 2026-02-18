@@ -1,124 +1,69 @@
-export ZSH="$HOME/.zsh"
+#!/bin/zsh
 
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+# os
+case "$(uname -s)" in
+  Darwin) export PLATFORM=macos ;;
+  Linux)  export PLATFORM=linux ;;
+  *)      export PLATFORM=unknown ;;
+esac
 
-export LC_CTYPE=en_US.UTF-8
+# platform
+if [[ "$PLATFORM" == "macos" ]]; then
+  source ~/.config/zsh/macos.sh
+elif [[ "$PLATFORM" == "linux" ]]; then
+  source ~/.config/zsh/linux.sh
+fi
 
-# 启用彩色提示符
-autoload -U colors && colors
-
-# 每次刷新提示符
-setopt prompt_subst
-
-
-# plugins
-source $ZSH/fzf/key-bindings.zsh
-
-source $ZSH/plugins/zsh-completions/zsh-completions.plugin.zsh
-source $ZSH/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-source $ZSH/plugins/git-prompt.sh
-export GIT_PS1_SHOWDIRTYSTATE=1
-### ---- history config ----------
-export HISTFILE=$HOME/.zsh_history
-# How many commands zsh will load to memory.
-export HISTSIZE=1000
-# How maney commands history will save on file.
-export SAVEHIST=1000
-# History won't save duplicates.
-setopt HIST_IGNORE_ALL_DUPS
-autoload -U compinit && compinit
-# ignore uppercase
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*'
-
-ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080, italic"
-
-local ret_status="%(?:%{$fg_bold[green]%}➜ :%{$fg_bold[red]%}➜ %s)"
-PROMPT='%{$fg[blue]%}%D{[%H:%M]} %{$fg_bold[green]%} %{$fg[cyan]%}%~ %{$fg_bold[blue]%}$(__git_ps1 "br:(%s)")%{$fg_bold[blue]%}%{$reset_color%}
-${ret_status}'
-
-#binding key
-bindkey '^P' history-beginning-search-backward
-bindkey '^B' backward-char
-bindkey '^A' beginning-of-line
-bindkey '^F' forward-char
-bindkey '^E' end-of-line
-bindkey '^D' delete-char
-
-
-# mac configuartion
-export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-# fix clangd can not find header
-export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
-export DISPLAY=:0
-
-# linux configuration
-# export LESSCHARSET=utf-8
+# macro
 export EDITOR='nvim'
-alias vi=nvim
+
+# key binding
+bindkey -e
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#808080"
+# remove underline of path
+ZSH_HIGHLIGHT_STYLES[path]='none'
+
+# Completion styling
+eval "$(dircolors -b)"
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+
+# alias
 alias ls='ls --color=auto'
 alias ll='ls -alh --color=auto'
-alias ra=joshuto
-alias genctags='ctags -R --c++-kinds=+p+l+x+c+d+e+f+g+m+n+s+t+u+v --fields=+liaS --extras=+qf --language-force=c++ -f .tags'
-alias gencscope='find . -name "*.h" -o -name "*.hpp" -o -name "*.cpp"  -o -name "*.c"> .cscope.files && cscope -Rbkq -i .cscope.files -f .cscope.out'
-alias vif='nvim $(fzf)'
 alias cl='clear'
+alias vi='nvim'
+alias vif='nvim $(fzf)'
+alias gs='git status -s'
 
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt inc_append_history
+setopt share_history
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+export FZF_CTRL_R_OPTS="--layout=reverse"
 
-# fzf configuratin
-export FZF_DEFAULT_OPTS=" --preview '(highlight -O ansi {} || cat {}) 2> /dev/null | head -500'"
-PROMPT=%m\ $PROMPT
-
-
-function joshuto() {
-    ID="$$"
-    mkdir -p /tmp/$USER
-    OUTPUT_FILE="/tmp/$USER/joshuto-cwd-$ID"
-    env joshuto --output-file "$OUTPUT_FILE" $@
-    exit_code=$?
-
-    case "$exit_code" in
-        # regular exit
-        0)
-        ;;
-        # output contains current directory
-        101)
-        JOSHUTO_CWD=$(cat "$OUTPUT_FILE")
-        cd "$JOSHUTO_CWD"
-        ;;
-        # output selected files
-        102)
-        ;;
-    *)
-        echo "Exit code: $exit_code"
-        ;;
-esac
+# y shell wrapper that provides the ability to change the current working directory when exiting Yazi
+function y() {
+   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+   command yazi "$@" --cwd-file="$tmp"
+   IFS= read -r -d '' cwd < "$tmp"
+   [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
+   rm -f -- "$tmp"
 }
 
-
-# temporary environment variables
-# fix ld: warning: dylib (/opt/homebrew/opt/llvm/lib/libunwind.dylib) was built for newer macOS version (13.0) than being linked (12.3)
-export MACOSX_DEPLOYMENT_TARGET=13.0
-
-export STM32CubeMX_PATH=/Applications/STMicroelectronics/STM32CubeMX.app/Contents/Resources
-export PATH="/opt/homebrew/Cellar/arm-none-eabi-gcc/14.2.0/bin:$PATH"
-
-# Ensure the maximum number of history records
-HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
-
-# Real-time writing of history
-setopt inc_append_history     # The command is appended to the history file immediately after execution
-setopt share_history          # Share history between all terminal windows
-
-# Preventing duplicate records
-setopt hist_ignore_dups       # Ignore duplicate history
-setopt hist_reduce_blanks     # Remove extra spaces at the beginning and end of the command
-setopt hist_ignore_space      # Ignore commands that begin with space (such as temporary commands)
-
-# disable homebrew auto update
-export HOMEBREW_NO_AUTO_UPDATE=1
+# starship
+export STARSHIP_CONFIG=$HOME/.config/starship/starship.toml
+eval "$(starship init zsh)"
