@@ -27,10 +27,9 @@ return {
         "L3MON4D3/LuaSnip",
         dependencies = {
           "saadparwaiz1/cmp_luasnip",
-          "STAR-H/vim-snippets",
         },
         config = function()
-          local snippetpath = vim.fn.stdpath("data") .. "/lazy/vim-snippets/snippets"
+          local snippetpath = vim.fn.stdpath("config") .. "/snippets"
           require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippetpath })
         end
       },

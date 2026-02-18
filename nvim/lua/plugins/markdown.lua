@@ -146,6 +146,7 @@ return {
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
+    enabled = vim.loop.os_uname().sysname ~= "Linux", -- Linux => Linux Darwin => macos
     lazy = true,
     ft = "markdown",
     dependencies = {
@@ -159,7 +160,7 @@ return {
       workspaces = {
         {
           name = "obsidian",
-          path = "~/Personal/obsidian",
+          path = "~/Documents/OneDrive/obsidian",
           overrides = {
             notes_subdir = "00-Inbox",
           },

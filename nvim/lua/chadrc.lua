@@ -25,6 +25,13 @@ M.base46 = {
   },
 }
 
+M.colorify = {
+  enabled = true,
+  mode = "virtual", -- fg, bg, virtual
+  virt_text = "󱓻 ",
+  highlight = { hex = true, lspvars = false },
+}
+
 M.nvdash = {
   load_on_startup = true,
   header = {

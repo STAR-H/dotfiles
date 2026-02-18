@@ -1,0 +1,34 @@
+snippet /h1
+    # $0
+snippet /h2
+    ## $0
+snippet /h3
+    ### $0
+snippet /h4
+    #### $0
+snippet /h5
+    ##### $0
+snippet /h6
+    ###### $0
+snippet /code
+    \`\`\`txt
+    $0
+    \`\`\`
+snippet /todo
+    - [ ] $0
+snippet /link
+    [${1:description}](${2:https://example.com})
+snippet /image
+    <img src="${1:https://example.jpg}" alt="${2:image description}" style="transform: scale(1);">
+snippet /table
+    | ${1:header1}| ${2:header2}| ${3:header3}|
+    | ---         | ---         | ---         |
+    | ${4:xx}     | ${5:xx}     | ${6:xx}     |
+snippet /frontmatter
+    ---
+    id: `strftime('%Y%m%d%H%M')`
+    created: `strftime('%Y-%m-%d %H:%M')`
+    modified: `strftime('%Y-%m-%d %H:%M')`
+    tags:
+    - $0
+    ---

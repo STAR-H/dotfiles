@@ -1,7 +1,7 @@
 return {
   {
     "yetone/avante.nvim",
-    enabled = not require("configs.utils").is_diff_mode(),
+    enabled = false,
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {

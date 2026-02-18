@@ -92,7 +92,8 @@ return {
           "AvanteInput",
           "AvanteSelectedFiles",
           "Avante",
-          "gitsigns-blame"
+          "gitsigns-blame",
+          "TelescopePrompt"
         },
         always_divide_middle = true,
         globalstatus         = true,

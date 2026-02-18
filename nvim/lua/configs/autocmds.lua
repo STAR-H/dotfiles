@@ -203,6 +203,7 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
   desc = 'Disable change window bg for FileType',
 })
+
 vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   group = focusWindow,
   callback = function(_)
@@ -213,6 +214,7 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'WinEnter' }, {
   end,
   desc = 'Enable cursorline',
 })
+
 vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
   group = focusWindow,
   callback = function(_)
@@ -222,4 +224,12 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
     end
   end,
   desc = 'Disable cursorline',
+})
+
+-- c/cpp column limit 128
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "c", "cpp" },
+  callback = function()
+    vim.fn.matchadd("Error", [[\%129v.\+]])
+  end,
 })

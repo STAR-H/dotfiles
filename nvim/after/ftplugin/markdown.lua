@@ -27,9 +27,9 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufModifiedSet", "FocusLost" }, {
       save_timer:close()
     end
 
-    -- 设置 1 秒延迟的定时器
+    -- 设置 30 秒延迟的定时器
     save_timer = vim.loop.new_timer()
-    save_timer:start(3000, 0, vim.schedule_wrap(function()
+    save_timer:start(30000, 0, vim.schedule_wrap(function()
       local current_mode = vim.api.nvim_get_mode().mode
       local is_normal_mode = current_mode == "n"
       -- 检查是否仍是 Markdown 文件且缓冲区有效
@@ -63,6 +63,29 @@ vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*.md",
   callback = update_modified_timestamp,
 })
+
+local function toggle_checkbox()
+  local bufnr = 0
+  local row = vim.api.nvim_win_get_cursor(0)[1] - 1
+  local line = vim.api.nvim_buf_get_lines(bufnr, row, row + 1, false)[1]
+
+  if not line then
+    return
+  end
+
+  -- 匹配 - [ ] 或 * [ ] 或 + [ ]
+  local new_line, count = line:gsub("^([%s]*[-*+]%s+)%[ %]", "%1[x]")
+  if count == 0 then
+    new_line, count = line:gsub("^([%s]*[-*+]%s+)%[x%]", "%1[ ]")
+  end
+
+  if count > 0 then
+    vim.api.nvim_buf_set_lines(bufnr, row, row + 1, false, { new_line })
+  end
+end
+
+vim.keymap.set("n", "<cr>", toggle_checkbox, { desc = "Toggle markdown checkbox" })
+
 
 -- enable spell check
 vim.opt_local.spell = false

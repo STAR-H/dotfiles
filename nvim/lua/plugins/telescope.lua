@@ -3,12 +3,19 @@ return {
   branch = '0.1.x',
   cmd = "Telescope",
   keys = {
-    { "<leader>ff", "<cmd>Telescope find_files<cr>",                desc = 'telescope find files' },
+    { "<leader>ff",
+    function()
+      local ok = pcall(require("telescope.builtin").git_files)
+      if not ok then
+        require("telescope.builtin").find_files()
+      end
+    end,
+    desc = 'telescope find files' },
     { "<leader>fg", "<cmd>Telescope live_grep<cr>",                 desc = 'telescope live grep' },
     { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = 'telescope list buffers' },
     { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = 'telescope fuzzy search' },
     { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",      desc = 'telescope current buffer tags' },
-    { "<leader>z=",         "<cmd>Telescope spell_suggest<cr>",     { desc = 'telescope spell suggest', noremap = true } }
+    { "<leader>z=", "<cmd>Telescope spell_suggest<cr>",           { desc = 'telescope spell suggest', noremap = true } }
   },
   dependencies = {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -77,6 +84,11 @@ return {
           previewer = false,
           cwd = vim.g.project_root_dir,
           prompt_title = "Find Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")"
+        },
+        git_files = {
+          theme = "dropdown",
+          previewer = false,
+          prompt_title = "Find Git Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")"
         },
         buffers = {
           prompt_title = "Switch Buffers",
