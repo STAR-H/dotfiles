@@ -2,7 +2,7 @@
 
 # Set paths
 DOTFILES_DIR="$PWD"
-CONFIG_DIR="$HOME/.config/"
+CONFIG_DIR="$HOME/.config"
 
 mkdir -p "$CONFIG_DIR"
 
