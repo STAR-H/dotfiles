@@ -48,6 +48,25 @@ return {
         language = true,
       },
 
+      quote = {
+        repeat_linebreak = true
+      },
+
+      win_options = {
+        showbreak = {
+          default = '',
+          rendered = '  ',
+        },
+        breakindent = {
+          default = false,
+          rendered = true,
+        },
+        breakindentopt = {
+          default = '',
+          rendered = '',
+        },
+      },
+
       anti_conceal = { enabled = false },
 
       indent = { enabled = false },
@@ -118,6 +137,7 @@ return {
 
   {
     "HakonHarnes/img-clip.nvim",
+    enabled = vim.loop.os_uname().sysname == "Darwin",
     ft = { 'markdown' },
     opts = {
       filetypes = {
@@ -146,7 +166,7 @@ return {
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
-    enabled = vim.loop.os_uname().sysname ~= "Linux", -- Linux => Linux Darwin => macos
+    enabled = vim.loop.os_uname().sysname == "Darwin", -- Linux => Linux, Darwin => macos
     lazy = true,
     ft = "markdown",
     dependencies = {
