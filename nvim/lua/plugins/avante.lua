@@ -1,20 +1,26 @@
 return {
   {
     "yetone/avante.nvim",
-    enabled = false,
+    enabled = vim.loop.os_uname().sysname == "Darwin",
+    build = vim.fn.has("win32") ~= 0
+      and "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
+      or "make",
     event = "VeryLazy",
     version = false, -- Never set this value to "*"! Never!
     opts = {
-      provider = "deepseek",
+      -- this file can contain specific instructions for your project
+      instructions_file = "avante.md",
+      provider = "qwen",
       providers = {
-        deepseek = {
+        qwen = {
           __inherited_from = "openai",
-          api_key_name = "DEEPSEEK_API_KEY",
-          endpoint = "https://api.deepseek.com",
-          model = "deepseek-coder",
+          api_key_name = "QWEN_API_KEY",
+          endpoint = "https://dashscope.aliyuncs.com/compatible-mode/v1",
+          model = "qwen3.5-plus",
+          timeout = 30000, -- Timeout in milliseconds
           extra_request_body = {
-            max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
-            -- reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
+            temperature = 0.75,
+            max_tokens = 20480,
           },
         },
       },
@@ -41,9 +47,7 @@ return {
       vim.api.nvim_set_hl(0, 'AvanteSidebarWinSeparator', { fg = '#808080', bg = '#232323' })
       vim.api.nvim_set_hl(0, 'AvanteSidebarWinHorizontalSeparator', { fg = '#36393a', bg = '#232323' })
     end,
-    -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-    build = "make",
-    -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "stevearc/dressing.nvim",
