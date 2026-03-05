@@ -44,7 +44,7 @@ alias vif='nvim $(fzf)'
 alias gs='git status -s'
 
 # History
-HISTSIZE=5000
+HISTSIZE=10000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -65,6 +65,7 @@ precmd() {
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 export FZF_CTRL_R_OPTS="--layout=reverse"
+export FZF_DEFAULT_COMMAND='find . -type f -not -path "*/.*"'
 
 # y shell wrapper that provides the ability to change the current working directory when exiting Yazi
 function y() {
