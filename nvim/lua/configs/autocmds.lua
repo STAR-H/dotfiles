@@ -227,9 +227,23 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'WinLeave' }, {
 })
 
 -- c/cpp column limit 128
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "c", "cpp" },
+vim.api.nvim_create_autocmd("BufWinEnter", {
   callback = function()
+    local ft = vim.bo.filetype
+    if ft ~= "cpp" and ft ~= "c" then return end
+    if vim.w.overlength_match then return end
+
+    vim.w.overlength_match =
     vim.fn.matchadd("Error", [[\%129v.\+]])
   end,
 })
+
+vim.api.nvim_create_autocmd("BufWinLeave", {
+  callback = function()
+    if vim.w.overlength_match then
+      vim.fn.matchdelete(vim.w.overlength_match)
+      vim.w.overlength_match = nil
+    end
+  end,
+})
+
