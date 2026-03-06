@@ -7,6 +7,11 @@ case "$(uname -s)" in
   *)      export PLATFORM=unknown ;;
 esac
 
+# local machine-specific configurations
+if [[ -f $HOME/.local.sh ]]; then
+  source $HOME/.local.sh
+fi
+
 # platform
 if [[ "$PLATFORM" == "macos" ]]; then
   source ~/.config/zsh/macos.sh
@@ -14,10 +19,6 @@ elif [[ "$PLATFORM" == "linux" ]]; then
   source ~/.config/zsh/linux.sh
 fi
 
-# local machine-specific configurations
-if [[ -f $HOME/.local.sh ]]; then
-  source $HOME/.local.sh
-fi
 
 # macro
 export EDITOR='nvim'
@@ -74,6 +75,15 @@ function y() {
    IFS= read -r -d '' cwd < "$tmp"
    [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd"
    rm -f -- "$tmp"
+}
+
+# tmux copy
+tcopy() {
+    if [ -t 0 ]; then
+        echo "tcopy expects stdin" >&2
+        return 1
+    fi
+    tee >(tmux load-buffer -)
 }
 
 # starship

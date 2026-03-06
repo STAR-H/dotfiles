@@ -1,5 +1,5 @@
-source $HOME/tools/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-source $HOME/tools/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $ZSH_PLUGINS/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-fpath=($HOME/tools/zsh-plugins/zsh-completions $fpath)
+fpath=($ZSH_PLUGINS/zsh-completions $fpath)
 autoload -Uz compinit && compinit
