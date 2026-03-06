@@ -332,8 +332,8 @@
     side-by-side = true
     keep-plus-minus-markers = false
     syntax-theme = Nord
-    file-style = "#434C5E" bold
-    file-decoration-style = "#434C5E" ul
+    file-style = "#d8fdf6" bold
+    file-decoration-style = "#d8fdf6" ul
     file-added-label = [+]
     file-copied-label = [==]
     file-modified-label = [*]
@@ -341,11 +341,11 @@
     file-renamed-label = [->]
     hunk-header-style = omit
     line-numbers-left-format = " {nm:>3} │"
-    line-numbers-left-style = red
+    line-numbers-left-style = "#5E81AC"
     line-numbers-right-format = " {np:>3} │"
-    line-numbers-right-style = green
-    line-numbers-minus-style = red italic black
-    line-numbers-plus-style = green italic black
+    line-numbers-right-style = "#5E81AC"
+    line-numbers-minus-style = red italic
+    line-numbers-plus-style = green italic
     line-numbers-zero-style = "#434C5E" italic
     minus-style = bold red
     minus-emph-style = bold "#202020" "#FF5555"
