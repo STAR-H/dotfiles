@@ -328,6 +328,7 @@
 [delta "chameleon"]
     #author: https://github.com/AirOnSkin
     dark = true
+    tabs = 4
     line-numbers = true
     side-by-side = true
     keep-plus-minus-markers = false
