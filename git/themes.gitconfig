@@ -346,9 +346,9 @@
     line-numbers-left-style = "#5E81AC"
     line-numbers-right-format = "│ {np:>3} "
     line-numbers-right-style = "#5E81AC"
-    line-numbers-minus-style = red italic
-    line-numbers-plus-style = green italic
-    line-numbers-zero-style = "#434C5E" italic
+    line-numbers-minus-style = red bold
+    line-numbers-plus-style = green bold
+    line-numbers-zero-style = "#434C5E"
     minus-style = bold red
     minus-emph-style = bold "#202020" "#FF5555"
     minus-non-emph-style = bold
