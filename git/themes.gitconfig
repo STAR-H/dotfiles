@@ -330,6 +330,7 @@
     dark = true
     tabs = 4
     line-numbers = true
+    right-arrow = ➤
     side-by-side = true
     keep-plus-minus-markers = false
     syntax-theme = Nord
