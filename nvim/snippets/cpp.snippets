@@ -9,8 +9,11 @@ snippet mainn
     }
 
 snippet main
-    int main(const int argc, void** argv)
+    int main(const int argc, char** argv)
     {
         $0
         return 0;
     }
+
+snippet cout
+    std::cout << $0 << std::endl;
