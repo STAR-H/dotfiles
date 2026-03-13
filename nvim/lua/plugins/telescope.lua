@@ -88,7 +88,12 @@ return {
         git_files = {
           theme = "dropdown",
           previewer = false,
-          prompt_title = "Find Git Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")"
+          prompt_title = "Find Git Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")",
+          mappings = {
+            i = {
+              ["<Tab>"] = function() require('telescope.builtin').find_files() end,
+            }
+          }
         },
         buffers = {
           prompt_title = "Switch Buffers",
