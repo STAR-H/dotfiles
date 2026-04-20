@@ -73,6 +73,13 @@ return {
     local navic_status, navic = pcall(require, 'nvim-navic')
     local noice_status, noice = pcall(require, 'noice')
 
+    local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
+    local section_b = {diagnostics_component}
+
+    if not is_windows then
+      table.insert(section_b, diff)
+    end
+
     require('lualine').setup {
       options = {
         icons_enabled        = true,
@@ -105,7 +112,7 @@ return {
       },
       sections = {
         lualine_a = { 'mode' },
-        lualine_b = { diagnostics_component, diff },
+        lualine_b = {section_b},
         lualine_c = {
           { 'filename',
             file_status = true,       -- Displays file status (readonly status, modified status)
@@ -164,9 +171,19 @@ return {
             function()
               local stbufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
               if rawget(vim, "lsp") then
+                local lsp_names = {}
+
                 for _, client in ipairs(vim.lsp.get_clients()) do
                   if client.attached_buffers[stbufnr] and client.name ~= "null-ls" then
-                    return (vim.o.columns > 100 and "  " .. client.name .. " ") or " LSP "
+                    table.insert(lsp_names, client.name)
+                  end
+                end
+
+                if #lsp_names > 0 then
+                  if vim.o.columns > 100 then
+                    return "  " .. table.concat(lsp_names, ",")
+                  else
+                    return "  LSP"
                   end
                 end
               end

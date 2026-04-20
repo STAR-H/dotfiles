@@ -35,6 +35,8 @@ return {
       -- custom key mappings end
     end
 
+    local function has_git() return vim.fn.executable("git") ==1 end
+
     require("nvim-tree").setup({
       -- Changes the tree root directory on `DirChanged` and refreshes the tree.
       sync_root_with_cwd = false,
@@ -61,6 +63,9 @@ return {
       filters = {
         dotfiles = true,
       },
+      git = {
+        enable = has_git(),
+      }
     })
     -- nvim-tree highlight override
     vim.api.nvim_set_hl(0, 'NvimTreeCursorLine', { bg = '#2e2e2e', bold = true })

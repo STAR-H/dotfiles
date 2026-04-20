@@ -1,6 +1,8 @@
 return {
   "aznhe21/actions-preview.nvim",
   event = "VeryLazy",
+  -- Linux => Linux, Darwin => macos Windows => Windows_NT
+  enabled = vim.tbl_contains({ "Darwin", "Linux" }, vim.loop.os_uname().sysname),
   config = function()
     require("actions-preview").setup({
       backend = "telescope",

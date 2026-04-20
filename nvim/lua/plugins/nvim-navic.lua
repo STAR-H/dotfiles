@@ -49,7 +49,7 @@ return {
       },
       highlight = false,
       separator = " > ",
-      depth_limit = 10,
+      depth_limit = 4,
       depth_limit_indicator = "..",
       safe_output = true,
       click = true

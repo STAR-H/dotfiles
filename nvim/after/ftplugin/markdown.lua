@@ -27,9 +27,9 @@ vim.api.nvim_create_autocmd({ "InsertLeave", "BufModifiedSet", "FocusLost" }, {
       save_timer:close()
     end
 
-    -- 设置 30 秒延迟的定时器
+    -- 设置 15 秒延迟的定时器
     save_timer = vim.loop.new_timer()
-    save_timer:start(30000, 0, vim.schedule_wrap(function()
+    save_timer:start(15000, 0, vim.schedule_wrap(function()
       local current_mode = vim.api.nvim_get_mode().mode
       local is_normal_mode = current_mode == "n"
       -- 检查是否仍是 Markdown 文件且缓冲区有效

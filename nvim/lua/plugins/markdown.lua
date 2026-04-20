@@ -52,6 +52,12 @@ return {
         repeat_linebreak = true
       },
 
+      link = {
+        footnote = {
+          icon = ''
+        }
+      },
+
       win_options = {
         showbreak = {
           default = '',
@@ -166,7 +172,7 @@ return {
   {
     "epwalsh/obsidian.nvim",
     version = "*", -- recommended, use latest release instead of latest commit
-    enabled = vim.loop.os_uname().sysname == "Darwin", -- Linux => Linux, Darwin => macos
+    enabled = false,
     lazy = true,
     ft = "markdown",
     dependencies = {

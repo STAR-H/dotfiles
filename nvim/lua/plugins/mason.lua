@@ -20,6 +20,7 @@ return {
         "cmake",
         "lua_ls",
         "bashls",
+        "marksman"
       }
       require("mason").setup(settings)
       require("mason-lspconfig").setup({

@@ -8,8 +8,12 @@ return {
     { "gu",         "<Cmd>Gitsigns reset_hunk<CR>",                 desc = "Gitsigns reset_hunk" },
     { "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>",  desc = "Gitsigns Toggle Current Line Blame" },
   },
-  -- add key map for nvcheatsheet
-  enabled = not require("configs.utils").is_diff_mode(),
+  enabled = function()
+    local sys = vim.loop.os_uname().sysname
+    local allowed = { Darwin = true, Linux = true }
+
+    return not require("configs.utils").is_diff_mode() and allowed[sys]
+  end,
   config = function()
     require('gitsigns').setup {
       signs                        = {

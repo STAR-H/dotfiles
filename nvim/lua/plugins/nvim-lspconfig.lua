@@ -8,7 +8,7 @@ return {
     local lspconfig = require "lspconfig"
     local lsphandlers = require("configs.handlers")
 
-    local servers = { "clangd", "cmake", "bashls", }
+    local servers = { "clangd", "cmake", "bashls", "marksman" }
 
     -- lsps with default config
     local opts = {}

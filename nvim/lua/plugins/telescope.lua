@@ -18,7 +18,11 @@ return {
     { "<leader>z=", "<cmd>Telescope spell_suggest<cr>",           { desc = 'telescope spell suggest', noremap = true } }
   },
   dependencies = {
-    { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    {
+      "nvim-telescope/telescope-fzf-native.nvim",
+      build = "make",
+      enabled = vim.tbl_contains({ "Darwin", "Linux" }, vim.loop.os_uname().sysname),
+    },
     { "nvim-lua/plenary.nvim" },
   },
   config = function()
@@ -131,7 +135,7 @@ return {
     })
 
     -- load the extension here
-    require('telescope').load_extension('bookmarks')
-    require("telescope").load_extension("fzf")
+    pcall(require('telescope').load_extension, 'bookmarks')
+    pcall(require("telescope").load_extension, "fzf")
   end
 }
