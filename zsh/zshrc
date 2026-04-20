@@ -78,7 +78,7 @@ function y() {
 }
 
 # tmux copy
-tcopy() {
+tp() {
     if [ -t 0 ]; then
         echo "tcopy expects stdin" >&2
         return 1
