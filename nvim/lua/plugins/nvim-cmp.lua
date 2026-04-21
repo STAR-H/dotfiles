@@ -205,6 +205,7 @@ return {
 
       cmp.setup.filetype({ 'markdown', 'Avante' }, {
         sources = {
+          { name = 'nvim_lsp',        group_index = 1, priority = 100 },
           { name = 'luasnip',         group_index = 1, priority = 100 },
           { name = 'render-markdown', group_index = 1, priority = 100 },
           { name = 'buffer',          group_index = 3, priority = 40 },

@@ -17,6 +17,32 @@ return {
         position = 'inline',
         left_pad = 1,
         right_pad = 1,
+        border = true,
+        border_virtual = true,
+        -- Used above heading for border.
+        above = '─',
+        -- above = '·',
+        -- Used below heading for border.
+        below = '─',
+        -- below = '·',
+        backgrounds = {
+          'RenderMarkdownH1Bg',
+          'RenderMarkdownH2Bg',
+          'RenderMarkdownH3Bg',
+          'RenderMarkdownH4Bg',
+          'RenderMarkdownH5Bg',
+          'RenderMarkdownH6Bg',
+        },
+        -- Highlight for the heading and sign icons.
+        -- Output is evaluated using the same logic as 'backgrounds'.
+        foregrounds = {
+          'RenderMarkdownH1',
+          'RenderMarkdownH2',
+          'RenderMarkdownH3',
+          'RenderMarkdownH4',
+          'RenderMarkdownH5',
+          'RenderMarkdownH6',
+        },
       },
 
       checkbox = {
@@ -114,13 +140,29 @@ return {
       vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = '#3a3735' })
       vim.api.nvim_set_hl(0, 'RenderMarkdown_RendermarkdownCodeBorder_bg_as_fg', { link = 'RenderMarkdownCode' })
 
-      vim.api.nvim_set_hl(0, 'RenderMarkdownH1Bg', {fg = '#32302f', bg = '#fabd2f', bold = true})
-      vim.api.nvim_set_hl(0, 'RenderMarkdownH2Bg', {fg = '#32302f', bg = '#fe8019', bold = true})
-      vim.api.nvim_set_hl(0, 'RenderMarkdownH3Bg', {fg = '#32302f', bg = '#83a598', bold = true})
-      vim.api.nvim_set_hl(0, 'RenderMarkdownH4Bg', {fg = '#32302f', bg = '#458588', bold = true})
-      vim.api.nvim_set_hl(0, 'RenderMarkdownH5Bg', {fg = '#32302f', bg = '#b8bb26', bold = true})
-      vim.api.nvim_set_hl(0, 'RenderMarkdownH6Bg', {fg = '#32302f', bg = '#a89984', bold = true})
-    end
+      -- H1 (yellow)
+      vim.api.nvim_set_hl(0, "RenderMarkdownH1Bg", { fg = "#e6c384", bg = "#4a412a", bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH1",   { fg = "#e6c384", bold = true })
+
+      -- H2 (green)
+      vim.api.nvim_set_hl(0, "RenderMarkdownH2Bg", { fg = "#c0d8a0", bg = "#3f4a36", bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH2",   { fg = "#c0d8a0", bold = true })
+
+      -- H3 (aqua)
+      vim.api.nvim_set_hl(0, "RenderMarkdownH3Bg", { fg = "#a8d5c4", bg = "#384a46", bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH3",   { fg = "#a8d5c4", bold = true })
+
+      -- H4 (blue)
+      vim.api.nvim_set_hl(0, "RenderMarkdownH4Bg", { fg = "#b0c8e0", bg = "#38424a", bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH4",   { fg = "#b0c8e0", bold = true })
+
+      -- H5 (purple)
+      vim.api.nvim_set_hl(0, "RenderMarkdownH5Bg", { fg = "#d0b8e0", bg = "#44384a", bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH5",   { fg = "#d0b8e0", bold = true })
+
+      -- H6 (neutral gray)
+      vim.api.nvim_set_hl(0, "RenderMarkdownH6Bg", { fg = "#b8b8b8", bg = "#3a3a3a", bold = true })
+      vim.api.nvim_set_hl(0, "RenderMarkdownH6",   { fg = "#b8b8b8", bold = true })    end
 
   },
   -- install with yarn or npm
