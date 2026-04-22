@@ -3,8 +3,8 @@ local function update_modified_timestamp()
   local in_frontmatter = false
   for i, line in ipairs(lines) do
     if line:match("^---") then in_frontmatter = true end
-    if in_frontmatter and line:match("^modified:") then
-      lines[i] = "modified: " .. os.date("%Y-%m-%d %H:%M")
+    if in_frontmatter and line:match("^updated:") then
+      lines[i] = "updated: " .. os.date("%Y-%m-%d %H:%M")
       vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
       break
     end
