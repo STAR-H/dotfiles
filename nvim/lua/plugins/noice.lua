@@ -47,10 +47,10 @@ return {
             { find = "^%s?cleared" },      -- mark-1 cleared
             { find = "^Cleared%sall" },    -- all marks cleared
             { find = "^%d%s?$" },
-            { find = "^/.*" }              --mark-1/word
+            { find = "^/.*" },             -- mark-1/word
+            { find = "^.*EasyAlign.*" }     -- EasyAlign
           },
         },
-        view = "mini",
         opts = { skip = true },
       },
     },

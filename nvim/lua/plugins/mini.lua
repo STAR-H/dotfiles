@@ -25,14 +25,6 @@ return {
     end
   },
   {
-    "echasnovski/mini.align",
-    version = "*",
-    event = "VeryLazy",
-    config = function()
-      require("mini.align").setup()
-    end
-  },
-  {
     "echasnovski/mini.cursorword",
     enabled = not require("configs.utils").is_diff_mode(),
     ft = { "c", "cpp", "h", "hpp", "lua" },
