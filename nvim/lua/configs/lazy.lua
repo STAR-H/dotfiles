@@ -1,5 +1,5 @@
 return {
-  defaults = { lazy = true },
+  defaults = { lazy = true, pin = true },
   install = { colorscheme = { "nvchad" } },
   checker = { enabled = false },
   -- NOTE: disable annoying messages when change the config files

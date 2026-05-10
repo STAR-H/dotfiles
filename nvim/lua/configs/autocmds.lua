@@ -158,9 +158,8 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
-local blend = Snacks.util.blend('#282828', '#3d3b4f',0.8)
 vim.api.nvim_set_hl(0, 'FocusedWindow', { link = 'Normal' })
-vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = blend })
+vim.api.nvim_set_hl(0, 'UnfocusedWindow', { bg = '#2c2c30' })
 local ignore_filetypes = {
   "NvimTree",
   "tagbar",
@@ -247,3 +246,39 @@ vim.api.nvim_create_autocmd("BufWinLeave", {
   end,
 })
 
+-- Daily Note: Create or open YYYY-MM-DD.md with frontmatter
+local function create_daily_note()
+  local cwd = vim.fn.getcwd()
+  local filename = os.date("%Y-%m-%d") .. ".md"
+  local full_path = cwd .. "/" .. filename
+
+  if vim.fn.filereadable(full_path) == 1 then
+    vim.cmd.edit(full_path)
+    return
+  end
+
+  local id = os.date("%Y%m%d%H%M%S")
+  local created = os.date("%Y-%m-%d %H:%M")
+  local updated = created
+
+  local frontmatter = {
+    "---",
+    "id: " .. id,
+    "created: " .. created,
+    "updated: " .. updated,
+    "tags:",
+    "- ",
+    "---",
+    ""
+  }
+
+  local file = io.open(full_path, "w")
+  if file then
+    file:write(table.concat(frontmatter, "\n"))
+    file:close()
+  end
+
+  vim.cmd.edit(full_path)
+end
+
+vim.api.nvim_create_user_command("DailyNote", create_daily_note, { desc = "Create or open daily note" })
