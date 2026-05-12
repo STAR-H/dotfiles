@@ -43,8 +43,12 @@ return {
       require("mini.cursorword").setup({ delay = 500 })
 
       vim.api.nvim_set_hl(0, "MiniCursorword", { bg = "#504945", bold = true })
-      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { underline = true })
+      vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { italic = true })
     end
   },
-  { "nvim-mini/mini.comment", version = "*" },
+  {
+    "nvim-mini/mini.comment",
+    version = "*",
+    event = "VeryLazy",
+  },
 }

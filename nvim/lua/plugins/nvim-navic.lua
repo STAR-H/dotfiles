@@ -15,8 +15,14 @@ return {
     })
   end,
   config = function()
+    local icons = require("configs.icons").lspkind
+    local spaced = {}
+    for k, v in pairs(icons) do
+      spaced[k] = v .. " "   -- add space after each icon
+    end
+
     require("nvim-navic").setup {
-      icons = require("configs.icons").lspkind,
+      icons = spaced,
       lsp = {
         auto_attach = true,
         preference = nil,

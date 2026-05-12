@@ -2,8 +2,9 @@
 return {
   "sunjon/shade.nvim",
   event = "VeryLazy",
+  enabled = not require("configs.utils").is_diff_mode(),
   config = function()
-    require 'shade'.setup({
+    require("shade").setup({
       overlay_opacity = 50,
       opacity_step = 1,
       keys = {
