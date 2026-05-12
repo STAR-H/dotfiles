@@ -1,18 +1,49 @@
+---Shows available keymaps when leader (,) is pressed.
+---Groups are defined in spec for categorization, with helix preset icons.
 return {
   "folke/which-key.nvim",
-  cmd = "WhichKey",
-  keys = { "<leader>", "<Space>" },
-  opts = function()
-    local settings = {
-      delay = 1000,
-      triggers = {
-        { "<leader>", mode = { "n", "v" } },
-        { "<Space>",  mode = { "n" } },
+  enabled = not require("configs.utils").is_diff_mode(),
+  event = "VeryLazy",
+  keys = {
+    {
+      "<leader><leader>",
+      function() require("which-key").show() end,
+      desc = "Which-Key Popup",
+    },
+  },
+  opts_extend = { "spec" },
+  opts = {
+    preset = "classic",
+    delay = 1000,
+    icons = {
+      mappings = false, -- disable Nerd Font mapping icons
+    },
+    spec = {
+      {
+        mode = { "n", "x" },
+        { "<leader>b", group = "buffer" },
+        { "<leader>c", group = "code" },
+        { "<leader>f", group = "find" },
+        { "<leader>g", group = "git" },
+        { "<leader>l", group = "lsp" },
+        { "<leader>s", group = "search" },
+        { "<leader>t", group = "toggle" },
+        { "<leader>u", group = "ui" },
+        { "<leader>x", group = "diagnostics" },
+        { "[",         group = "prev" },
+        { "]",         group = "next" },
+        { "g",         group = "goto" },
+        { "z",         group = "fold" },
+        {
+          "<leader>w",
+          group = "windows",
+          proxy = "<c-w>",
+          expand = function() return require("which-key.extras").expand.win() end,
+        },
       },
-      icons = {
-        mappings = false,   -- not use icon
-      },
-    }
-    return settings
+    },
+  },
+  config = function(_, opts)
+    require("which-key").setup(opts)
   end,
 }

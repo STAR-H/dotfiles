@@ -1,3 +1,5 @@
+---Visual word marking and navigation. Integrates with nvim-hlslens.
+---Keymaps: mm mark, mr mark by regex, mc clear all. n/N jumps marks+search.
 return {
   "STAR-H/vim-mark",
   keys = {
@@ -12,7 +14,7 @@ return {
   },
   -- do not add mark words to the search(/)  and input(@) history
   config = function()
-    vim.g.mwHistAdd = ' '
+    vim.g.mwHistAdd = " "
     -- let marks to be case-insensitive
     vim.g.mwIgnoreCase = 0
     vim.g.mwMaxMatchPriority = 10
@@ -22,7 +24,7 @@ return {
     local function mark_or_hlslens_search(is_backward)
       local is_marked = vim.fn["mark#CurrentMark"]()
       local is_marked_string = tostring(is_marked[1])
-      if is_marked_string == nil or is_marked_string == "" then   -- current not marked
+      if is_marked_string == nil or is_marked_string == "" then -- current not marked
         local status = nil
         if not is_backward then
           status = pcall(function() vim.cmd("execute('normal! ' . v:count1 . 'n')") end)
@@ -32,12 +34,12 @@ return {
         if status then
           require("hlslens").start()
         end
-      else   -- is marked
+      else -- is marked
         vim.fn["mark#SearchCurrentMark"](is_backward)
       end
     end
 
-    -- 绑定键映射
+    -- key mapping
     vim.api.nvim_set_keymap("n", "n", "", {
       noremap = true,
       silent = true,

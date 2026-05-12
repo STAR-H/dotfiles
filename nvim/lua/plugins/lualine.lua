@@ -1,10 +1,13 @@
+---Blazing fast and easy to configure Neovim statusline.
+local stl_bg = "#32302f"
+
 return {
   "nvim-lualine/lualine.nvim",
   event = "VeryLazy",
   dependencies = {
     "nvim-tree/nvim-web-devicons",
     "SmiteshP/nvim-navic",
-    "folke/noice.nvim"
+    "folke/noice.nvim",
   },
   init = function()
     vim.g.lualine_laststatus = vim.o.laststatus
@@ -16,20 +19,18 @@ return {
       vim.o.laststatus = 0
     end
 
-    vim.api.nvim_set_hl(0, 'StatusLine', { bg = '#32302f' })
-    -- lualine diff status highlight override
-    vim.api.nvim_set_hl(0, 'stlDiffAdd', { fg = '#b8bb26', bg = '#32302f' })
-    vim.api.nvim_set_hl(0, 'stlDiffDelete', { fg = '#fb4934', bg = '#32302f' })
-    vim.api.nvim_set_hl(0, 'stlDiffModified', { fg = '#f18019', bg = '#32302f' })
+    vim.api.nvim_set_hl(0, "StatusLine", { bg = stl_bg })
   end,
   config = function()
     vim.o.laststatus = vim.g.lualine_laststatus
+
+    -- diagnostics status component
     local function diagnostics_component()
       local bufnr = vim.api.nvim_get_current_buf()
       if not vim.diagnostic.is_enabled() then
         return string.format("%%#LualineDiagOff#󰦞")
       end
-      -- 获取当前缓冲区的诊断统计信息
+
       local diagnostics = vim.diagnostic.get(bufnr)
       local error_count = 0
       local warning_count = 0
@@ -53,195 +54,165 @@ return {
       return string.format("%%#LualineError# %d %%#LualineWarning# %d", error_count, warning_count)
     end
 
-    vim.api.nvim_set_hl(0, "LualineError", { fg = '#FF0000', bg = '#32302f', bold = true })
-    vim.api.nvim_set_hl(0, "LualineWarning", { fg = '#FFA500', bg = '#32302f', bold = true })
-    vim.api.nvim_set_hl(0, "LualineDiagOn", { fg = '#93f542', bg = '#32302f' })
-    vim.api.nvim_set_hl(0, "LualineDiagOff", { fg = '#FF0000', bg = '#32302f' })
+    -- highlight groups
+    vim.api.nvim_set_hl(0, "LualineError",    { fg = "#FF0000", bg = stl_bg, bold = true })
+    vim.api.nvim_set_hl(0, "LualineWarning",  { fg = "#FFA500", bg = stl_bg, bold = true })
+    vim.api.nvim_set_hl(0, "LualineDiagOn",   { fg = "#93f542", bg = stl_bg })
+    vim.api.nvim_set_hl(0, "LualineDiagOff",  { fg = "#FF0000", bg = stl_bg })
+    vim.api.nvim_set_hl(0, "stlDiffAdd",      { fg = "#b8bb26", bg = stl_bg })
+    vim.api.nvim_set_hl(0, "stlDiffDelete",   { fg = "#fb4934", bg = stl_bg })
+    vim.api.nvim_set_hl(0, "stlDiffModified", { fg = "#f18019", bg = stl_bg })
 
+    -- diff component
     local diff = {
-      'diff',
-      colored = true,   -- Displays a colored diff status if set to true
+      "diff",
+      colored = true,
       diff_color = {
-        -- Same color values as the general color option can be used here.
-        added    = 'stlDiffAdd', -- Changes the diff's added color
-        modified = 'stlDiffModified', -- Changes the diff's modified color
-        removed  = 'stlDiffDelete', -- Changes the diff's removed color you
+        added    = "stlDiffAdd",
+        modified = "stlDiffModified",
+        removed  = "stlDiffDelete",
       },
-      symbols = { added = '  ', modified = '  ', removed = '  ' }, -- Changes the symbols used by the diff.
+      symbols = { added = "  ", modified = "  ", removed = "  " },
     }
 
-    local navic_status, navic = pcall(require, 'nvim-navic')
-    local noice_status, noice = pcall(require, 'noice')
+    local navic_status, navic = pcall(require, "nvim-navic")
+    local noice_status, noice = pcall(require, "noice")
 
-    local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
-    local section_b = {diagnostics_component}
+    -- shared navic breadcrumb component
+    local function navic_component()
+      if not navic_status then
+        return
+      end
+      return {
+        function() return navic.get_location() end,
+        cond = function() return navic.is_available() end,
+      }
+    end
+
+    local is_windows = require("configs.platform").is_windows
+    local section_b = { diagnostics_component }
 
     if not is_windows then
       table.insert(section_b, diff)
     end
 
-    require('lualine').setup {
+    require("lualine").setup({
       options = {
         icons_enabled        = true,
-        theme                = 'gruvbox-material',   --gruvbox-material / nord
-        section_separators   = { left = '', right = '' },
-        component_separators = { left = '', right = '' },
+        theme                = "gruvbox-material",
+        section_separators   = { left = "", right = "" },
+        component_separators = { left = "", right = "" },
         disabled_filetypes   = {
-          statusline = { "nvdash" },
+          statusline = {},
         },
         ignore_focus         = {
           "NvimTree",
           "tagbar",
           "undotree",
-          "vista_kind",
-          "vista_markdown",
+          "aerial",
           "trouble",
-          "AvanteInput",
-          "AvanteSelectedFiles",
-          "Avante",
           "gitsigns-blame",
-          "TelescopePrompt"
+          "TelescopePrompt",
         },
         always_divide_middle = true,
         globalstatus         = true,
-        refresh              = {
+        refresh = {
           statusline = 500,
           tabline    = 1000,
           winbar     = 1000,
-        }
+        },
       },
       sections = {
-        lualine_a = { 'mode' },
-        lualine_b = {section_b},
+        lualine_a = { "mode" },
+        lualine_b = { section_b },
         lualine_c = {
-          { 'filename',
-            file_status = true,       -- Displays file status (readonly status, modified status)
-            newfile_status = false,   -- Display new file status (new file means no write after created)
+          {
+            "filename",
+            file_status = true,
+            newfile_status = false,
             path = 1,
             symbols = {
-              modified = '[+]',         -- Text to show when the file is modified.
-              readonly = '[RO]',        -- Text to show when the file is non-modifiable or readonly.
-              unnamed  = '[No Name]',   -- Text to show for unnamed buffers.
-              newfile  = '[New]',       -- Text to show for newly created file before first write
+              modified = "[+]",
+              readonly = "[RO]",
+              unnamed  = "[No Name]",
+              newfile  = "[New]",
             },
           },
-          -- Show @recording messages in statusline
+          -- noice recording indicator
           {
-            function()
-              return noice.api.status.mode.get()
-            end,
-            cond = function()
-              if noice_status then
-                return noice.api.status.mode.has()
-              else
-                return false
-              end
-            end,
+            function() return noice.api.status.mode.get() end,
+            cond = function() return noice_status and noice.api.status.mode.has() end,
             color = { fg = "#ff9e64" },
           },
         },
         lualine_x = {
+          navic_component(),
+          -- spell language indicator
           {
             function()
-              if navic_status then
-                return navic.get_location()
-              else
-                return
-              end
-            end,
-            cond = function()
-              if navic_status then
-                return navic.is_available()
-              else
-                return
-              end
-            end
-          },
-          {
-            function()
-                return "󰓆[" .. table.concat(vim.opt.spelllang:get(), ",") .. "]"
+              return "󰓆[" .. table.concat(vim.opt.spelllang:get(), ",") .. "]"
             end,
             color = { fg = "#ffaa00", gui = "bold" },
-            cond = function()
-              return vim.wo.spell
-            end
+            cond = function() return vim.wo.spell end,
           },
-
+          -- active LSP client names
           {
             function()
               local stbufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid or 0)
-              if rawget(vim, "lsp") then
-                local lsp_names = {}
+              local lsp_names = {}
 
-                for _, client in ipairs(vim.lsp.get_clients()) do
-                  if client.attached_buffers[stbufnr] and client.name ~= "null-ls" then
-                    table.insert(lsp_names, client.name)
-                  end
+              for _, client in ipairs(vim.lsp.get_clients()) do
+                if client.attached_buffers[stbufnr] then
+                  table.insert(lsp_names, client.name)
                 end
+              end
 
-                if #lsp_names > 0 then
-                  if vim.o.columns > 100 then
-                    return "  " .. table.concat(lsp_names, ",")
-                  else
-                    return "  LSP"
-                  end
+              if #lsp_names > 0 then
+                if vim.o.columns > 100 then
+                  return "  " .. table.concat(lsp_names, ",")
+                else
+                  return "  LSP"
                 end
               end
 
               return ""
             end,
             color = { fg = "#ff9e64" },
-
           },
-          'filesize', 'filetype' },
+          "filesize",
+          "filetype",
+        },
         lualine_y = {
+          -- project root directory name
           {
             function()
-              return " " .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t')
+              return " " .. vim.fn.fnamemodify(vim.g.project_root_dir, ":t")
             end,
             cond = function()
-              if vim.g.project_root_dir == nil or vim.g.project_root_dir == "" then
-                return false
-              else
-                return true
-              end
+              return vim.g.project_root_dir ~= nil and vim.g.project_root_dir ~= ""
             end,
             color = {
-              bg = "#32302f",
+              bg = stl_bg,
               fg = "#458588",
-            }
+            },
           },
-          'selectioncount' },
-        lualine_z = { 'progress' }
+          "selectioncount",
+        },
+        lualine_z = { "progress" },
       },
       winbar = {},
       inactive_sections = {
         lualine_a = {},
         lualine_b = {},
-        lualine_c = { 'filename' },
+        lualine_c = { "filename" },
         lualine_x = {
-          {
-            function()
-              if navic_status then
-                return navic.get_location()
-              else
-                return
-              end
-            end,
-
-            cond = function()
-              if navic_status then
-                return navic.is_available()
-              else
-                return
-              end
-            end,
-          },
-          'location' },
+          navic_component(),
+          "location",
+        },
         lualine_y = {},
-        lualine_z = {}
+        lualine_z = {},
       },
-      extensions = { 'quickfix', 'nvim-tree' }
-    }
-  end
+      extensions = { "quickfix", "nvim-tree" },
+    })
+  end,
 }

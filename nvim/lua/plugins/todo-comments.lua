@@ -1,3 +1,4 @@
+-- Highlight TODO, FIXME, HACK, and other comment keywords.
 return {
   "folke/todo-comments.nvim",
   enabled = not require("configs.utils").is_diff_mode(),
@@ -5,7 +6,7 @@ return {
   dependencies = { "nvim-lua/plenary.nvim" },
   opts = {
     highlight = {
-      after = "fg",   -- "fg" or "bg" or empty
+      after = "fg", -- "fg" or "bg" or empty
       multiline = true
     },
   },

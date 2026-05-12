@@ -1,57 +1,104 @@
-vim.opt.backup = false                                  -- creates a backup file
-vim.opt.clipboard = "unnamedplus"                       -- allows neovim to access the system clipboard
-vim.opt.completeopt = { "menu", "menuone", "noselect" } -- mostly just for cmp
-vim.opt.conceallevel = 0                                -- so that `` is visible in markdown files
-vim.opt.hlsearch = true                                 -- highlight all matches on previous search pattern
-vim.opt.ignorecase = true                               -- ignore case in search patterns
-vim.opt.mouse = "n"                                     -- allow the mouse to be used in neovim
-vim.opt.pumheight = 10                                  -- pop up menu height
-vim.opt.showcmd = false
-vim.opt.showmode = false                                -- we don't need to see things like -- INSERT -- anymore
-vim.opt.showtabline = 0                                 -- never show tabs
-vim.opt.smartcase = true                                -- smart case
-vim.opt.smartindent = true                              -- make indenting smarter again
-vim.opt.splitbelow = true                               -- force all horizontal splits to go below current window
-vim.opt.splitright = true                               -- force all vertical splits to go to the right of current window
-vim.opt.swapfile = false                                -- creates a swapfile
-vim.opt.termguicolors = true                            -- set term gui colors (most terminals support this)
-vim.opt.timeoutlen = 500                                -- time to wait for a mapped sequence to complete (in milliseconds)
-vim.opt.undofile = true                                 -- enable persistent undo
-vim.opt.updatetime = 100                                -- faster completion (4000ms default)
-vim.opt.writebackup = true                              -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
-vim.opt.expandtab = true                                -- convert tabs to spaces
-vim.opt.shiftwidth = 2                                  -- the number of spaces inserted for each indentation
-vim.opt.tabstop = 4                                     -- insert 4 spaces for a tab
-vim.opt.cursorline = true                               -- highlight the current line
-vim.opt.number = false                                  -- set numbered lines
-vim.opt.relativenumber = false                          -- set relative numbered lines
-vim.opt.numberwidth = 2                                 -- set number column width to 2 {default 4}
+-- =============================================================================
+-- Editor Options
+-- =============================================================================
 
-vim.opt.signcolumn = "yes"                              -- always show the sign column, otherwise it would shift the text each time
-vim.opt.wrap = true                                     -- display lines as one long line
-vim.opt.linebreak = true                                -- companion to wrap, don't split words
-vim.opt.scrolloff = 10                                  -- minimal number of screen lines to keep above and below the cursor
-vim.opt.sidescrolloff = 10                              -- minimal number of screen columns either side of cursor if wrap is `false`
-vim.opt.whichwrap = "bs<>[]hl"                          -- which "horizontal" keys are allowed to travel to prev/next line
+vim.opt.backup = false            -- disable backup files
+vim.opt.clipboard = "unnamedplus" -- sync system clipboard with unnamed register
+vim.opt.swapfile = false          -- disable swap files
+vim.opt.undofile = true           -- enable persistent undo history
+vim.opt.writebackup = true        -- protect against concurrent edits
+vim.opt.confirm = true            -- confirm before abandoning unsaved changes
+vim.opt.autowrite = false         -- don't auto-write before certain commands
 
-vim.opt.ruler = false
-vim.opt.laststatus = 3 -- global statusline needed
-vim.opt.list = true
-vim.opt.magic = true
-vim.opt.redrawtime = 300
-vim.opt.showmatch = true
-vim.opt.matchtime = 1
-vim.opt.tags = "./.tags;,.tags"
-vim.opt.cindent = true
-vim.opt.cinoptions = "g0,:0,N-s,(0"
-vim.opt.softtabstop = 4
-vim.opt.smarttab = true
-vim.opt.autowrite = false
-vim.opt.confirm = true
+vim.opt.timeoutlen = 500          -- key sequence timeout (ms)
+vim.opt.updatetime = 100          -- faster CursorHold trigger (default 4000)
+vim.opt.showcmd = false           -- hide partial command in statusline
+vim.opt.showmode = false          -- hide -- INSERT -- (statusline shows mode)
 
--- disable netrw
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- =============================================================================
+-- UI Options
+-- =============================================================================
+
+vim.opt.termguicolors = true   -- enable 24-bit RGB color
+vim.opt.laststatus = 3         -- global statusline across all windows
+vim.opt.showtabline = 0        -- never show tab bar
+vim.opt.cursorline = true      -- highlight current line
+vim.opt.number = false         -- no absolute line numbers
+vim.opt.relativenumber = false -- no relative line numbers
+vim.opt.numberwidth = 2        -- line number column width
+vim.opt.signcolumn = "yes"     -- always show sign column (avoids shift)
+vim.opt.wrap = true            -- soft-wrap long lines
+vim.opt.linebreak = true       -- wrap at word boundaries
+vim.opt.scrolloff = 10         -- keep 10 lines visible above/below cursor
+vim.opt.sidescrolloff = 10     -- keep 10 cols visible left/right of cursor
+vim.opt.smoothscroll = true    -- smooth scrolling with virtual lines
+vim.opt.pumheight = 10         -- popup menu max height
+
+vim.opt.list = true            -- show invisible characters
+vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
+
+vim.opt.fillchars = {
+  foldopen = "",
+  foldclose = "",
+  fold = " ",
+  foldsep = "│",
+  diff = " ",
+}
+vim.opt.foldcolumn = "0" -- no fold column by default (dynamic)
+
+-- =============================================================================
+-- Indentation
+-- =============================================================================
+
+vim.opt.expandtab = true                        -- use spaces instead of tabs
+vim.opt.shiftwidth = 4                          -- indent width 4 spaces (default)
+vim.opt.tabstop = 4                             -- tab display width 4 spaces
+vim.opt.softtabstop = 4                         -- soft tab width
+vim.opt.smarttab = true                         -- use shiftwidth at line start, tabstop elsewhere
+vim.opt.smartindent = true                      -- auto-indent based on syntax
+vim.opt.cindent = true                          -- C-style indentation
+vim.opt.cinoptions = "g0,:0,N-s,(0"             -- C indentation options
+vim.opt.formatoptions:remove({ "c", "r", "o" }) -- disable auto comment continuation
+
+-- =============================================================================
+-- Search
+-- =============================================================================
+
+vim.opt.hlsearch = true       -- highlight all search matches
+vim.opt.ignorecase = true     -- case-insensitive search
+vim.opt.smartcase = true      -- case-sensitive when uppercase used
+vim.opt.showmatch = true      -- briefly jump to matching bracket
+vim.opt.matchtime = 1         -- match highlight duration (100ms)
+vim.opt.shortmess:append("c") -- suppress completion messages
+
+-- =============================================================================
+-- Window / Split Behavior
+-- =============================================================================
+
+vim.opt.splitbelow = true      -- horizontal split opens below
+vim.opt.splitright = true      -- vertical split opens to the right
+vim.opt.whichwrap = "bs<>[]hl" -- keys that can wrap across lines
+
+-- =============================================================================
+-- Completion
+-- =============================================================================
+
+vim.opt.completeopt = { "menu", "menuone", "noselect" } -- completion popup behavior
+vim.opt.conceallevel = 0                                -- show all concealed text (markdown inline code)
+
+-- =============================================================================
+-- Misc
+-- =============================================================================
+
+vim.opt.mouse = "n"                                   -- mouse support in normal mode
+vim.opt.tags = "./.tags;,.tags"                       -- tags file search path
+vim.opt.runtimepath:remove("/usr/share/vim/vimfiles") -- isolate from system vim plugins
+
+vim.opt.diffopt:append({ "foldcolumn:1", "indent-heuristic", "algorithm:minimal", "linematch:60"})
+
+-- =============================================================================
+-- Disable Built-in Providers (not needed, speed up startup)
+-- =============================================================================
 
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
@@ -59,28 +106,23 @@ vim.g.loaded_python_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_node_provider = 0
 
-vim.g.diff_translations = 0 -- To disable localisations and speed up the syntax highlighting
+-- disable netrw (use nvim-tree instead)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-vim.opt.fillchars = {
-  foldopen = "",
-  foldclose = "",
-  fold = " ",
-  foldsep = "│",
-}
-vim.opt.foldcolumn = '0'
-vim.opt.smoothscroll = true
+-- speed up diff syntax highlighting
+vim.g.diff_translations = 0
 
-vim.opt.diffopt:append { 'algorithm:histogram', 'foldcolumn:1', 'indent-heuristic' }
+-- =============================================================================
+-- Diagnostics: disabled by default, toggle with `dt`
+-- =============================================================================
 
-vim.diagnostic.enable(false)                          -- disable diagnostic by default
+vim.diagnostic.enable(false)
 
-vim.opt.shortmess:append "c"                          -- don't give |ins-completion-menu| messages
-vim.opt.formatoptions:remove({ "c", "r", "o" })       -- don't insert the current comment leader automatically
--- for auto-wrapping comments using 'textwidth', hitting <Enter> in insert mode, or hitting 'o' or 'O' in normal mode.
-vim.opt.runtimepath:remove("/usr/share/vim/vimfiles") -- separate vim plugins from neovim in case vim still in use
--- add binaries installed by mason.nvim to path
-local is_windows = vim.fn.has "win32" ~= 0
+-- =============================================================================
+-- PATH: prepend mason binaries
+-- =============================================================================
+local is_windows = require("configs.platform").is_windows
 local sep = is_windows and "\\" or "/"
 local delim = is_windows and ";" or ":"
-vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
+vim.env.PATH = table.concat({ vim.fn.stdpath("data"), "mason", "bin" }, sep) .. delim .. vim.env.PATH

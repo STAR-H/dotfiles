@@ -1,15 +1,14 @@
+---Utility functions for diff mode detection, diagnostics toggle,
+---buffer closing, and dynamic foldcolumn.
 local M = {}
 
--- function for diffMode (vi -d)
-M.is_diff_mode = function()
-  if vim.opt.diff:get() then
-    return true
-  else
-    return false
-  end
+---Check if running in diff mode (nvim -d)
+function M.is_diff_mode()
+  return vim.opt.diff:get()
 end
 
-M.toggle_diagnostics = function()
+---Toggle diagnostics on/off globally with notification
+function M.toggle_diagnostics()
   if not vim.diagnostic.is_enabled() then
     vim.diagnostic.enable(true)
     vim.notify("Diagnostic Enabled!", vim.log.levels.INFO)
@@ -19,9 +18,9 @@ M.toggle_diagnostics = function()
   end
 end
 
--- close buffer or window layout
-M.close_buffer = function()
-  local win_count = vim.fn.winnr('$')
+---Close current window if splits exist, otherwise close buffer
+function M.close_buffer()
+  local win_count = vim.fn.winnr("$")
   if win_count > 1 then
     vim.cmd("close")
   else
@@ -29,8 +28,8 @@ M.close_buffer = function()
   end
 end
 
-
-M.update_foldcolumn = function()
+---Dynamically show foldcolumn only when folds exist in the buffer
+function M.update_foldcolumn()
   if not vim.wo.foldenable then
     vim.wo.foldcolumn = "0"
     return
@@ -48,5 +47,24 @@ M.update_foldcolumn = function()
   vim.wo.foldcolumn = has_fold and "1" or "0"
 end
 
+function M.statuscolumn()
+  local lnum = vim.v.lnum
+  if not vim.wo.diff then
+    return "%=%l %C"
+  end
+  local hl_id = vim.fn.diff_hlID(lnum, 0)
+  if hl_id > 0 then
+    local name = vim.fn.synIDattr(vim.fn.synIDtrans(hl_id), "name")
+    local map = {
+      DiffAdd = "DiffAddNr",
+      DiffChange = "DiffChangeNr",
+      DiffDelete = "DiffDeleteNr",
+      DiffModified = "DiffModifiedNr",
+    }
+    local hl = map[name] or "LineNr"
+    return "%=%#" .. hl .. "#" .. string.format("%3d", lnum) .. " %*%C"
+  end
+  return "%=%#LineNr#" .. string.format("%3d", lnum) .. " %*%C"
+end
 
 return M

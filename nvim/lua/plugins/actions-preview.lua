@@ -1,8 +1,8 @@
+---Preview LSP code actions before applying.
 return {
   "aznhe21/actions-preview.nvim",
   event = "VeryLazy",
-  -- Linux => Linux, Darwin => macos Windows => Windows_NT
-  enabled = vim.tbl_contains({ "Darwin", "Linux" }, vim.loop.os_uname().sysname),
+  enabled = require("configs.platform").is_unix and not require("configs.utils").is_diff_mode(),
   config = function()
     require("actions-preview").setup({
       backend = "telescope",
@@ -20,7 +20,7 @@ return {
         },
       },
     })
-
-    vim.keymap.set({ "n" }, "<leader>ca", require("actions-preview").code_actions)
+    vim.keymap.set("n", "<leader>ca", require("actions-preview").code_actions,
+      { desc = "LSP code actions with preview" })
   end
 }

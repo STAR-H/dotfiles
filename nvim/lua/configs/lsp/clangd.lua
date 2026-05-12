@@ -9,8 +9,4 @@ return {
     "--pch-storage=memory",
     "-j=8"
   },
-  -- capabilities = {
-  --   offsetEncoding = { "utf-16" },
-  -- },
-  single_file_support = true,
 }

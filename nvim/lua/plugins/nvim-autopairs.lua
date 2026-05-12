@@ -1,4 +1,5 @@
--- autopairing of (){}[] etc
+---Automatic pairing of brackets, quotes, and other characters.
+---Integrates with nvim-cmp to handle pairing when accepting completions.
 return {
   "windwp/nvim-autopairs",
   event = "InsertEnter",

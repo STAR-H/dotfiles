@@ -1,3 +1,4 @@
+---LSP-powered code context breadcrumbs for statusline/winbar.
 return {
   "SmiteshP/nvim-navic",
   event = "VeryLazy",
@@ -15,42 +16,15 @@ return {
   end,
   config = function()
     require("nvim-navic").setup {
-      icons = {
-        File          = "󰈙 ",
-        Module        = " ",
-        Namespace     = "󰦮 ",
-        Package       = " ",
-        Class         = " ",
-        Method        = "ƒ ",
-        Property      = "󰜢 ",
-        Field         = " ",
-        Constructor   = " ",
-        Enum          = " ",
-        Interface     = " ",
-        Function      = "󰊕 ",
-        Variable      = "󰀫 ",
-        Constant      = "󰏿 ",
-        String        = " ",
-        Number        = "󰎠 ",
-        Boolean       = "󰨙 ",
-        Array         = "󰅪 ",
-        Object        = "󰅩 ",
-        Key           = "󰌋 ",
-        Null          = "󰟢 ",
-        EnumMember    = " ",
-        Struct        = "󰆧 ",
-        Event         = " ",
-        Operator      = " ",
-        TypeParameter = " ",
-      },
+      icons = require("configs.icons").lspkind,
       lsp = {
         auto_attach = true,
         preference = nil,
       },
       highlight = false,
-      separator = " > ",
+      separator = " → ",
       depth_limit = 4,
-      depth_limit_indicator = "..",
+      depth_limit_indicator = "…",
       safe_output = true,
       click = true
     }

@@ -1,8 +1,8 @@
+---Navigate code with search labels and enhanced motions.
 return {
   "folke/flash.nvim",
   event = "VeryLazy",
-  enabled = not require("configs.utils").is_diff_mode(),
-  keys = { { "<leader>s", mode = "n", "<cmd>lua require('flash').jump()<cr>", desc = "flash search jump" }, },
+  keys = { { "<leader>s", mode = "n", "<cmd>lua require'flash'.jump()<cr>", desc = "flash search jump" } },
   config = function()
     require("flash").setup({
       jump = {

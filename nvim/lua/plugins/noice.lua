@@ -1,3 +1,4 @@
+---Enhanced UI for cmdline, messages, and popupmenu.
 return {
   "folke/noice.nvim",
   enabled = true,
@@ -42,13 +43,13 @@ return {
       {
         filter = {
           any = {
-            { find = "^mark%-?%d?%s?" },   -- vim-mark mark-1
-            { find = ".(%w+)\\>$" },       -- vim-mark /\<xxxxx\>
-            { find = "^%s?cleared" },      -- mark-1 cleared
-            { find = "^Cleared%sall" },    -- all marks cleared
+            { find = "^mark%-?%d?%s?" }, -- vim-mark mark-1
+            { find = ".(%w+)\\>$" },     -- vim-mark /\<xxxxx\>
+            { find = "^%s?cleared" },    -- mark-1 cleared
+            { find = "^Cleared%sall" },  -- all marks cleared
             { find = "^%d%s?$" },
-            { find = "^/.*" },             -- mark-1/word
-            { find = "^.*EasyAlign.*" }     -- EasyAlign
+            { find = "^/.*" },           -- mark-1/word
+            { find = "^.*EasyAlign.*" }  -- EasyAlign
           },
         },
         opts = { skip = true },
@@ -56,13 +57,13 @@ return {
     },
     -- you can enable a preset for easier configuration
     presets = {
-      bottom_search         = false,   -- use a classic bottom cmdline for search
-      long_message_to_split = false,   -- long messages will be sent to a split
-      lsp_doc_border        = true,    -- add a border to hover docs and signature help
+      bottom_search         = false, -- use a classic bottom cmdline for search
+      long_message_to_split = false, -- long messages will be sent to a split
+      lsp_doc_border        = true,  -- add a border to hover docs and signature help
     },
-    throttle = 1000 / 30,              -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
+    throttle = 1000 / 30,            -- how frequently does Noice need to check for ui updates? This has no effect when in blocking mode.
     cmdline = {
-      enabled = true,                  -- enables the Noice cmdline UI
+      enabled = true,                -- enables the Noice cmdline UI
       format = {
         cmdline     = { pattern = "^:", icon = "", lang = "vim" },
         search_down = { kind = "search", pattern = "^/", icon = " ", lang = "regex" },
@@ -76,11 +77,11 @@ return {
     messages = {
       -- NOTE: If you enable messages, then the cmdline is enabled automatically.
       -- This is a current Neovim limitation.
-      enabled = true,        -- enables the Noice messages UI
-      view_search = false,   -- view for search count messages. Set to `false` to disable
+      enabled = true,      -- enables the Noice messages UI
+      view_search = false, -- view for search count messages. Set to `false` to disable
     },
     health = {
-      checker = true,   -- Disable if you don't want health checks to run
+      checker = true, -- Disable if you don't want health checks to run
     },
     views = {
       mini = {
@@ -104,7 +105,7 @@ return {
     },
     hover = {
       enabled = true,
-      silent = false,   -- set to true to not show a message if hover is not available
+      silent = false, -- set to true to not show a message if hover is not available
     },
   },
 

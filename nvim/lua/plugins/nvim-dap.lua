@@ -1,15 +1,14 @@
 return {
   {
     "mfussenegger/nvim-dap",
-    -- enabled = not require("configs.utils").is_diff_mode(),
     enabled = false,
     keys = {
-      { "<Space>db", function() require 'dap'.toggle_breakpoint() end, desc = "DAP Toggle Breakpoint" },
-      { "<Space>dr", function() require("dap").continue() end,         desc = "DAP Run/Continue" },
-      { "<Space>dc", function() require("dap").run_to_cursor() end,    desc = "DAP Run to Cursor" },
-      { "<Space>di", function() require("dap").step_into() end,        desc = "DAP Step Into" },
-      { "<Space>dg", function() require("dap").goto_() end,            desc = "DAP Go to Line (No Execute)" },
-      { "<Space>do", function() require("dap").step_over() end,        desc = "DAP Step Over" },
+      { "<Space>db", function() require("dap").toggle_breakpoint() end, desc = "DAP Toggle Breakpoint" },
+      { "<Space>dr", function() require("dap").continue() end,          desc = "DAP Run/Continue" },
+      { "<Space>dc", function() require("dap").run_to_cursor() end,     desc = "DAP Run to Cursor" },
+      { "<Space>di", function() require("dap").step_into() end,         desc = "DAP Step Into" },
+      { "<Space>dg", function() require("dap").goto_() end,             desc = "DAP Go to Line (No Execute)" },
+      { "<Space>do", function() require("dap").step_over() end,         desc = "DAP Step Over" },
     },
     dependencies = {
       {
@@ -42,23 +41,23 @@ return {
       local dap_breakpoint_color = {
         breakpoint = {
           ctermbg = 0,
-          fg = '#f00707',
-          bg = '#31353f',
+          fg = "#f00707",
+          bg = "#31353f",
         },
         logpoing = {
           ctermbg = 0,
-          fg = '#61afef',
-          bg = '#31353f',
+          fg = "#61afef",
+          bg = "#31353f",
         },
         stopped = {
           ctermbg = 0,
-          fg = '#2ad138',
-          bg = '#31353f'
+          fg = "#2ad138",
+          bg = "#31353f"
         },
       }
-      vim.api.nvim_set_hl(0, 'DapBreakpoint', dap_breakpoint_color.breakpoint)
-      vim.api.nvim_set_hl(0, 'DapLogPoint', dap_breakpoint_color.logpoing)
-      vim.api.nvim_set_hl(0, 'DapStopped', dap_breakpoint_color.stopped)
+      vim.api.nvim_set_hl(0, "DapBreakpoint", dap_breakpoint_color.breakpoint)
+      vim.api.nvim_set_hl(0, "DapLogPoint", dap_breakpoint_color.logpoing)
+      vim.api.nvim_set_hl(0, "DapStopped", dap_breakpoint_color.stopped)
 
 
       local dap_breakpoint = {
@@ -69,10 +68,10 @@ return {
           numhl = "DapBreakpoint",
         },
         condition = {
-          text = '󰆗',
-          texthl = 'DapBreakpoint',
-          linehl = 'DapBreakpoint',
-          numhl = 'DapBreakpoint',
+          text = "󰆗",
+          texthl = "DapBreakpoint",
+          linehl = "DapBreakpoint",
+          numhl = "DapBreakpoint",
         },
         rejected = {
           text = "",
@@ -81,16 +80,16 @@ return {
           numhl = "DapBreakpoint",
         },
         logpoint = {
-          text = '',
-          texthl = 'DapLogPoint',
-          linehl = 'DapLogPoint',
-          numhl = 'DapLogPoint',
+          text = "",
+          texthl = "DapLogPoint",
+          linehl = "DapLogPoint",
+          numhl = "DapLogPoint",
         },
         stopped = {
-          text = '',
-          texthl = 'DapStopped',
-          linehl = 'DapStopped',
-          numhl = 'DapStopped',
+          text = "",
+          texthl = "DapStopped",
+          linehl = "DapStopped",
+          numhl = "DapStopped",
         },
       }
       vim.fn.sign_define('DapBreakpoint',          dap_breakpoint.error)
@@ -100,16 +99,16 @@ return {
       vim.fn.sign_define('DapStopped',             dap_breakpoint.stopped)
 
       dap.adapters.lldb = {
-        type = 'executable',
+        type = "executable",
         command = vim.fn.stdpath("data") .. "/mason/bin/codelldb", -- adjust as needed, must be absolute path
-        name = 'lldb'
+        name = "lldb"
       }
 
       dap.configurations.cpp = {
         {
-          name = 'Launch',
-          type = 'lldb',
-          request = 'launch',
+          name = "Launch",
+          type = "lldb",
+          request = "launch",
           args = function()
             local args_string = vim.fn.input("Input arguments: ")
             return vim.split(args_string, " ")
@@ -117,7 +116,7 @@ return {
           program = function()
             return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
           end,
-          cwd = '${workspaceFolder}',
+          cwd = "${workspaceFolder}",
           stopOnEntry = false,
         },
       }

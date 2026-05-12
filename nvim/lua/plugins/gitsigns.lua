@@ -1,40 +1,35 @@
+---Git integration: gutter signs, blame, hunk navigation.
 return {
   "lewis6991/gitsigns.nvim",
-  event = "User FilePost",
-  keys = {
-    { "]g",         "&diff ? ']g' : '<cmd>Gitsigns next_hunk<CR>'", desc = "Gitsigns next_hunk<CR>" },
-    { "[g",         "&diff ? '[g' : '<cmd>Gitsigns prev_hunk<CR>'", desc = "Gitsigns prev_hunk" },
-    { "gs",         "<Cmd>Gitsigns preview_hunk<CR>",               desc = "Gitsigns preview_hunk" },
-    { "gu",         "<Cmd>Gitsigns reset_hunk<CR>",                 desc = "Gitsigns reset_hunk" },
-    { "<leader>gb", "<Cmd>Gitsigns toggle_current_line_blame<CR>",  desc = "Gitsigns Toggle Current Line Blame" },
-  },
+  event = "BufReadPost",
   enabled = function()
-    local sys = vim.loop.os_uname().sysname
-    local allowed = { Darwin = true, Linux = true }
+    -- TODO: add is unix to combiand mocos or linux
+    local platform = require("configs.platform")
 
-    return not require("configs.utils").is_diff_mode() and allowed[sys]
+    return not require("configs.utils").is_diff_mode()
+        and platform.is_unix
   end,
   config = function()
-    require('gitsigns').setup {
+    require("gitsigns").setup {
       signs                        = {
         add          = { text = "+" },
         change       = { text = "~" },
         delete       = { text = "-", show_count = true },
-        topdelete    = { text = '▔', show_count = true },
-        changedelete = { text = '~' },
-        untracked    = { text = '┆' },
+        topdelete    = { text = "▔", show_count = true },
+        changedelete = { text = "~" },
+        untracked    = { text = "┆" },
       },
       count_chars                  = {
-        [1] = '₁',
-        [2] = '₂',
-        [3] = '₃',
-        [4] = '₄',
-        [5] = '₅',
-        [6] = '₆',
-        [7] = '₇',
-        [8] = '₈',
-        [9] = '₉',
-        ['+'] = '₊',
+        [1] = "₁",
+        [2] = "₂",
+        [3] = "₃",
+        [4] = "₄",
+        [5] = "₅",
+        [6] = "₆",
+        [7] = "₇",
+        [8] = "₈",
+        [9] = "₉",
+        ['+'] = "₊",
       },
       signcolumn                   = true,  -- Toggle with `:Gitsigns toggle_signs`
       numhl                        = false, -- Toggle with `:Gitsigns toggle_numhl`
@@ -48,21 +43,21 @@ return {
       current_line_blame           = false, -- Toggle with `:Gitsigns toggle_current_line_blame`
       current_line_blame_opts      = {
         virt_text = true,
-        virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+        virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
         delay = 300,
         ignore_whitespace = true,
       },
       -- current_line_blame_formatter = '<author> (<author_time:%R>):<summary>',
-      current_line_blame_formatter = '<author> (<author_time:%y-%m-%d>):<summary>',
+      current_line_blame_formatter = "<author> (<author_time:%y-%m-%d>):<summary>",
       sign_priority                = 6,
       update_debounce              = 100,
       status_formatter             = nil,   -- Use default
       max_file_length              = 40000, -- Disable if file is longer than this (in lines)
       preview_config               = {
         -- Options passed to nvim_open_win
-        border = 'rounded',
-        style = 'minimal',
-        relative = 'cursor',
+        border = "rounded",
+        style = "minimal",
+        relative = "cursor",
         row = 0,
         col = 1
       },
@@ -80,6 +75,6 @@ return {
         map('n', '<leader>gb', '<Cmd>Gitsigns toggle_current_line_blame<CR>')
       end
     }
-    vim.api.nvim_set_hl(0, 'GitSignsCurrentLineBlame', { fg = '#a89984' })
+    vim.api.nvim_set_hl(0, "GitSignsCurrentLineBlame", { fg = "#a89984" })
   end
 }

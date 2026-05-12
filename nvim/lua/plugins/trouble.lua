@@ -1,12 +1,13 @@
+---Pretty list for diagnostics, references, and quickfix.
 return {
   "folke/trouble.nvim",
   keys = {
     { "gr",         "<cmd>Trouble lsp_references focus=true<cr>",       desc = "LSP Go to References" },
     { "gd",         "<cmd>Trouble lsp_definitions focus=true<cr>",      desc = "LSP Go to Definitions" },
-    -- NOTE:gi is conflict with original vim command (jump to the last into insert mode location),
-    -- and go to implementation is not use often, so commented this key mapping
-    -- { "gi",         "<cmd>Trouble lsp_implementations focus=true<cr>",  desc = "LSP Go to Implementations" },
-    { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics list diagnostics info(current buffer)" },
+    -- NOTE: gi is conflict with original vim command (jump to the last into insert mode location),
+    -- so change keymap to gI
+    { "gI",         "<cmd>Trouble lsp_implementations focus=true<cr>",  desc = "LSP Go to Implementations" },
+    { "<leader>ld", "<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<cr>", desc = "Diagnostics list diagnostics info(current buffer)" },
   },
   dependencies = { "nvim-tree/nvim-web-devicons" },
   opts = {

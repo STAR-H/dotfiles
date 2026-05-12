@@ -1,6 +1,7 @@
+---Fuzzy finder for files, buffers, grep, and more.
 return {
   "nvim-telescope/telescope.nvim",
-  branch = '0.1.x',
+  branch = "master",
   cmd = "Telescope",
   keys = {
     { "<leader>ff",
@@ -10,24 +11,24 @@ return {
         require("telescope.builtin").find_files()
       end
     end,
-    desc = 'telescope find files' },
-    { "<leader>fg", "<cmd>Telescope live_grep<cr>",                 desc = 'telescope live grep' },
-    { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = 'telescope list buffers' },
-    { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = 'telescope fuzzy search' },
-    { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",      desc = 'telescope current buffer tags' },
-    { "<leader>z=", "<cmd>Telescope spell_suggest<cr>",           { desc = 'telescope spell suggest', noremap = true } }
+    desc = "telescope find files" },
+    { "<leader>fg", "<cmd>Telescope live_grep<cr>",                 desc = "telescope live grep" },
+    { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = "telescope list buffers" },
+    { "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "telescope fuzzy search" },
+    { "<leader>ft", "<cmd>Telescope lsp_document_symbols<cr>",      desc = "telescope current buffer tags" },
+    { "<leader>z=", "<cmd>Telescope spell_suggest<cr>",           { desc = "telescope spell suggest", noremap = true } }
   },
   dependencies = {
     {
       "nvim-telescope/telescope-fzf-native.nvim",
       build = "make",
-      enabled = vim.tbl_contains({ "Darwin", "Linux" }, vim.loop.os_uname().sysname),
+      enabled = require("configs.platform").is_unix,
     },
     { "nvim-lua/plenary.nvim" },
   },
   config = function()
     local actions = require "telescope.actions"
-    require('telescope').setup({
+    require("telescope").setup({
       defaults = {
         git_worktrees = vim.g.project_root_dir, -- use project.nvim update root dir
         color_devicons = false,
@@ -45,7 +46,7 @@ return {
           "--smart-case",
           "--trim"                    --remove indentation
         },
-        layout_strategy = 'vertical', -- horizontal or vertical
+        layout_strategy = "vertical", -- horizontal or vertical
         layout_config = {
           horizontal = {
             prompt_position = "bottom",
@@ -95,7 +96,7 @@ return {
           prompt_title = "Find Git Files at (" .. vim.fn.fnamemodify(vim.g.project_root_dir, ':t') .. ")",
           mappings = {
             i = {
-              ["<Tab>"] = function() require('telescope.builtin').find_files() end,
+              ["<Tab>"] = function() require("telescope.builtin").find_files() end,
             }
           }
         },
@@ -135,7 +136,7 @@ return {
     })
 
     -- load the extension here
-    pcall(require('telescope').load_extension, 'bookmarks')
+    pcall(require("telescope").load_extension, "bookmarks")
     pcall(require("telescope").load_extension, "fzf")
   end
 }

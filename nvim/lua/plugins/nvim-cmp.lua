@@ -1,3 +1,6 @@
+---Completion engine with LSP, buffer, path, dictionary, and snippet sources.
+---Uses LuaSnip for snippets, cmp-cmdline for command-line completion.
+---Icons from configs/icons.lua (replaces nvchad.icons.lspkind).
 return {
   {
     "hrsh7th/nvim-cmp",
@@ -13,8 +16,8 @@ return {
       {
         "uga-rosa/cmp-dictionary",
         config = function()
-          -- 定义词典保存路径
-          local dict_path = vim.fn.stdpath('config') .. '/dictionary/words_alpha.txt'
+              -- define dictionary save path
+          local dict_path = vim.fn.stdpath("config") .. '/dictionary/words_alpha.txt'
 
           require("cmp_dictionary").setup({
             paths = { dict_path, },
@@ -29,20 +32,20 @@ return {
           "saadparwaiz1/cmp_luasnip",
         },
         config = function()
-          local snippetpath = vim.fn.stdpath("config") .. "/snippets"
-          require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippetpath })
+          local snippet_path = vim.fn.stdpath("config") .. "/snippets"
+          require("luasnip.loaders.from_snipmate").lazy_load({ paths = snippet_path })
         end
       },
     },
     config = function()
-      local cmp = require 'cmp'
+      local cmp = require "cmp"
       local compare = require("cmp.config.compare")
-      local luasnip = require('luasnip')
+      local luasnip = require("luasnip")
 
       local options = {
         snippet = {
           expand = function(args)
-            require 'luasnip'.lsp_expand(args.body)
+            require("luasnip").lsp_expand(args.body)
           end,
         },
 
@@ -117,34 +120,34 @@ return {
         sources = cmp.config.sources(
           {
             {
-              name = 'nvim_lsp',
+              name = "nvim_lsp",
               keyword_length = 2,
               -- remove lsp snippet item from completion list
               entry_filter = function(entry)
                 return require("cmp").lsp.CompletionItemKind.Snippet ~= entry:get_kind()
               end
             },
-            { name = 'luasnip', },
-            { name = 'nvim_lua' },
+            { name = "luasnip", },
+            { name = "nvim_lua" },
           },
 
           {
-            { name = 'buffer', keyword_length = 3 },
+            { name = "buffer", keyword_length = 3 },
           },
 
           {
-            { name = 'path', keyword_length = 3 },
+            { name = "path", keyword_length = 3 },
           },
 
           {
-            { name = 'render-markdown' },
+            { name = "render-markdown" },
           }
         ),
 
         formatting = {
           fields = { "abbr", "menu", "kind" },
           format = function(entry, item)
-            local icons = require "nvchad.icons.lspkind"
+            local icons = require("configs.icons").lspkind
             local icon = icons[item.kind] or ""
             local kind = item.kind or ""
 
@@ -166,7 +169,7 @@ return {
         },
 
         view = {
-          entries = { name = 'custom', selection_order = 'near_cursor' }
+          entries = { name = "custom", selection_order = "near_cursor" }
         },
 
         sorting = {
@@ -196,20 +199,20 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources(
           {
-            { name = 'path' }
+            { name = "path" }
           },
           {
-            { name = 'cmdline' }
+            { name = "cmdline" }
           })
       })
 
-      cmp.setup.filetype({ 'markdown', 'Avante' }, {
+      cmp.setup.filetype({ "markdown" }, {
         sources = {
-          { name = 'nvim_lsp',        group_index = 1, priority = 100 },
-          { name = 'luasnip',         group_index = 1, priority = 100 },
-          { name = 'render-markdown', group_index = 1, priority = 100 },
-          { name = 'buffer',          group_index = 3, priority = 40 },
-          { name = 'path',            group_index = 3, priority = 40 },
+          { name = "nvim_lsp",        group_index = 1, priority = 100 },
+          { name = "luasnip",         group_index = 1, priority = 100 },
+          { name = "render-markdown", group_index = 1, priority = 100 },
+          { name = "buffer",          group_index = 3, priority = 40 },
+          { name = "path",            group_index = 3, priority = 40 },
           {
             name = "dictionary",
             keyword_length = 2,
@@ -219,7 +222,7 @@ return {
         }
       })
       -- override the deprecate abbr item highlight add strikethrough line
-      vim.api.nvim_set_hl(0, 'CmpItemAbbrDeprecatedDefault', { bg = 'NONE', strikethrough = true, fg = '#656565' })
+      vim.api.nvim_set_hl(0, "CmpItemAbbrDeprecatedDefault", { bg = "NONE", strikethrough = true, fg = "#656565" })
     end
   },
 }
