@@ -7,7 +7,7 @@ local map = vim.keymap.set
 -- =============================================================================
 -- on_attach: buffer-local LSP keymaps
 -- =============================================================================
-M.on_attach = function(_, bufnr)
+M.on_attach = function(client, bufnr)
   local function opts(desc)
     return { buffer = bufnr, desc = "LSP " .. desc }
   end
