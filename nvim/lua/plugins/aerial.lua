@@ -36,7 +36,7 @@ return {
       "Struct",
     },
     close_on_select = false,
-    disable_max_lines = 10000,
+    disable_max_lines = 30000,
     disable_max_size = 2000000, -- 2MB
     highlight_on_jump = 300,
     post_jump_cmd = "normal! zz",

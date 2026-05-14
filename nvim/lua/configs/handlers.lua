@@ -24,8 +24,22 @@ M.on_attach = function(_, bufnr)
   map("n", "<leader>ls", vim.lsp.buf.signature_help, opts("SignatureHelp"))
 
   -- clangd: switch between source and header
-  map("n", "<leader>a", "<cmd>ClangdSwitchSourceHeader<cr>", opts("Clangd Switch Source Header"))
-
+  if client.name == "clangd" then
+    map("n", "<leader>a", function()
+      local params = vim.lsp.util.make_text_document_params(bufnr)
+      client.request("textDocument/switchSourceHeader", params, function(err, result)
+        if err then
+          vim.notify(tostring(err), vim.log.levels.ERROR)
+          return
+        end
+        if not result then
+          vim.notify("Corresponding file not found", vim.log.levels.WARN)
+          return
+        end
+        vim.cmd.edit(vim.uri_to_fname(result))
+      end, bufnr)
+    end, opts("Clangd Switch Source Header"))
+  end
   -- format buffer (normal mode)
   map("n", "<leader>lf",
     function()
