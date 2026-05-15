@@ -339,6 +339,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
   group = augroup("dim"),
   callback = function()
     if require("configs.utils").is_diff_mode() then return end
-    require("configs.dim").setup()
+    require("configs.dim").setup({
+      ignore_filetypes = ignore_filetypes,
+      ignore_buftypes = ignore_buftypes,
+    })
   end,
 })
