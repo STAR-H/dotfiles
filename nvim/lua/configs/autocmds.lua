@@ -229,6 +229,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", "WinLeave" }, {
 -- =============================================================================
 vim.api.nvim_create_autocmd("BufWinEnter", {
   callback = function()
+    if require("configs.utils").is_diff_mode() then return end   -- skip in diff mode
     local ft = vim.bo.filetype
     if ft ~= "cpp" and ft ~= "c" then
       return
