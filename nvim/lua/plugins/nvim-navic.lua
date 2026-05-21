@@ -1,7 +1,7 @@
 ---LSP-powered code context breadcrumbs for statusline/winbar.
 return {
   "SmiteshP/nvim-navic",
-  event = "VeryLazy",
+  event = "BufReadPre",
   dependencies = { "neovim/nvim-lspconfig" },
   init = function()
     -- PERF: Set it to true to update context only on CursorHold event. Could be usefull if
