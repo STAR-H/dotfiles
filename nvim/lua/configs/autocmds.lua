@@ -79,10 +79,10 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- =============================================================================
--- Auto-enable diagnostics for lua files
+-- Auto-enable diagnostics for lua/json/jsonc files
 -- =============================================================================
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "lua",
+  pattern = { "lua", "json", "jsonc" },
   callback = function()
     vim.diagnostic.enable(true)
   end,

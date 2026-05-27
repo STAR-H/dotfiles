@@ -22,6 +22,7 @@ return {
         "clangd",
         "lua_ls",
         "marksman",
+        "jsonls",
       }
 
       require("mason").setup(settings)
@@ -44,7 +45,7 @@ return {
       local lsphandlers = require("configs.handlers")
 
       -- servers with default config
-      local servers = { "clangd", "marksman" }
+      local servers = { "clangd", "marksman", "jsonls" }
 
       for _, server in ipairs(servers) do
         local opts = {

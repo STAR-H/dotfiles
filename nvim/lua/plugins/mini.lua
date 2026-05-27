@@ -1,4 +1,4 @@
----Library of minimal Neovim modules (surround, cursorword, comment).
+---Library of minimal Neovim modules (surround, cursorword).
 return {
   {
     "echasnovski/mini.surround",
@@ -45,10 +45,5 @@ return {
       vim.api.nvim_set_hl(0, "MiniCursorword", { bg = "#504945", bold = true, underline = true})
       vim.api.nvim_set_hl(0, "MiniCursorwordCurrent", { bold = true })
     end
-  },
-  {
-    "nvim-mini/mini.comment",
-    version = "*",
-    event = "VeryLazy",
   },
 }
