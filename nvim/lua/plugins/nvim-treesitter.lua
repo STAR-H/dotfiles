@@ -13,7 +13,6 @@ return {
         "diff",
         "bash",
         "json",
-        "jsonc",
         "vim",
         "vimdoc",
         "lua",

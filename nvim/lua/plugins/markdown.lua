@@ -50,6 +50,7 @@ return {
       pipe_table = {
         cell = "padded",
         preset = "round",
+        border_virtual = true,
       },
 
       code = {
