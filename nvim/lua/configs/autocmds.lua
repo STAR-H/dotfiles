@@ -273,7 +273,7 @@ local function create_daily_note()
     "created: " .. created,
     "updated: " .. updated,
     "tags:",
-    "- ",
+    " - ",
     "---",
     "",
   }
@@ -346,3 +346,20 @@ vim.api.nvim_create_autocmd("VimEnter", {
     })
   end,
 })
+
+-- =============================================================================
+-- Obsidian: desktop app integration (macOS only)
+-- =============================================================================
+if require("configs.platform").is_macos then
+  vim.api.nvim_create_user_command("ObsidianOpen", function()
+    require("configs.utils").obsidian_open()
+  end, {
+    desc = "Open current buffer in Obsidian desktop app",
+  })
+
+  vim.api.nvim_create_user_command("ObsidianDaily", function()
+    require("configs.utils").obsidian_daily()
+  end, {
+    desc = "Create or open daily note under $OBSIDIAN_DAILY (YYYY-MM-DD.md)",
+  })
+end
