@@ -187,4 +187,18 @@ return {
       { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
     },
   },
+
+  {
+    "iamcco/markdown-preview.nvim",
+    cmd = { "MarkdownPreview", "MarkdownPreviewToggle", "MarkdownPreviewStop" },
+    ft = { "markdown" },
+    init = function()
+      local css_dir = vim.fn.stdpath("config") .. "/lua/configs/markdown/"
+      vim.g.mkdp_markdown_css = css_dir .. "theme.css"
+      vim.g.mkdp_theme = "dark"
+      vim.g.mkdp_auto_close = 0
+      vim.g.mkdp_auto_start = 0
+      vim.g.mkdp_refresh_slow = 0
+    end,
+  },
 }
