@@ -225,29 +225,61 @@ vim.api.nvim_create_autocmd({ "BufLeave", "WinLeave" }, {
 })
 
 -- =============================================================================
--- C/C++: highlight lines exceeding 128 columns
+-- Toggle highlighting for lines exceeding 128 columns in C/C++ buffers
 -- =============================================================================
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  callback = function()
-    if require("configs.utils").is_diff_mode() then return end   -- skip in diff mode
-    local ft = vim.bo.filetype
-    if ft ~= "cpp" and ft ~= "c" then
-      return
+local overlength_enabled = false
+
+local function is_overlength_filetype()
+  local ft = vim.bo.filetype
+  return ft == "cpp" or ft == "c"
+end
+
+local function clear_overlength_match()
+  if vim.w.overlength_match then
+    pcall(vim.fn.matchdelete, vim.w.overlength_match)
+    vim.w.overlength_match = nil
+  end
+end
+
+local function apply_overlength_match()
+  clear_overlength_match()
+
+  if not overlength_enabled then
+    return
+  end
+
+  if require("configs.utils").is_diff_mode() then
+    return
+  end
+
+  if not is_overlength_filetype() then
+    return
+  end
+
+  vim.w.overlength_match = vim.fn.matchadd("Error", [[\%129v.\+]])
+end
+
+local function refresh_overlength_matches()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_call(win, apply_overlength_match)
     end
-    if vim.w.overlength_match then
-      return
-    end
-    vim.w.overlength_match = vim.fn.matchadd("Error", [[\%129v.\+]])
-  end,
+  end
+end
+
+vim.api.nvim_create_user_command("ToggleOverlength", function()
+  overlength_enabled = not overlength_enabled
+  refresh_overlength_matches()
+
+  local state = overlength_enabled and "enabled" or "disabled"
+  vim.notify("Overlength highlight " .. state .. " for C/C++ buffers.", vim.log.levels.INFO)
+end, {
+  desc = "Toggle highlighting for lines exceeding 128 columns in C/C++ buffers",
 })
 
-vim.api.nvim_create_autocmd("BufWinLeave", {
-  callback = function()
-    if vim.w.overlength_match then
-      vim.fn.matchdelete(vim.w.overlength_match)
-      vim.w.overlength_match = nil
-    end
-  end,
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter", "FileType" }, {
+  group = augroup("overlength_highlight"),
+  callback = apply_overlength_match,
 })
 
 -- =============================================================================
