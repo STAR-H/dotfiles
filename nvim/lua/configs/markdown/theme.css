@@ -65,18 +65,14 @@ body {
   z-index: 1;
   width: min(calc(100% - 64px), var(--mado-content-width));
   max-width: var(--mado-content-width) !important;
-  margin: 36px auto !important;
+  margin: 16px auto !important;
   color: var(--mado-text) !important;
   background: transparent !important;
   background-color: transparent !important;
 }
 
 #page-header {
-  color: var(--mado-text) !important;
-  background: hsla(215, 17%, 19%, 0.86) !important;
-  background-color: hsla(215, 17%, 19%, 0.86) !important;
-  border-color: var(--mado-border) !important;
-  border-radius: var(--mado-radius-lg) var(--mado-radius-lg) 0 0 !important;
+  display: none !important;
 }
 
 body::before {
@@ -116,17 +112,21 @@ body::before {
   z-index: 1;
   min-height: calc(100vh - 124px);
   margin: 0 !important;
-  padding: 54px 72px 86px !important;
+  padding: 32px 72px 86px !important;
   color: var(--mado-text) !important;
   background: hsla(215, 17%, 19%, 0.86) !important;
   background-color: hsla(215, 17%, 19%, 0.86) !important;
   border-color: var(--mado-border) !important;
-  border-radius: 0 0 var(--mado-radius-lg) var(--mado-radius-lg) !important;
+  border-radius: var(--mado-radius-lg) !important;
   box-shadow: var(--mado-shadow);
   backdrop-filter: blur(12px);
 }
 
 #write > :first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body > :first-child {
   margin-top: 0 !important;
 }
 
@@ -687,13 +687,13 @@ summary {
 
   .markdown-body {
     min-height: calc(100vh - 68px);
-    padding: 34px 24px 54px !important;
-    border-radius: 0 0 var(--mado-radius-md) var(--mado-radius-md) !important;
+    padding: 24px 24px 54px !important;
+    border-radius: var(--mado-radius-md) !important;
   }
 
   h1,
   h2 {
-    padding: 14px 16px 14px 24px;
+    padding: 14px 0;
   }
 
   h1 {
