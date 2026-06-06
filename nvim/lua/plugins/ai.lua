@@ -4,6 +4,7 @@ return {
   "nickjvandyke/opencode.nvim",
   version = "*", -- Latest stable release
   event = "VeryLazy",
+  enabled = require("configs.platform").is_macos,
   pin = false,
   config = function()
     ---@type opencode.Opts
