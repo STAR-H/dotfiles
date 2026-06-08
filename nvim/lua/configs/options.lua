@@ -44,6 +44,7 @@ vim.opt.fillchars = {
   foldsep = "│",
   diff = " ",
 }
+vim.opt.foldtext = 'v:lua.require("configs.utils").foldtext()'
 vim.opt.foldcolumn = "0" -- no fold column by default (dynamic)
 
 -- =============================================================================

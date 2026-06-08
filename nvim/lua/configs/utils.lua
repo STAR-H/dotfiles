@@ -67,6 +67,15 @@ function M.statuscolumn()
   return "%=%#LineNr#" .. string.format("%3d", lnum) .. " %*%C"
 end
 
+function M.foldtext()
+  local line = vim.fn.getline(vim.v.foldstart)
+  local indent = line:match("^%s*") or ""
+  local text = line:gsub("^%s*", "")
+  local line_count = vim.v.foldend - vim.v.foldstart + 1
+
+  return string.format("%s%d lines: %s", indent, line_count, text)
+end
+
 ---Open current buffer in Obsidian desktop app via CLI.
 ---Requires $OBSIDIAN_VAULT env var pointing to a valid vault directory.
 function M.obsidian_open()
