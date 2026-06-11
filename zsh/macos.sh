@@ -1,4 +1,4 @@
-export PATH=~/Workspace/Softwares/nvim-macos-arm64/bin:$PATH
+export PATH=$HOME/Workspace/Softwares/nvim-macos-arm64/bin:$PATH
 
 # Install coreutils to get GNU versions of standard utilities
 # (macOS ships BSD variants with different behavior).
