@@ -1,0 +1,197 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/oh-my-opencode.schema.json",
+
+  "agents": {
+    // Sisyphus: Main orchestrator. Classifies intent, breaks down work, delegates to specialists, supervises execution, and verifies completion.
+    // It needs development capabilities. Read-only shell commands are allowed; mutating commands require confirmation.
+    "sisyphus": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "xhigh",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Hephaestus: Autonomous deep worker. Handles complex implementation, multi-file changes, architecture-heavy debugging, and end-to-end development.
+    // Keep mutating shell commands behind confirmation to prevent broad unintended changes.
+    "hephaestus": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Oracle: Read-only consultant. Provides architecture advice, hard-debugging analysis, design tradeoff review, and risk assessment.
+    // It should analyze only, never modify files or execute shell commands.
+    "oracle": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "high",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Librarian: External research agent. Looks up official documentation, library APIs, open-source examples, and current best practices.
+    // Web access is allowed; local edits are denied; read-only shell commands are allowed and mutating commands require confirmation.
+    "librarian": {
+      "model": "ts-openai/gpt-5.4-mini",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Explore: Local codebase research agent. Finds files, call sites, existing patterns, related implementations, and project conventions.
+    // It should search and summarize only. Read-only shell commands are allowed; mutating commands require confirmation.
+    "explore": {
+      "model": "ts-openai/gpt-5.4-mini",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Multimodal-Looker: Media analysis agent. Interprets images, screenshots, PDFs, diagrams, and other visual inputs.
+    // It should only read/analyze provided media and must not edit files, run commands, or access external directories.
+    "multimodal-looker": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium",
+      "fallback_models": [
+        {
+          "model": "ts-openai/gpt-5.4"
+        }
+      ],
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Prometheus: Strategic planner. Interviews the user, clarifies scope, identifies ambiguities, and produces implementation plans.
+    // The plugin's prometheus-md-only hook limits writes to Markdown files; edits still require confirmation here.
+    "prometheus": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "high",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Metis: Pre-planning consultant. Detects hidden intent, missing requirements, ambiguity, scope gaps, and likely planning failures.
+    // It should advise before planning, not execute development actions.
+    "metis": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "high",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Momus: Plan reviewer. Critiques plans for clarity, completeness, verifiability, missing context, and weak success criteria.
+    // It should review only, never modify files or run commands.
+    "momus": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "xhigh",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Atlas: Todo-list orchestrator. Executes existing plans, distributes tasks, tracks progress, and verifies task completion.
+    // It may need execution capabilities. Read-only shell commands are allowed; mutating commands remain approval-gated.
+    "atlas": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    },
+
+    // Sisyphus-Junior: Category-spawned executor. Performs one clearly delegated task at a time under a selected category.
+    // It is an implementation worker. Read-only shell commands are allowed; mutating commands require confirmation; external directory access is denied.
+    "sisyphus-junior": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium",
+      "permission": {
+        "edit": "ask",
+        "external_directory": "ask",
+        "doom_loop": "ask"
+      }
+    }
+  },
+
+  "categories": {
+    "visual-engineering": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "high"
+    },
+    "ultrabrain": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "xhigh"
+    },
+    "deep": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium"
+    },
+    "artistry": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "xhigh"
+    },
+    "quick": {
+      "model": "ts-openai/gpt-5.4-mini"
+    },
+    "unspecified-low": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium"
+    },
+    "unspecified-high": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium"
+    },
+    "writing": {
+      "model": "ts-openai/gpt-5.5",
+      "variant": "medium"
+    }
+  },
+
+  // Disable desktop and session notification hooks from Oh My OpenAgent.
+  "disabled_hooks": [
+      "session-notification",
+      "background-notification",
+      "startup-toast"
+  ],
+
+  // Keep notification auto-detection behavior and do not force-enable notifications.
+  "notification": {
+    "force_enable": false
+  },
+
+  "tmux": {
+    "enabled": false,
+    "layout": "main-vertical",
+    "main_pane_size": 60,
+    "main_pane_min_width": 120,
+    "agent_pane_min_width": 40,
+    "isolation": "inline"
+  },
+
+  "runtime_fallback": true
+}
