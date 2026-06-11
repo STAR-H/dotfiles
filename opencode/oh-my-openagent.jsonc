@@ -179,6 +179,8 @@
       "startup-toast"
   ],
 
+  "disabled_skills": ["git-master"],
+
   // Keep notification auto-detection behavior and do not force-enable notifications.
   "notification": {
     "force_enable": false
