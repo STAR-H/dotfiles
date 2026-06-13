@@ -200,6 +200,8 @@ return {
       vim.g.mkdp_auto_start = 0
       vim.g.mkdp_refresh_slow = 0
       vim.g.mkdp_preview_options = {
+        disable_sync_scroll = 0,
+        sync_scroll_type = "relative",
         disable_filename = 1,
       }
     end,

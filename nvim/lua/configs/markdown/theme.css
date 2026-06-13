@@ -31,7 +31,7 @@
   --mado-radius-sm: 4px;
   --mado-radius-md: 8px;
   --mado-radius-lg: 23px;
-  --mado-content-width: 1170px;
+  --mado-content-width: 100%;
 }
 
 * {
@@ -65,7 +65,7 @@ body {
   z-index: 1;
   width: min(calc(100% - 64px), var(--mado-content-width));
   max-width: var(--mado-content-width) !important;
-  margin: 16px auto !important;
+  margin: 48px auto !important;
   color: var(--mado-text) !important;
   background: transparent !important;
   background-color: transparent !important;
@@ -95,8 +95,8 @@ body::before {
   z-index: 1;
   width: min(calc(100% - 64px), var(--mado-content-width));
   max-width: var(--mado-content-width);
-  min-height: calc(100vh - 72px);
-  margin: 36px auto;
+  min-height: calc(100vh - 216px);
+  margin: 108px auto;
   padding: 54px 72px 86px;
   color: var(--mado-text) !important;
   background: hsla(215, 17%, 19%, 0.86) !important;
@@ -497,27 +497,33 @@ pre code {
 }
 
 table {
-  display: table;
-  width: 100%;
-  margin: 1.35em 0;
-  overflow: hidden;
+  display: block;
+  width: max-content;
+  margin: 1.35em auto;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
   border-spacing: 0;
   border-collapse: separate;
-  background: var(--mado-bg-soft);
-  border: 1px solid var(--mado-border);
-  border-radius: var(--mado-radius-md);
+  background: transparent;
+  border: 1px solid hsla(210, 15%, 33%, 0.42);
+  border-radius: var(--mado-radius-sm);
 }
 
 thead {
-  border-top: 2px solid var(--mado-accent-strong);
+  border-top: 0;
 }
 
 th,
 td {
-  padding: 10px 14px;
-  border-right: 1px solid var(--mado-border);
-  border-bottom: 1px solid var(--mado-border);
+  min-width: 9rem;
+  max-width: 24rem;
+  padding: 7px 10px;
+  border-right: 1px solid hsla(210, 15%, 33%, 0.42);
+  border-bottom: 1px solid hsla(210, 15%, 33%, 0.42);
   text-align: left;
+  overflow-wrap: break-word;
+  vertical-align: top;
 }
 
 th:last-child,
@@ -530,13 +536,13 @@ tr:last-child td {
 }
 
 th {
-  color: var(--mado-text);
-  background: hsla(215, 24%, 16%, 0.88);
-  font-weight: 650;
+  color: hsl(218, 17%, 72%);
+  background: hsla(215, 18%, 17%, 0.48);
+  font-weight: 500;
 }
 
 tbody tr:nth-child(2n) td {
-  background: hsla(215, 20%, 22%, 0.34);
+  background: hsla(215, 20%, 22%, 0.16);
 }
 
 img {
@@ -704,11 +710,6 @@ summary {
     font-size: 1.34rem;
   }
 
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
 }
 
 @media print {
