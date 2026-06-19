@@ -18,6 +18,27 @@ function M.toggle_diagnostics()
   end
 end
 
+---Copy current visual selection as an absolute file line reference.
+---Format: /absolute/path/to/file:Lstart-Lend
+function M.copy_line_reference()
+  local path = vim.api.nvim_buf_get_name(0)
+  if path == "" then
+    vim.notify("No file in current buffer", vim.log.levels.WARN, { title = "Line Reference" })
+    return
+  end
+
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  local ref = string.format("%s:L%d-L%d", vim.fn.fnamemodify(path, ":p"), start_line, end_line)
+  vim.fn.setreg("+", ref)
+  vim.notify("Line Reference: " .. ref, vim.log.levels.INFO)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+end
+
 ---Close current window if splits exist, otherwise close buffer
 function M.close_buffer()
   local win_count = vim.fn.winnr("$")

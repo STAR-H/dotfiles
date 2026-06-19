@@ -74,6 +74,12 @@ keymap("n", "<ESC>",
 
 keymap("v", "q", "<Esc>", { noremap = true, silent = true, desc = "Quit visual mode" })
 
+keymap("x", "<C-a>",
+  function()
+    require("configs.utils").copy_line_reference()
+  end,
+  { noremap = true, silent = true, desc = "Copy selected line reference" })
+
 -- =============================================================================
 -- Macro Recording: remap Q -> q, disable default q
 -- =============================================================================
