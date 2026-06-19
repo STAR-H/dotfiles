@@ -51,8 +51,7 @@ fi
 mkdir -p "$CONFIG_DIR"
 printf 'ready   %s\n' "$CONFIG_DIR"
 
-link_item opencode.jsonc
-link_item oh-my-openagent.jsonc
+link_item opencode.json
 link_item tui.json
 link_item AGENTS.md
 link_item agents
