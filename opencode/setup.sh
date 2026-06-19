@@ -56,7 +56,9 @@ link_item oh-my-openagent.jsonc
 link_item tui.json
 link_item AGENTS.md
 link_item agents
+link_item commands
 link_item skills
+link_item caveman-plugin
 link_item themes
 
 printf 'done    OpenCode setup complete\n'
