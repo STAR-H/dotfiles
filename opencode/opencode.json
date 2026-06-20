@@ -144,6 +144,22 @@
       "type": "remote",
       "url": "https://components.espressif.com/mcp",
       "enabled": true
+    },
+    "headroom": {
+      "type": "local",
+      "command": [
+        "{env:HEADROOM_BIN}",
+        "mcp",
+        "serve"
+      ],
+      "enabled": true
+    },
+    "codebase-memory-mcp": {
+      "type": "local",
+      "command": [
+        "{env:CODEBASE_MEMORY_MCP_BIN}"
+      ],
+      "enabled": true
     }
   },
   "plugin": [
