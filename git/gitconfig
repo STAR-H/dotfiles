@@ -4,10 +4,6 @@
 [http]
     sslBackend = openssl
 
-[user]
-    name = STAR-H
-    email = user@example.invalid
-
 [filter "lfs"]
     clean = git-lfs clean -- %f
     smudge = git-lfs smudge -- %f
