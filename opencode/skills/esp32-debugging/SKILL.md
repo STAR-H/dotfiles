@@ -1,9 +1,6 @@
 ---
 name: esp32-debugging
-description: Debug ESP32 firmware issues including compilation errors, runtime panics, memory issues, and communication failures
-user-invocable: true
-argument-hint: "[error-context]"
-allowed-tools: Bash(just:*), Read, Grep, Glob
+description: Use when debugging ESP32 or ESP-IDF firmware build errors, idf.py failures, Guru Meditation panics, reset loops, stack/heap memory faults, I2C/SPI/UART communication failures, sdkconfig or partition issues, flash/monitor problems, or serial logs.
 ---
 
 # ESP32 Firmware Debugging Guide
@@ -19,6 +16,12 @@ Apply this skill when the user:
 
 `$ARGUMENTS` may contain error messages or context about the issue.
 
+Before suggesting build, flash, or monitor commands:
+- first check whether `idf.py --version` succeeds
+- if it does not, read project instructions (`AGENTS.md`) for the exact ESP-IDF environment activation command
+- if the project does not define one, fall back to the user's documented activation method
+- if no documented method exists, ask the user instead of guessing install paths
+
 ## Debugging Process
 
 ### Ask for Context First
@@ -32,8 +35,10 @@ If the error isn't clear from `$ARGUMENTS`, ask the user to provide:
 
 **Run a fresh build to capture the error:**
 ```bash
-just <project>::build 2>&1 | tail -100
+idf.py build
 ```
+
+If `idf.py` is unavailable in the current shell, read project instructions (`AGENTS.md`) for the correct ESP-IDF environment activation command before building.
 
 **Missing Includes**
 ```
@@ -122,11 +127,13 @@ Checklist:
 
 ```bash
 # Clean build to eliminate stale objects
-just <project>::clean && just <project>::build
+idf.py fullclean build
 
 # Start serial monitor
-just <project>::monitor PORT=/dev/cu.usbserial-0001
+idf.py monitor
 ```
+
+Use the project's documented ESP-IDF environment activation command first if `idf.py` is not already available in the shell.
 
 ### 6. Useful ESP-IDF Config Options
 

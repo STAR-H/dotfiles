@@ -21,7 +21,7 @@ Use these checklists to speed up implementation, review, and debugging work with
 ## Implementation Checklist
 
 - Confirm target chip (`esp32`, `esp32s3`, `esp32c3`, etc.) and ESP-IDF version.
-- Confirm ESP-IDF toolchain is installed and usable before building (`idf.py --version` succeeds or project wrapper preflight passes).
+- Confirm ESP-IDF toolchain is installed and usable before building (`idf.py --version` succeeds).
 - Confirm plugin/framework compatibility preflight passes and produces an evidence report before building.
 - Confirm board-level pin mapping and electrical constraints before assigning GPIOs.
 - Confirm task model: task priorities, stack sizes, queue depths, timer cadence, core affinity (if used).
@@ -74,10 +74,12 @@ Use these checklists to speed up implementation, review, and debugging work with
 
 ## Build / Validation Checklist
 
-- Prefer project `build.sh` wrapper if present; otherwise use `idf.py build`.
-- Before running the build, verify ESP-IDF environment setup is valid (`idf.py` runs, not just exists).
+- Use `idf.py build` unless the user or project instructions specify a different command.
+- Before running the build, verify ESP-IDF environment setup is valid (`idf.py --version` succeeds, not just that the command name exists).
+- If `idf.py` is unavailable, read project instructions (`AGENTS.md`) for the exact environment activation command before building.
+- If the project instructions do not define an activation command, fall back to the user's documented activation method if one exists.
+- If no documented activation method exists, ask the user instead of guessing paths or modifying shell configuration.
 - Before running the build, verify plugin/framework compatibility evidence (matrix/manifest/release-note proof) is concrete and current for the exact versions in use.
-- If the developer shell UX is poor, add/update a shell helper snippet (for example `.zshrc`) for `idf` env sourcing and PATH setup.
 - Run the build after code/config/partition changes before declaring completion.
 - If build fails, fix and rerun until it passes.
 - Review warnings; resolve correctness/safety warnings rather than ignoring them.

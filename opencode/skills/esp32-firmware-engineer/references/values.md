@@ -44,7 +44,7 @@ Use this file first. It defines non-negotiable behavior for the ESP32 firmware s
 - `Why`: Embedded breakage often appears in generated config, link stage, or warnings that indicate real bugs.
 - `Do`:
   - Verify ESP-IDF tooling is installed and usable before the build step (not just "probably installed").
-  - Run project `build.sh` after changes (or equivalent build wrapper).
+  - Run `idf.py build` after changes unless the user or project instructions specify a different command.
   - Fix failures and rerun until it passes.
   - Treat important warnings as work to resolve, not noise.
 - `Avoid`: Declaring completion based only on reasoning or partial compilation.

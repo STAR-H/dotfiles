@@ -1,35 +1,41 @@
 ---
 name: cavecrew
 description: >
-  Decision guide for delegating to caveman-style subagents. Tells the main
-  thread WHEN to spawn `cavecrew-investigator` (locate code), `cavecrew-builder`
-  (1-2 file edit), or `cavecrew-reviewer` (diff review) instead of doing the
-  work inline or using vanilla `Explore`. Subagent output is caveman-compressed
-  so the tool-result injected back into main context is ~60% smaller — main
-  context lasts longer across long sessions.
-  Trigger: "delegate to subagent", "use cavecrew", "spawn investigator/builder/reviewer",
-  "save context", "compressed agent output".
+  Use when delegating code search, surgical edits, or diff review to
+  caveman-style subagents and compact structured output matters. Trigger:
+  "delegate to subagent", "use cavecrew", "spawn
+  investigator/builder/reviewer", "save context", "compressed agent output".
 ---
 
-Cavecrew = three subagent presets that emit caveman output. Same job as Anthropic defaults (`Explore`, edit-style agents, reviewer); difference is the tool-result they return is compressed, so main context shrinks per delegation.
+Cavecrew = three subagent presets that emit caveman-compressed output. Use them when you want locator, surgical-edit, or review work delegated with minimal main-context cost.
 
 ## When to use cavecrew vs alternatives
 
 | Task | Use |
 |---|---|
 | "Where is X defined / what calls Y / list uses of Z" | `cavecrew-investigator` |
-| Same but you also want suggestions/architecture commentary | `Explore` (vanilla) |
+| Same but you also want suggestions or architecture commentary | General-purpose explore agent or main thread |
 | Surgical edit, ≤2 files, scope obvious | `cavecrew-builder` |
-| New feature / 3+ files / cross-cutting refactor | Main thread or `feature-dev:code-architect` |
+| New feature / 3+ files / cross-cutting refactor | Main thread or full-feature build agent |
 | Review diff, branch, or file for bugs | `cavecrew-reviewer` |
-| Deep code review with rationale + alternatives | `Code Reviewer` (vanilla) |
+| Deep code review with rationale + alternatives | General-purpose review agent |
 | One-line answer you already know | Main thread, no subagent |
 
-Rule of thumb: **if you'd want the subagent's output in 1/3 the tokens, pick cavecrew. If you'd want prose, pick vanilla.**
+Rule of thumb: **if you want compact structured output, pick cavecrew. If you want expansive prose or design discussion, use a general-purpose agent. Short is fine. Missing core meaning is not.**
 
 ## Why this exists (the real win)
 
-Subagent tool results get injected into main context verbatim. A vanilla `Explore` that returns 2k tokens of prose costs 2k tokens of main-context budget every time. The same finding from `cavecrew-investigator` returns ~700 tokens. Across 20 delegations in one session that's the difference between context exhaustion and finishing the task.
+Subagent results get injected into main context. A verbose general-purpose agent can easily return 2k tokens of prose; the same finding from `cavecrew-investigator` is often far smaller. Across many delegations, that difference decides whether context lasts.
+
+## Entry points
+
+This skill is entry-point agnostic. Use it when delegation starts from:
+- main-thread reasoning
+- a custom command
+- a reusable workflow prompt
+- manual subagent dispatch
+
+Decision rule stays same: pick smallest cavecrew agent that can finish job.
 
 ## Output contracts
 
@@ -74,9 +80,9 @@ Skip investigator. Hand exact path:line to `cavecrew-builder` directly.
 
 - Don't use `cavecrew-builder` when you don't already know the file. Spawn investigator first or main thread will eat tokens passing context.
 - Don't chain `cavecrew-investigator → cavecrew-builder` for a 5-file refactor. Builder will return `too-big.` and you'll have wasted a turn.
-- Don't ask `cavecrew-reviewer` for "general feedback" — it returns findings only, no architecture opinions. Use `Code Reviewer` for that.
+- Don't ask `cavecrew-reviewer` for "general feedback" — it returns findings only, no architecture opinions. Use a general-purpose review agent for that.
 - Don't expect prose. Cavecrew output is structured, sometimes terse to the point of cryptic. If a human will read it directly, paraphrase.
 
 ## Auto-clarity (inherited)
 
-Subagents drop caveman → normal English for security warnings, irreversible-action confirmations, and any output where fragment ambiguity could be misread. Resume caveman after.
+Subagents switch from caveman style to clear, normal prose for security warnings, irreversible-action confirmations, and any output where fragment ambiguity could be misread. If user is using Chinese, write clear Simplified Chinese. Keep code and exact technical strings unchanged. Resume caveman after.

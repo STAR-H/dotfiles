@@ -159,6 +159,14 @@
       "trash *": "ask",
       "git rm *": "ask",
       "git push*": "ask"
+    },
+    "external_directory": {
+      "*": "ask",
+      "~/.config/**": "allow",
+      "/tmp/**": "allow",
+      "/private/tmp/**": "allow",
+      "/var/folders/**": "allow",
+      "/private/var/folders/**": "allow"
     }
   }
 }

@@ -1,11 +1,16 @@
 ---
 name: esp32-firmware-engineer
-description: ESP32 firmware engineering for ESP-IDF projects. Write, review, and debug embedded C/C++ code involving FreeRTOS tasks/queues/timers, GPIO/I2C/SPI/UART/ADC/PWM peripherals, TWAI/CAN, Wi-Fi/BLE networking, OTA updates, Secure Boot and flash encryption, LVGL display integration, build/flash/monitor workflows, logging, crash analysis, memory/code-size optimization, low-power sleep/wakeup design, on-device USB/serial service terminals, and board bring-up. Use when an agent is asked to implement ESP-IDF firmware features, review embedded changes for correctness or race conditions, investigate boot/runtime failures or Guru Meditation panics, interpret serial logs, fix build/link/flash problems, optimize RAM/flash usage, tune deep sleep/light sleep behavior, harden firmware for production, add a service console/CLI, integrate a display with LVGL, or diagnose hardware-software integration issues on ESP32-class devices.
+description: Use when working on ESP32 or ESP-IDF firmware: implement or review C/C++ code, debug idf.py build/flash/monitor failures, Guru Meditation panics, FreeRTOS races, GPIO/I2C/SPI/UART/TWAI drivers, Wi-Fi/BLE, OTA, LVGL displays, sleep/power, memory, sdkconfig, partitions, Secure Boot, flash encryption, or board bring-up.
 ---
 
 # ESP32 Firmware Engineer
 
 Act as a senior ESP-IDF firmware engineer focused on correctness, debuggability, and fast iteration.
+
+## Usage
+
+- Use subagent `esp32-debugger` for read-only diagnosis and log/build/panic triage.
+- Use subagent `esp32-firmware-engineer` for implementation, fixes, reviews, bring-up, `sdkconfig`, partitions, OTA, LVGL, security, and validated build workflows.
 
 ## Work Style
 
@@ -44,13 +49,16 @@ Act as a senior ESP-IDF firmware engineer focused on correctness, debuggability,
 2. Classify the work as `write`, `review`, `debug`, or `bring-up`.
 3. Resolve blocking context questions first (hardware, exact ESP32 variant, partitions/OTA, key `sdkconfig` constraints).
 4. Read the minimum relevant files first (`main`, component code, headers, `CMakeLists.txt`, `sdkconfig`, partition CSV, logs, scripts).
-5. Before any build/flash/monitor step, verify ESP-IDF is properly installed and usable (`idf.py` resolves and runs, or the project shell wrapper can source the environment successfully).
-6. Verify concrete compatibility evidence for every plugin/framework in use (exact versions + official matrix/manifest/release-note proof). If any link in the stack is ambiguous, stop and resolve it first.
-7. Build a failure model before editing code for debugging tasks.
-8. Load the minimum relevant topic references (RTOS/communication/memory/power/peripherals/partitions/logging/display/toolchain setup/compatibility) plus `references/esp-idf-checklists.md`.
-9. Implement changes.
-10. Run the project's `build.sh` (preferred) after modifications; if it fails or emits unacceptable warnings, fix and rerun before claiming completion.
-11. Validate with any additional task-specific checks (flash/monitor/log parsing/tests) and describe remaining hardware verification gaps.
+5. Before any build/flash/monitor step, check whether `idf.py --version` succeeds in the current shell.
+6. If `idf.py` is unavailable, read project instructions (`AGENTS.md`) for the exact ESP-IDF environment activation command and use that command before running `idf.py`.
+7. If the project does not define an activation command, fall back to the user's standard ESP-IDF activation method if one is already documented in the environment or global instructions.
+8. If no documented activation method exists, stop and ask the user for the correct ESP-IDF environment activation command instead of guessing paths.
+9. Verify concrete compatibility evidence for every plugin/framework in use (exact versions + official matrix/manifest/release-note proof). If any link in the stack is ambiguous, stop and resolve it first.
+10. Build a failure model before editing code for debugging tasks.
+11. Load the minimum relevant topic references (RTOS/communication/memory/power/peripherals/partitions/logging/display/toolchain setup/compatibility) plus `references/esp-idf-checklists.md`.
+12. Implement changes.
+13. Run `idf.py build` after modifications unless the user or project instructions specify a different command; if it fails or emits unacceptable warnings, fix and rerun before claiming completion.
+14. Validate with any additional task-specific checks (flash/monitor/log parsing/tests) and describe remaining hardware verification gaps.
 
 ## Writing Firmware
 
@@ -91,18 +99,17 @@ Act as a senior ESP-IDF firmware engineer focused on correctness, debuggability,
 
 ## Build / Flash / Monitor Guidance
 
-- Prefer project wrapper scripts (`build.sh`, `flash.sh`, `monitor.sh`) if present, with `idf.py` as the underlying engine.
-- Use `idf.py build`, `idf.py flash`, and `idf.py monitor` as the baseline workflow when wrappers are absent.
-- Before building, confirm ESP-IDF tooling is actually usable (`idf.py --version` succeeds), not just present on `PATH`.
+- Use `idf.py build`, `idf.py flash`, and `idf.py monitor` as the standard workflow unless the user or project instructions specify a different command.
+- Before running `idf.py`, confirm `idf.py --version` succeeds in the current shell.
+- If `idf.py` is unavailable, read project instructions (`AGENTS.md`) for the exact ESP-IDF environment activation command and use that command first.
+- If the project instructions do not define an activation command, fall back to the user's documented ESP-IDF activation method if one exists.
+- If no documented activation method exists, stop and ask the user for the correct activation command instead of guessing common install paths.
 - Before building, confirm plugin/framework compatibility with concrete evidence (for example ADF README matrix row+column, SR `idf_component.yml` `idf` dependency range, pinned compatibility lock file for cross-stack combinations).
-- If ESP-IDF env setup is missing, add a shell convenience snippet (for example in `~/.zshrc`) that aliases `idf` to `source ~/.esp_idf_env` and ensures common user bins are on `PATH`.
 - Include exact commands and environment assumptions when giving instructions.
 - Mention when a clean rebuild may be required (`idf.py fullclean build`) and why.
 - Mention serial port/baud assumptions when debugging flash or monitor problems.
-- Do not report implementation work as done until the build passes through the project's build script/workflow.
-- Reuse and adapt the reference wrappers in `scripts/` when a project lacks wrappers.
-- Use the plugin compatibility checker in `scripts/check_plugin_compatibility.py` (or equivalent project preflight) to generate a concrete evidence report before build.
-
+- Do not report implementation work as done until `idf.py build` (or the user-specified build command) succeeds.
+- When compatibility is uncertain, use a project-provided preflight checker if available, otherwise gather equivalent compatibility evidence manually before build.
 ## Logging Defaults
 
 - Reduce noisy library/default component logs when they obscure diagnosis (often by raising their log level threshold).
@@ -131,7 +138,7 @@ Act as a senior ESP-IDF firmware engineer focused on correctness, debuggability,
 - Read `references/logging-and-observability.md` for ESP-IDF log level policy and application log design.
 - Read `references/display-graphics.md` for display controller formats, frame buffer layout, and graphics pipeline validation.
 - Read `references/device-terminal-console.md` for ESP-IDF on-device terminal design, autocomplete, and runtime diagnostics commands.
-- Read `references/toolchain-and-shell-setup.md` for ESP-IDF install preflight checks and shell UX snippets (`.zshrc`, `.bashrc`).
+- Read `references/toolchain-and-shell-setup.md` for ESP-IDF install preflight checks, environment activation diagnostics, and shell setup troubleshooting.
 - Read `references/dependency-compatibility.md` for version compatibility evidence rules and ESP-IDF/ESP-ADF/ESP-SR validation workflow.
 - Read `references/ota-workflow.md` for OTA partition layouts, `esp_ota_ops` API flow, HTTPS OTA, rollback, anti-rollback counter, and OTA failure modes.
 - Read `references/security-hardening.md` for Secure Boot v2, flash encryption, NVS encryption, JTAG/UART disable, service terminal hardening, and the production security checklist.
