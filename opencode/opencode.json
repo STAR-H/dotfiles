@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "small_model": "ts-openai/gpt-5.4",
   "default_agent": "plan",
   "provider": {
     "ts-openai": {
@@ -71,54 +72,7 @@
             "high": {},
             "xhigh": {}
           }
-        },
-        "gpt-5.3-codex-spark": {
-          "name": "GPT-5.3 Codex Spark",
-          "limit": {
-            "context": 128000,
-            "output": 32000
-          },
-          "options": {
-            "store": false
-          },
-          "variants": {
-            "low": {},
-            "medium": {},
-            "high": {},
-            "xhigh": {}
-          }
-        },
-        "gpt-5.3-codex": {
-          "name": "GPT-5.3 Codex",
-          "limit": {
-            "context": 400000,
-            "output": 128000
-          },
-          "options": {
-            "store": false
-          },
-          "variants": {
-            "low": {},
-            "medium": {},
-            "high": {},
-            "xhigh": {}
-          }
-        },
-        "codex-mini-latest": {
-          "name": "Codex Mini",
-          "limit": {
-            "context": 200000,
-            "output": 100000
-          },
-          "options": {
-            "store": false
-          },
-          "variants": {
-            "low": {},
-            "medium": {},
-            "high": {}
-  }
-}
+        }
       }
     }
   },
@@ -160,12 +114,21 @@
         "{env:CODEBASE_MEMORY_MCP_BIN}"
       ],
       "enabled": true
+    },
+    "agentmemory": {
+      "type": "local",
+      "command": ["npx", "-y", "@agentmemory/mcp"],
+      "enabled": true
     }
   },
   "plugin": [
     "superpowers@git+https://github.com/obra/superpowers.git",
-    "./caveman-plugin/plugin.js"
+    "./caveman-plugin/plugin.js",
+    "./plugins/agentmemory-capture.ts"
   ],
+  "skills": {
+    "paths": ["skills/agentmemory"]
+  },
   "permission": {
     "bash": {
       "*": "allow",

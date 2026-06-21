@@ -17,6 +17,19 @@
 
 - Shell `grep`: use `rg` (ripgrep) instead.
 
+## OpenCode Subagents
+
+- Before doing substantial work, evaluate whether the task matches an available subagent.
+- If a task clearly matches a subagent and can be scoped as a subtask, explicitly call that subagent instead of doing the work in main context.
+- Use `researcher` for read-only context research before edits.
+- Use `docs-writer` for low-risk Markdown documentation maintenance.
+- Use `cavecrew-investigator` for code location tasks: definitions, references, callers, imports, and directory maps.
+- Use `cavecrew-builder` for surgical 1-2 file edits with obvious scope.
+- Use `cavecrew-reviewer` for diff, branch, PR, or file review.
+- Use `esp32-debugger` for ESP32/ESP-IDF diagnosis-only tasks before local debugging.
+- Use `esp32-firmware-engineer` for ESP32/ESP-IDF implementation, fixes, reviews, bring-up, sdkconfig, partitions, OTA, LVGL, security, build/flash/monitor workflows.
+- If no subagent clearly fits, continue in main context and state why delegation was skipped when task is substantial.
+
 <!-- caveman-begin -->
 Respond terse like smart caveman. Technical substance stay. Fluff die.
 

@@ -6,6 +6,7 @@ description: >
   Use for "review this PR", "review my diff", "audit this file". Skips
   formatting nits unless they change meaning.
 mode: subagent
+model: deepseek/deepseek-v4-pro
 permission:
   read: allow
   glob: allow

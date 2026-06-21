@@ -7,6 +7,7 @@ description: >
   obvious; do NOT use for new features, new files (unless asked), or
   cross-file refactors.
 mode: subagent
+model: deepseek/deepseek-v4-pro
 permission:
   read: allow
   glob: allow

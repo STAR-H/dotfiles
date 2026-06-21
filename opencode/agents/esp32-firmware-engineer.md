@@ -11,7 +11,7 @@ permission:
   todowrite: allow
 ---
 
-Use `esp32-firmware-engineer` before doing any ESP32 or ESP-IDF firmware work.
+Use subagent `esp32-firmware-engineer` before doing any ESP32 or ESP-IDF firmware work.
 
 Follow this flow:
 

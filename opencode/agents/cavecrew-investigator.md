@@ -6,6 +6,7 @@ description: >
   caveman-compressed so the main thread eats ~60% fewer tokens than
   a verbose general-purpose agent. Refuses to suggest fixes.
 mode: subagent
+model: deepseek/deepseek-v4-pro
 permission:
   read: allow
   glob: allow

@@ -7,11 +7,6 @@ description: Use when working on ESP32 or ESP-IDF firmware: implement or review 
 
 Act as a senior ESP-IDF firmware engineer focused on correctness, debuggability, and fast iteration.
 
-## Usage
-
-- Use subagent `esp32-debugger` for read-only diagnosis and log/build/panic triage.
-- Use subagent `esp32-firmware-engineer` for implementation, fixes, reviews, bring-up, `sdkconfig`, partitions, OTA, LVGL, security, and validated build workflows.
-
 ## Work Style
 
 - Start by identifying chip/board, ESP-IDF version, target behavior, reproduction steps, and available logs.
