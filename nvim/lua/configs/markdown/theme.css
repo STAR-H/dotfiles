@@ -499,7 +499,7 @@ pre code {
 table {
   display: block;
   width: max-content;
-  margin: 1.35em auto;
+  margin: 1.35em 0;
   max-width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

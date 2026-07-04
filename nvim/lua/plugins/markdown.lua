@@ -203,6 +203,9 @@ return {
         disable_sync_scroll = 0,
         sync_scroll_type = "relative",
         disable_filename = 1,
+        toc = {
+          containerClass = "toc",
+        },
       }
     end,
   },
