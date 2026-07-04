@@ -5,8 +5,8 @@
   "provider": {
     "ts-openai": {
       "options": {
-        "baseURL": "{env:OPENAI_BASE_URL}",
-        "apiKey": "{env:OPENAI_API_KEY}"
+        "baseURL": "{env:TS_OPENAI_BASE_URL}",
+        "apiKey": "{env:TS_OPENAI_API_KEY}"
       },
       "models": {
         "gpt-5.2": {
