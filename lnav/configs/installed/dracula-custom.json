@@ -39,6 +39,12 @@
                     },
                     "edit": {
                         "value": "\u270F\uFE0F"
+                    },
+                    "breakpoint": {
+                        "value": "\u25CF"
+                    },
+                    "disabled-breakpoint": {
+                        "value": "\u25CB"
                     }
                 },
                 "vars": {
@@ -67,6 +73,11 @@
                         "color": "#1c1c1c",
                         "background-color": "$cyan"
                     },
+                    "fuzzy-match": {
+                        "color": "$orange",
+                        "underline": true,
+                        "bold": true
+                    },
                     "alt-text": {
                         "background-color": "#1c1c1c"
                     },
@@ -94,6 +105,9 @@
                         "color": "$cyan",
                         "background-color": "#44475A",
                         "bold": true
+                    },
+                    "time-column": {
+                        "background-color": "#343746"
                     },
                     "disabled-cursor-line": {
                         "color": "$cyan",
@@ -126,9 +140,16 @@
                         "color": "$black",
                         "background-color": "$cyan"
                     },
+                    "popup-border": {
+                        "color": "$black",
+                        "background-color": "$cyan"
+                    },
                     "scrollbar": {
                         "color": "$black",
                         "background-color": "#888"
+                    },
+                    "timeline-bar": {
+                        "background-color": "#8560C0"
                     },
                     "h1": {
                         "color": "$cyan",
@@ -197,8 +218,41 @@
                     }
                 },
                 "syntax-styles": {
-                    "file": {
-                        "color": "$blue"
+                    "inline-code": {
+                        "color": "$green",
+                        "background-color": "#121212"
+                    },
+                    "quoted-code": {
+                        "color": "$orange",
+                        "background-color": "#121212"
+                    },
+                    "code-border": {
+                        "color": "#444",
+                        "background-color": "#121212"
+                    },
+                    "diff-delete": {
+                        "color": "#f00"
+                    },
+                    "diff-add": {
+                        "color": "#0f0"
+                    },
+                    "diff-section": {
+                        "color": "#6272A4"
+                    },
+                    "spectrogram-low": {
+                        "color": "$black",
+                        "background-color": "$green",
+                        "bold": true
+                    },
+                    "spectrogram-medium": {
+                        "color": "$black",
+                        "background-color": "$yellow",
+                        "bold": true
+                    },
+                    "spectrogram-high": {
+                        "color": "$black",
+                        "background-color": "$red",
+                        "bold": true
                     }
                 },
                 "status-styles": {
@@ -209,6 +263,11 @@
                     },
                     "title": {
                         "color": "#f6f6f6",
+                        "background-color": "#5394ec",
+                        "bold": true
+                    },
+                    "alert-title": {
+                        "color": "$red",
                         "background-color": "#5394ec",
                         "bold": true
                     },
@@ -250,6 +309,10 @@
                         "color": "#555",
                         "background-color": "#2f2f2f"
                     },
+                    "inactive-warn": {
+                        "color": "$orange",
+                        "background-color": "#2f2f2f"
+                    },
                     "inactive-alert": {
                         "color": "$red",
                         "background-color": "#2f2f2f"
@@ -259,7 +322,16 @@
                     }
                 },
                 "log-level-styles": {
+                    "warning": {
+                        "color": "$orange"
+                    },
                     "error": {
+                        "color": "$red"
+                    },
+                    "critical": {
+                        "color": "$red"
+                    },
+                    "fatal": {
                         "color": "$red"
                     }
                 }

@@ -1,0 +1,28 @@
+#
+# @synopsis: export-filters-to <path>
+# @description: Export current filters to an lnav script.
+#
+
+;SELECT raise_error('expecting output path as the first argument') WHERE $1 IS NULL
+:switch-to-view db
+;WITH export_lines(sort_key, cmd) AS (
+    VALUES
+        (0, '#!lnav -Nf'),
+        (1, '# Exported lnav filters.'),
+        (2, '# Add :highlight lines manually if needed.'),
+        (3, '')
+    UNION ALL
+    SELECT
+        1000 + filter_id,
+        CASE
+            WHEN language = 'sql' THEN ':filter-expr ' || pattern
+            WHEN type = 'in' THEN ':filter-in ' || pattern
+            WHEN type = 'out' THEN ':filter-out ' || pattern
+            ELSE '# unsupported filter ' || type || ' ' || language || ': ' || pattern
+        END
+    FROM lnav_view_filters
+    WHERE view_name = 'log' AND enabled = 1
+)
+SELECT cmd FROM export_lines ORDER BY sort_key
+:write-raw-to $1
+:switch-to-view log

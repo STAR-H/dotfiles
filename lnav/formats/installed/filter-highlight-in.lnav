@@ -1,0 +1,10 @@
+#
+# @synopsis: filter-highlight-in <pattern>
+# @description: Add a filter-in and highlight for the same pattern.
+#
+
+;SELECT raise_error('expecting a filter/highlight pattern') WHERE $__all__ IS NULL
+;SELECT ':filter-in ' || $__all__ AS filter_highlight_cmd
+:eval ${filter_highlight_cmd}
+;SELECT ':highlight ' || $__all__ AS filter_highlight_cmd
+:eval ${filter_highlight_cmd}

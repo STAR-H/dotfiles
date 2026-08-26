@@ -5,22 +5,38 @@
       "description": "Android Logcat log definition.",
       "url": "https://github.com/phoenixuprising/lnav-android-scheme",
       "timestamp-format": [
-        "%m-%d %H:%M:%S.%L"
+        "%m-%d %H:%M:%S.%L",
+        "%m-%d %H:%M:%S.%f"
       ],
       "regex": {
-        "basic": {
-          "pattern": "^(?<timestamp>\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2}\\.\\d{3})\\s+(?<pid>\\d+)\\s+(?<tid>\\d+)\\s+(?<level>\\w)\\s+(?<tag>.*?):(?<body>.*)$"
+        "threadtime": {
+          "pattern": "^(?<timestamp>\\d{2}-\\d{2}\\s\\d{2}:\\d{2}:\\d{2}\\.\\d{3,})\\s+(?:(?<uid>\\w+)\\s+)?(?<pid>\\d+)\\s+(?<tid>\\d+)\\s+(?<level>[VDIWEF])\\s+(?<tag>.*?):\\s?(?<body>.*)$"
         }
       },
+      "partitions": {
+        "buffer": {
+          "pattern": "^-+ beginning of (.*)$"
+        }
+      },
+      "ordered-by-time": false,
+      "body-field": "body",
       "level-field": "level",
       "level": {
-        "error": "E",
-        "warning": "W",
-        "info": "I",
-        "debug": "D",
-        "trace": "V"
+        "fatal": "^F",
+        "error": "^E",
+        "warning": "^W",
+        "info": "^I",
+        "debug": "^D",
+        "trace": "^V"
       },
       "value": {
+        "level": {
+          "kind": "string"
+        },
+        "uid": {
+          "kind": "string",
+          "identifier": true
+        },
         "pid": {
           "kind": "integer",
           "identifier": true

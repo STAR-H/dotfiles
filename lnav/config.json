@@ -1,4 +1,5 @@
 {
+    "$schema": "https://lnav.org/schemas/config-v1.schema.json",
     "ui": {
         "clock-format": "%m-%d %H:%M:%S",
         "dim-text": true,

@@ -8,6 +8,14 @@
                     "id": "org.lnav.key.breadcrumb.focus",
                     "command": ":prompt breadcrumb"
                 },
+                // use Ctrl-y as highlight command trigger
+                "x19": {
+                    "command": ":prompt command : 'highlight '"
+                },
+                // use Ctrl-k as clear-highlight command trigger
+                "x0b": {
+                    "command": ":prompt command : 'clear-highlight '"
+                },
                 "x31": {
                     "command": ":goto next 10 minutes after the hour"
                 },
