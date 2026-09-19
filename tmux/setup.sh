@@ -2,10 +2,9 @@
 
 set -euo pipefail
 
-DOTFILES_DIR="$PWD"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 TMUX_CONFIG_DIR="$CONFIG_DIR/tmux"
-TMUX_CONF_FILE="$TMUX_CONFIG_DIR/tmux.conf"
 TMUX_CONF_SYMLINK="$HOME/.tmux.conf"
 BACKUP_BASE="$HOME/.config/tmux-backups"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
@@ -37,10 +36,31 @@ link_path() {
   printf 'link    %s -> %s\n' "$target_path" "$source_path"
 }
 
+remove_legacy_config() {
+  local target
+
+  if [ ! -e "$TMUX_CONF_SYMLINK" ] && [ ! -L "$TMUX_CONF_SYMLINK" ]; then
+    return
+  fi
+
+  if [ -L "$TMUX_CONF_SYMLINK" ]; then
+    target="$(readlink "$TMUX_CONF_SYMLINK")"
+    if [ "$target" = "$TMUX_CONFIG_DIR/tmux.conf" ] || [ "$target" = "$DOTFILES_DIR/tmux.conf" ]; then
+      rm "$TMUX_CONF_SYMLINK"
+      printf 'remove  %s (duplicate legacy entry)\n' "$TMUX_CONF_SYMLINK"
+      return
+    fi
+  fi
+
+  mkdir -p "$(dirname -- "$BACKUP_DIR")"
+  mv "$TMUX_CONF_SYMLINK" "$BACKUP_DIR/tmux.conf"
+  printf 'backup  %s -> %s\n' "$TMUX_CONF_SYMLINK" "$BACKUP_DIR/tmux.conf"
+}
+
 mkdir -p "$CONFIG_DIR"
 printf 'ready   %s\n' "$CONFIG_DIR"
 
 link_path "$DOTFILES_DIR" "$TMUX_CONFIG_DIR" "$BACKUP_DIR/tmux"
-link_path "$TMUX_CONF_FILE" "$TMUX_CONF_SYMLINK" "$BACKUP_DIR/tmux.conf"
+remove_legacy_config
 
 printf 'done    tmux setup complete\n'
