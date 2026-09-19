@@ -1,5 +1,5 @@
 [include]
-    path = /Volumes/Workspace/dotfiles/git/themes.gitconfig
+    path = themes.gitconfig
 
 [http]
     sslBackend = openssl
