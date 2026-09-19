@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DOTFILES_DIR="$PWD"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 STARSHIP_CONFIG_DIR="$CONFIG_DIR/starship"
 BACKUP_BASE="$HOME/.config/starship-backups"
