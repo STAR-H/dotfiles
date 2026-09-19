@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-DOTFILES_DIR="$PWD"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config"
 YAZI_CONFIG_DIR="$CONFIG_DIR/yazi"
 BACKUP_BASE="$HOME/.config/yazi-backups"
@@ -44,7 +44,7 @@ if ! command -v yazi >/dev/null 2>&1; then
 fi
 
 YAZI_VERSION_OUTPUT="$(yazi --version)"
-YAZI_VERSION="$(printf '%s\n' "$YAZI_VERSION_OUTPUT" | sed -n 's/^Yazi \([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/p')"
+YAZI_VERSION="$(printf '%s\n' "$YAZI_VERSION_OUTPUT" | sed -n 's/^Yazi \([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/p; s/^[[:space:]]*Version:[[:space:]]*\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/p' | sed -n '1p')"
 
 if [ -z "$YAZI_VERSION" ]; then
   printf 'error   unable to parse yazi version: %s\n' "$YAZI_VERSION_OUTPUT" >&2
