@@ -2,12 +2,8 @@
 
 # : Manager {{{
 
-[manager]
+[mgr]
 cwd = { fg = "#8be9fd" }
-
-# Hovered
-hovered         = { reversed = true }
-preview_hovered = { underline = true }
 
 # Find
 find_keyword  = { fg = "#f1fa8c", bold = true, italic = true, underline = true }
@@ -19,11 +15,6 @@ marker_cut      = { fg = "#ff5555", bg = "#ff5555" }
 marker_marked   = { fg = "#8be9fd", bg = "#8be9fd" }
 marker_selected = { fg = "#f1fa8c", bg = "#f1fa8c" }
 
-# Tab
-tab_active   = { reversed = true }
-tab_inactive = {}
-tab_width    = 1
-
 # Count
 count_copied   = { fg = "#282a36", bg = "#50fa7b" }
 count_cut      = { fg = "#282a36", bg = "#ff5555" }
@@ -32,6 +23,24 @@ count_selected = { fg = "#282a36", bg = "#f1fa8c" }
 # Border
 border_symbol = "│"
 border_style  = { fg = "#7282b5" }
+
+# : }}}
+
+
+# : Indicator {{
+
+[indicator]
+current = { reversed = true }
+preview = { underline = true }
+
+# : }}}
+
+
+# : Tabs {{{
+
+[tabs]
+active   = { reversed = true }
+inactive = {}
 
 # : }}}
 
@@ -127,10 +136,9 @@ separator_style = { fg = "#83869c" }
 # : Help {{{
 
 [help]
-on      = { fg = "#8be9fd" }
-run     = { fg = "#ff79c6" }
+chord   = { fg = "#8be9fd" }
+action  = { fg = "#ff79c6" }
 hovered = { reversed = true, bold = true }
-footer  = { fg = "#44475a", bg = "#f8f8f2" }
 
 # : }}}
 
@@ -163,8 +171,8 @@ rules = [
 	{ mime = "application/{pdf,doc,rtf}", fg = "#50fa7b" },
 
 	# Fallback
-	{ name = "*", fg = "#f8f8f2" },
-	{ name = "*/", fg = "#bd93f9" }
+	{ url = "*", fg = "#f8f8f2" },
+	{ url = "*/", fg = "#bd93f9" }
 ]
 
 # : }}}

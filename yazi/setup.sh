@@ -8,7 +8,7 @@ YAZI_CONFIG_DIR="$CONFIG_DIR/yazi"
 BACKUP_BASE="$HOME/.config/yazi-backups"
 TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP_DIR="$BACKUP_BASE/$TIMESTAMP"
-REQUIRED_YAZI_VERSION="26.1.22"
+REQUIRED_YAZI_VERSION="26.9.1"
 
 version_ge() {
   local current="$1"
