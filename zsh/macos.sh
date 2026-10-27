@@ -1,9 +1,7 @@
-export PATH=$HOME/Workspace/Softwares/nvim-macos-arm64/bin:$PATH
-
 # Install coreutils to get GNU versions of standard utilities
 # (macOS ships BSD variants with different behavior).
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
-export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"
+#export PATH="/opt/homebrew/opt/libtool/libexec/gnubin:$PATH"
 
 # zsh plugins
 source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
